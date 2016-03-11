@@ -5,7 +5,7 @@ import Color from 'color'
 var colors={
 	bg:Color().rgb(246,246,246).hexString(),
 	primary:Color().rgb(200,22,36).hexString(),
-	secondary:Color().rgb(200,22,36).darken(0.5).hexString()
+	secondary:Color().rgb(200,22,36).darken(0.2).hexString()
 }
 
 class Head extends Component{
@@ -55,7 +55,21 @@ class MenuBar extends Component{
 		return (
 			<div style={{background:colors.primary}}>
 				<ul style={{width:1200,height:35,margin:"0 auto"}}>
-					{["所有商品分类","网站首页","批发市场","每日新款","款式搜索"].map(it=>{
+					<li style={{float:"left",listStyle:"none",fontWeight:"bold",lineHeight:"35px",color:"#fff",padding:"0 30px",fontSize:16,position:"relative",background:colors.secondary}} >
+						<span>所有商品分类</span>
+						<ul style={{position:"absolute",left:0,top:35,zIndex:999,width:"100%"}}>
+							{
+								[1,2,3].map(ii=>{
+									return (
+										<li key={Math.random()} style={{height:35,listStyle:"none",background:colors.bg,":hover":{background:colors.secondary}}}>
+											<a key={Math.random()} style={{lineHeight:"35px",color:"#000",":hover":{color:"#fff"},padding:"0px 15px",fontSize:16}} href={"/target/"+ii}>{ii}</a>
+										</li>
+									)
+								})
+							}
+						</ul>
+					</li>
+					{["网站首页","批发市场","每日新款","款式搜索"].map(it=>{
 						return (
 							<li key={it} style={{height:35,float:"left",listStyle:"none",":hover":{background:colors.secondary}}} >
 								<a style={{fontWeight:"bold",float:"left",lineHeight:"35px",color:"#fff",padding:"0px 15px",fontSize:16}} href={"/target/"+it}>{it}</a>

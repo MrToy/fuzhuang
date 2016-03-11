@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c5bd0681adf3bcf792cb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f1a2b281e0e8e4788ea3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1791,7 +1791,7 @@
 	var colors = {
 		bg: (0, _color2.default)().rgb(246, 246, 246).hexString(),
 		primary: (0, _color2.default)().rgb(200, 22, 36).hexString(),
-		secondary: (0, _color2.default)().rgb(200, 22, 36).darken(0.5).hexString()
+		secondary: (0, _color2.default)().rgb(200, 22, 36).darken(0.2).hexString()
 	};
 
 	var Head = _wrapComponent('Head')(function (_Component) {
@@ -1897,12 +1897,40 @@
 					{ style: { background: colors.primary } },
 					_react3.default.createElement(
 						'ul',
-						{ style: { width: 1200, height: 35, margin: "0 auto", color: "#fff" } },
+						{ style: { width: 1200, height: 35, margin: "0 auto" } },
+						_react3.default.createElement(
+							'li',
+							{ style: { float: "left", listStyle: "none", fontWeight: "bold", lineHeight: "35px", color: "#fff", padding: "0 30px", fontSize: 16, position: "relative", background: colors.secondary } },
+							_react3.default.createElement(
+								'span',
+								null,
+								'所有商品分类'
+							),
+							_react3.default.createElement(
+								'ul',
+								{ style: { position: "absolute", left: 0, top: 35, zIndex: 999, width: "100%" } },
+								[1, 2, 3].map(function (ii) {
+									return _react3.default.createElement(
+										'li',
+										{ key: Math.random(), style: { height: 35, listStyle: "none", background: colors.bg, ":hover": { background: colors.secondary } } },
+										_react3.default.createElement(
+											'a',
+											{ key: Math.random(), style: { lineHeight: "35px", color: "#000", ":hover": { color: "#fff" }, padding: "0px 15px", fontSize: 16 }, href: "/target/" + ii },
+											ii
+										)
+									);
+								})
+							)
+						),
 						["网站首页", "批发市场", "每日新款", "款式搜索"].map(function (it) {
 							return _react3.default.createElement(
 								'li',
 								{ key: it, style: { height: 35, float: "left", listStyle: "none", ":hover": { background: colors.secondary } } },
-								it
+								_react3.default.createElement(
+									'a',
+									{ style: { fontWeight: "bold", float: "left", lineHeight: "35px", color: "#fff", padding: "0px 15px", fontSize: 16 }, href: "/target/" + it },
+									it
+								)
 							);
 						})
 					)
