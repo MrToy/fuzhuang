@@ -74,7 +74,7 @@ class MenuBar extends Component{
 class MenuLeft extends Component{
 	render(){
 		return (
-			<ul style={{width:178,height:549,display:"inline-block",background:colors.bg,border:"1px solid "+colors.line,borderTop:"none"}}>
+			<ul style={{width:178,height:549,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderTop:"1px solid "+colors.line}}>
 				{
 					["精品男装","淘款市场","国际名流","意法男装","中纺服饰","一号基地","二号基地","男衬衫","品牌折扣","外贸原单","三号基地","更多市场"].map(ii=>{
 						return (
@@ -158,7 +158,7 @@ class ItemList extends Component{
 				<TitleBar title={this.props.title} />
 				<div style={{width:1220}}>
 					{(this.props.data||[]).map(it=>{
-						return <ItemPanel />
+						return <ItemPanel key={it} />
 					})}
 				</div>
 				<div style={{clear:"both"}}></div>
@@ -166,7 +166,6 @@ class ItemList extends Component{
 		)
 	}
 }
-
 
 class Footer extends Component{
 	render(){
