@@ -121,8 +121,25 @@ class InfoPanel extends Component{
 		)
 	}
 }
+class TitleBar extends Component{
+	render(){
+		return (
+			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
+				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
+			</div>
+		)
+	}
+}
 
-class Section1 extends Component{
+class ItemPanel extends Component{
+	render(){
+		return (
+			<div style={{float:"left",width:224,margin:"0 20px 20px 0",height:300,background:colors.bg}}></div>
+		)
+	}
+}
+
+class MainBar extends Component{
 	render(){
 		return (
 			<div style={{width:1200,margin:"0 auto",paddingBottom:20}}>
@@ -133,15 +150,24 @@ class Section1 extends Component{
 		)
 	}
 }
-class TitleBar extends Component{
+@Radium
+class ItemList extends Component{
 	render(){
-		return (
-			<div style={{width:1200,margin:"0 auto",borderBottom:"3px solid "+colors.primary}}>
-				<div style={{width:150,height:30,background:colors.primary}}></div>
+		return(
+			<div style={{width:1200,margin:"0 auto"}}>
+				<TitleBar title={this.props.title} />
+				<div style={{width:1220}}>
+					{(this.props.data||[]).map(it=>{
+						return <ItemPanel />
+					})}
+				</div>
+				<div style={{clear:"both"}}></div>
 			</div>
 		)
 	}
 }
+
+
 class Footer extends Component{
 	render(){
 		return(
@@ -157,8 +183,9 @@ class App extends Component{
 				<Head />
 				<LogoBar />
 				<MenuBar />
-				<Section1 />
-				<TitleBar />
+				<MainBar />
+				<ItemList title="潮流单品" data={[1,2,3,4,5,6,7,8,9,0]} />
+				<ItemList title="潮流单品" data={[1,2,3,4,5,6,7,8,9,0]} />
 				<Footer />
 			</div>
 		)

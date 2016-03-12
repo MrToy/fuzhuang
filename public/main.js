@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7f5c067ea199b47e3b40"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4cbbd6f000af02c2a140"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1734,7 +1734,7 @@
 
 	var _index6 = _interopRequireDefault(_index5);
 
-	var _class, _class2, _class3;
+	var _class, _class2, _class3, _class4;
 
 	var _reactDom = __webpack_require__(353);
 
@@ -1778,11 +1778,17 @@
 		InfoPanel: {
 			displayName: 'InfoPanel'
 		},
-		Section1: {
-			displayName: 'Section1'
-		},
 		TitleBar: {
 			displayName: 'TitleBar'
+		},
+		ItemPanel: {
+			displayName: 'ItemPanel'
+		},
+		MainBar: {
+			displayName: 'MainBar'
+		},
+		ItemList: {
+			displayName: 'ItemList'
 		},
 		Footer: {
 			displayName: 'Footer'
@@ -2050,31 +2056,8 @@
 		return InfoPanel;
 	}(_react2.Component));
 
-	var Section1 = _wrapComponent('Section1')(function (_Component10) {
-		(0, _inherits3.default)(Section1, _Component10);
-
-		function Section1() {
-			(0, _classCallCheck3.default)(this, Section1);
-			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Section1).apply(this, arguments));
-		}
-
-		(0, _createClass3.default)(Section1, [{
-			key: 'render',
-			value: function render() {
-				return _react3.default.createElement(
-					'div',
-					{ style: { width: 1200, margin: "0 auto", paddingBottom: 20 } },
-					_react3.default.createElement(MenuLeft, null),
-					_react3.default.createElement(Reveal, null),
-					_react3.default.createElement(InfoPanel, null)
-				);
-			}
-		}]);
-		return Section1;
-	}(_react2.Component));
-
-	var TitleBar = _wrapComponent('TitleBar')(function (_Component11) {
-		(0, _inherits3.default)(TitleBar, _Component11);
+	var TitleBar = _wrapComponent('TitleBar')(function (_Component10) {
+		(0, _inherits3.default)(TitleBar, _Component10);
 
 		function TitleBar() {
 			(0, _classCallCheck3.default)(this, TitleBar);
@@ -2086,11 +2069,11 @@
 			value: function render() {
 				return _react3.default.createElement(
 					'div',
-					{ style: { width: 1200, margin: "0 auto", borderBottom: "2px solid " + colors.primary } },
+					{ style: { borderBottom: "2px solid " + colors.primary, marginBottom: 20 } },
 					_react3.default.createElement(
 						'strong',
 						{ style: { display: "inline-block", padding: "0 20px", height: 23, background: colors.primary, lineHeight: "23px", fontSize: 14, color: "#fff", textAlign: "center" } },
-						'热卖单品'
+						this.props.title || "#"
 					)
 				);
 			}
@@ -2098,8 +2081,77 @@
 		return TitleBar;
 	}(_react2.Component));
 
-	var Footer = _wrapComponent('Footer')(function (_Component12) {
-		(0, _inherits3.default)(Footer, _Component12);
+	var ItemPanel = _wrapComponent('ItemPanel')(function (_Component11) {
+		(0, _inherits3.default)(ItemPanel, _Component11);
+
+		function ItemPanel() {
+			(0, _classCallCheck3.default)(this, ItemPanel);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ItemPanel).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(ItemPanel, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement('div', { style: { float: "left", width: 224, margin: "0 20px 20px 0", height: 300, background: colors.bg } });
+			}
+		}]);
+		return ItemPanel;
+	}(_react2.Component));
+
+	var MainBar = _wrapComponent('MainBar')(function (_Component12) {
+		(0, _inherits3.default)(MainBar, _Component12);
+
+		function MainBar() {
+			(0, _classCallCheck3.default)(this, MainBar);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(MainBar).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(MainBar, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement(
+					'div',
+					{ style: { width: 1200, margin: "0 auto", paddingBottom: 20 } },
+					_react3.default.createElement(MenuLeft, null),
+					_react3.default.createElement(Reveal, null),
+					_react3.default.createElement(InfoPanel, null)
+				);
+			}
+		}]);
+		return MainBar;
+	}(_react2.Component));
+
+	var ItemList = _wrapComponent('ItemList')((0, _radium2.default)(_class4 = function (_Component13) {
+		(0, _inherits3.default)(ItemList, _Component13);
+
+		function ItemList() {
+			(0, _classCallCheck3.default)(this, ItemList);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ItemList).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(ItemList, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement(
+					'div',
+					{ style: { width: 1200, margin: "0 auto" } },
+					_react3.default.createElement(TitleBar, { title: this.props.title }),
+					_react3.default.createElement(
+						'div',
+						{ style: { width: 1220 } },
+						(this.props.data || []).map(function (it) {
+							return _react3.default.createElement(ItemPanel, null);
+						})
+					),
+					_react3.default.createElement('div', { style: { clear: "both" } })
+				);
+			}
+		}]);
+		return ItemList;
+	}(_react2.Component)) || _class4);
+
+	var Footer = _wrapComponent('Footer')(function (_Component14) {
+		(0, _inherits3.default)(Footer, _Component14);
 
 		function Footer() {
 			(0, _classCallCheck3.default)(this, Footer);
@@ -2115,8 +2167,8 @@
 		return Footer;
 	}(_react2.Component));
 
-	var App = _wrapComponent('App')(function (_Component13) {
-		(0, _inherits3.default)(App, _Component13);
+	var App = _wrapComponent('App')(function (_Component15) {
+		(0, _inherits3.default)(App, _Component15);
 
 		function App() {
 			(0, _classCallCheck3.default)(this, App);
@@ -2137,8 +2189,9 @@
 					_react3.default.createElement(Head, null),
 					_react3.default.createElement(LogoBar, null),
 					_react3.default.createElement(MenuBar, null),
-					_react3.default.createElement(Section1, null),
-					_react3.default.createElement(TitleBar, null),
+					_react3.default.createElement(MainBar, null),
+					_react3.default.createElement(ItemList, { title: '潮流单品', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] }),
+					_react3.default.createElement(ItemList, { title: '当季热销', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] }),
 					_react3.default.createElement(Footer, null)
 				);
 			}
