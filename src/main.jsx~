@@ -136,8 +136,8 @@ class Section1 extends Component{
 class TitleBar extends Component{
 	render(){
 		return (
-			<div style={{width:1200,margin:"0 auto",borderBottom:"2px solid "+colors.primary}}>
-				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>热卖单品</strong>
+			<div style={{width:1200,margin:"0 auto",borderBottom:"3px solid "+colors.primary}}>
+				<div style={{width:150,height:30,background:colors.primary}}></div>
 			</div>
 		)
 	}

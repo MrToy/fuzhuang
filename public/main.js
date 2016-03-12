@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f1a2b281e0e8e4788ea3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7f5c067ea199b47e3b40"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1734,7 +1734,7 @@
 
 	var _index6 = _interopRequireDefault(_index5);
 
-	var _class, _class2;
+	var _class, _class2, _class3;
 
 	var _reactDom = __webpack_require__(353);
 
@@ -1762,6 +1762,30 @@
 		},
 		MenuBar: {
 			displayName: 'MenuBar'
+		},
+		MenuLeft: {
+			displayName: 'MenuLeft'
+		},
+		Carouse: {
+			displayName: 'Carouse'
+		},
+		Carouse2: {
+			displayName: 'Carouse2'
+		},
+		Reveal: {
+			displayName: 'Reveal'
+		},
+		InfoPanel: {
+			displayName: 'InfoPanel'
+		},
+		Section1: {
+			displayName: 'Section1'
+		},
+		TitleBar: {
+			displayName: 'TitleBar'
+		},
+		Footer: {
+			displayName: 'Footer'
 		},
 		App: {
 			displayName: 'App'
@@ -1791,7 +1815,8 @@
 	var colors = {
 		bg: (0, _color2.default)().rgb(246, 246, 246).hexString(),
 		primary: (0, _color2.default)().rgb(200, 22, 36).hexString(),
-		secondary: (0, _color2.default)().rgb(200, 22, 36).darken(0.2).hexString()
+		secondary: (0, _color2.default)().rgb(200, 22, 36).darken(0.2).hexString(),
+		line: "#DDD"
 	};
 
 	var Head = _wrapComponent('Head')(function (_Component) {
@@ -1810,7 +1835,7 @@
 					{ style: { background: colors.bg, borderBottom: "1px solid #CCC" } },
 					_react3.default.createElement(
 						'div',
-						{ style: { width: 1200, height: 40, margin: "0 auto", lineHeight: "40px", fontSize: 14 } },
+						{ style: { width: 1200, height: 30, margin: "0 auto", lineHeight: "30px", fontSize: 14 } },
 						_react3.default.createElement(
 							'p',
 							null,
@@ -1900,27 +1925,8 @@
 						{ style: { width: 1200, height: 35, margin: "0 auto" } },
 						_react3.default.createElement(
 							'li',
-							{ style: { float: "left", listStyle: "none", fontWeight: "bold", lineHeight: "35px", color: "#fff", padding: "0 30px", fontSize: 16, position: "relative", background: colors.secondary } },
-							_react3.default.createElement(
-								'span',
-								null,
-								'所有商品分类'
-							),
-							_react3.default.createElement(
-								'ul',
-								{ style: { position: "absolute", left: 0, top: 35, zIndex: 999, width: "100%" } },
-								[1, 2, 3].map(function (ii) {
-									return _react3.default.createElement(
-										'li',
-										{ key: Math.random(), style: { height: 35, listStyle: "none", background: colors.bg, ":hover": { background: colors.secondary } } },
-										_react3.default.createElement(
-											'a',
-											{ key: Math.random(), style: { lineHeight: "35px", color: "#000", ":hover": { color: "#fff" }, padding: "0px 15px", fontSize: 16 }, href: "/target/" + ii },
-											ii
-										)
-									);
-								})
-							)
+							{ style: { width: 180, textAlign: "center", float: "left", listStyle: "none", fontWeight: "bold", lineHeight: "35px", color: "#fff", fontSize: 16, background: colors.secondary } },
+							'所有商品分类'
 						),
 						["网站首页", "批发市场", "每日新款", "款式搜索"].map(function (it) {
 							return _react3.default.createElement(
@@ -1940,8 +1946,177 @@
 		return MenuBar;
 	}(_react2.Component)) || _class2);
 
-	var App = _wrapComponent('App')(function (_Component5) {
-		(0, _inherits3.default)(App, _Component5);
+	var MenuLeft = _wrapComponent('MenuLeft')((0, _radium2.default)(_class3 = function (_Component5) {
+		(0, _inherits3.default)(MenuLeft, _Component5);
+
+		function MenuLeft() {
+			(0, _classCallCheck3.default)(this, MenuLeft);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(MenuLeft).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(MenuLeft, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement(
+					'ul',
+					{ style: { width: 178, height: 549, display: "inline-block", background: colors.bg, border: "1px solid " + colors.line, borderTop: "none" } },
+					["精品男装", "淘款市场", "国际名流", "意法男装", "中纺服饰", "一号基地", "二号基地", "男衬衫", "品牌折扣", "外贸原单", "三号基地", "更多市场"].map(function (ii) {
+						return _react3.default.createElement(
+							'li',
+							{ key: ii, style: { margin: "10px 0", height: 35, listStyle: "none" } },
+							_react3.default.createElement(
+								'a',
+								{ key: ii + ".child", style: { textAlign: "center", fontWeight: "normal", width: "100%", lineHeight: "35px", float: "left", color: "#000", ":hover": { color: colors.primary }, fontSize: 16 }, href: "/target/" + ii },
+								ii
+							)
+						);
+					})
+				);
+			}
+		}]);
+		return MenuLeft;
+	}(_react2.Component)) || _class3);
+
+	var Carouse = _wrapComponent('Carouse')(function (_Component6) {
+		(0, _inherits3.default)(Carouse, _Component6);
+
+		function Carouse() {
+			(0, _classCallCheck3.default)(this, Carouse);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Carouse).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(Carouse, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement('div', { style: { height: 350, marginBottom: 20, background: colors.bg } });
+			}
+		}]);
+		return Carouse;
+	}(_react2.Component));
+
+	var Carouse2 = _wrapComponent('Carouse2')(function (_Component7) {
+		(0, _inherits3.default)(Carouse2, _Component7);
+
+		function Carouse2() {
+			(0, _classCallCheck3.default)(this, Carouse2);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Carouse2).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(Carouse2, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement('div', { style: { height: 160, background: colors.bg } });
+			}
+		}]);
+		return Carouse2;
+	}(_react2.Component));
+
+	var Reveal = _wrapComponent('Reveal')(function (_Component8) {
+		(0, _inherits3.default)(Reveal, _Component8);
+
+		function Reveal() {
+			(0, _classCallCheck3.default)(this, Reveal);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Reveal).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(Reveal, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement(
+					'div',
+					{ style: { display: "inline-block", width: 760, height: 530, margin: "20px 0 0 20px" } },
+					_react3.default.createElement(Carouse, null),
+					_react3.default.createElement(Carouse2, null)
+				);
+			}
+		}]);
+		return Reveal;
+	}(_react2.Component));
+
+	var InfoPanel = _wrapComponent('InfoPanel')(function (_Component9) {
+		(0, _inherits3.default)(InfoPanel, _Component9);
+
+		function InfoPanel() {
+			(0, _classCallCheck3.default)(this, InfoPanel);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(InfoPanel).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(InfoPanel, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement('div', { style: { display: "inline-block", width: 218, height: 528, margin: "20px 0 0 20px", border: "1px solid " + colors.line } });
+			}
+		}]);
+		return InfoPanel;
+	}(_react2.Component));
+
+	var Section1 = _wrapComponent('Section1')(function (_Component10) {
+		(0, _inherits3.default)(Section1, _Component10);
+
+		function Section1() {
+			(0, _classCallCheck3.default)(this, Section1);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Section1).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(Section1, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement(
+					'div',
+					{ style: { width: 1200, margin: "0 auto", paddingBottom: 20 } },
+					_react3.default.createElement(MenuLeft, null),
+					_react3.default.createElement(Reveal, null),
+					_react3.default.createElement(InfoPanel, null)
+				);
+			}
+		}]);
+		return Section1;
+	}(_react2.Component));
+
+	var TitleBar = _wrapComponent('TitleBar')(function (_Component11) {
+		(0, _inherits3.default)(TitleBar, _Component11);
+
+		function TitleBar() {
+			(0, _classCallCheck3.default)(this, TitleBar);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(TitleBar).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(TitleBar, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement(
+					'div',
+					{ style: { width: 1200, margin: "0 auto", borderBottom: "2px solid " + colors.primary } },
+					_react3.default.createElement(
+						'strong',
+						{ style: { display: "inline-block", padding: "0 20px", height: 23, background: colors.primary, lineHeight: "23px", fontSize: 14, color: "#fff", textAlign: "center" } },
+						'热卖单品'
+					)
+				);
+			}
+		}]);
+		return TitleBar;
+	}(_react2.Component));
+
+	var Footer = _wrapComponent('Footer')(function (_Component12) {
+		(0, _inherits3.default)(Footer, _Component12);
+
+		function Footer() {
+			(0, _classCallCheck3.default)(this, Footer);
+			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Footer).apply(this, arguments));
+		}
+
+		(0, _createClass3.default)(Footer, [{
+			key: 'render',
+			value: function render() {
+				return _react3.default.createElement('div', { style: { marginTop: 20, background: colors.bg, height: 200, borderTop: "1px solid " + colors.line } });
+			}
+		}]);
+		return Footer;
+	}(_react2.Component));
+
+	var App = _wrapComponent('App')(function (_Component13) {
+		(0, _inherits3.default)(App, _Component13);
 
 		function App() {
 			(0, _classCallCheck3.default)(this, App);
@@ -1961,7 +2136,10 @@
 					),
 					_react3.default.createElement(Head, null),
 					_react3.default.createElement(LogoBar, null),
-					_react3.default.createElement(MenuBar, null)
+					_react3.default.createElement(MenuBar, null),
+					_react3.default.createElement(Section1, null),
+					_react3.default.createElement(TitleBar, null),
+					_react3.default.createElement(Footer, null)
 				);
 			}
 		}]);
