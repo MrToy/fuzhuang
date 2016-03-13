@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import Radium from 'radium'
 import Color from 'color'
+import request from 'superagent';
 var colors={
 	bg:Color().rgb(246,246,246).hexString(),
 	primary:Color().rgb(200,22,36).hexString(),
@@ -42,8 +43,8 @@ class LogoBar extends Component{
 			<div style={{background:colors.bg}}>
 				<div style={{width:1200,height:110,margin:"0 auto"}}>
 					<span style={{height:"100%",display:"inline-block",verticalAlign:"middle"}}></span>
-					<img style={{verticalAlign:"middle"}} src={require("./logo.gif")} />
-					<Search style={{verticalAlign:"middle",margin:"0 120px"}} />
+					<img style={{verticalAlign:"middle",width:100,height:100,margin:"0 30px"}} src={require("./logo.png")} />
+					<Search style={{verticalAlign:"middle",margin:"0 80px"}} />
 				</div>
 			</div>
 		)
@@ -74,7 +75,7 @@ class MenuBar extends Component{
 class MenuLeft extends Component{
 	render(){
 		return (
-			<ul style={{width:178,height:549,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderTop:"1px solid "+colors.line}}>
+			<ul style={{width:178,height:549,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
 				{
 					["精品男装","淘款市场","国际名流","意法男装","中纺服饰","一号基地","二号基地","男衬衫","品牌折扣","外贸原单","三号基地","更多市场"].map(ii=>{
 						return (
@@ -117,7 +118,13 @@ class Reveal extends Component{
 class InfoPanel extends Component{
 	render(){
 		return (
-			<div style={{display:"inline-block",width:218,height:528,margin:"20px 0 0 20px",border:"1px solid "+colors.line}}></div>
+			<div style={{display:"inline-block",verticalAlign:"top",width:218,height:528,margin:"20px 0 0 20px",border:"1px solid "+colors.line}}>
+				<div style={{height:100,lineHeight:"100px",textAlign:"center"}}>hello</div>
+				<div style={{height:40,background:colors.bg,borderTop:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
+					<a href="#" style={{color:"#444",display:"inline-block",width:108,height:"100%",borderRight:"1px solid "+colors.line,lineHeight:"40px",textAlign:"center"}}>登录</a>
+					<a href="#" style={{color:"#444",display:"inline-block",width:109,lineHeight:"40px",textAlign:"center"}}>注册</a>
+				</div>
+			</div>
 		)
 	}
 }
@@ -130,11 +137,24 @@ class TitleBar extends Component{
 		)
 	}
 }
-
+@Radium
 class ItemPanel extends Component{
 	render(){
 		return (
-			<div style={{float:"left",width:224,margin:"0 20px 20px 0",height:300,background:colors.bg}}></div>
+			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:270,border:"1px solid "+colors.line}}>
+				<p style={{marginBottom:10,height:200,position:"relative"}}>
+					<a href="#" style={{height:"100%"}}>
+						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,margin:"auto"}}/>
+					</a>
+				</p>
+				<a href="#" style={{color:"#555",":hover":{color:colors.primary}}}>
+					<p style={{height:38,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
+				</a>
+				<p style={{height:20,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
+					<b>￥</b>
+					<span>{this.props.price}</span>
+				</p>
+			</div>
 		)
 	}
 }
@@ -157,8 +177,8 @@ class ItemList extends Component{
 			<div style={{width:1200,margin:"0 auto"}}>
 				<TitleBar title={this.props.title} />
 				<div style={{width:1220}}>
-					{(this.props.data||[]).map(it=>{
-						return <ItemPanel key={it} />
+					{(this.props.data||[]).map((it,index)=>{
+						return <ItemPanel key={index} {...it} />
 					})}
 				</div>
 				<div style={{clear:"both"}}></div>
@@ -174,7 +194,16 @@ class Footer extends Component{
 		)
 	}
 }
+var z={img:require("./logo.png"),text:"潮流单品",price:300}
 class App extends Component{
+	constructor(props){
+		super(props)
+		request
+			.get("http://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&word=皮卡丘&rn=1&pn=10")
+			.end((err,res)=>{
+				console.log(res)
+			})
+	}
 	render(){
 		return (
 			<div>
@@ -183,8 +212,7 @@ class App extends Component{
 				<LogoBar />
 				<MenuBar />
 				<MainBar />
-				<ItemList title="潮流单品" data={[1,2,3,4,5,6,7,8,9,0]} />
-				<ItemList title="当季热销" data={[1,2,3,4,5,6,7,8,9,0]} />
+				<ItemList title="潮流单品" data={[z,z,z,z,z,z,z,z,z,z]} />
 				<Footer />
 			</div>
 		)
