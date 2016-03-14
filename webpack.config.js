@@ -15,7 +15,7 @@ module.exports = {
 		loaders: [
 			{ test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel',
 				query: {
-					cacheDirectory: true,
+					cacheDirectory:"temp",
 					presets: ['react', 'es2015', 'stage-0'],
 					plugins: ['transform-runtime', 'add-module-exports','transform-decorators-legacy']
 				}

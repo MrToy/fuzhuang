@@ -2,13 +2,15 @@ import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import Radium from 'radium'
 import Color from 'color'
-import request from 'superagent';
+import request from 'superagent'
+import {VelocityComponent,velocityHelpers} from 'velocity-react'
 var colors={
 	bg:Color().rgb(246,246,246).hexString(),
+	//primary:"green",
 	primary:Color().rgb(200,22,36).hexString(),
-	secondary:Color().rgb(200,22,36).darken(0.2).hexString(),
 	line:"#DDD"
 }
+colors.secondary=Color(colors.primary).darken(0.2).hexString()
 
 class Head extends Component{
 	render(){
@@ -28,7 +30,7 @@ class Head extends Component{
 class Search extends Component{
 	render(){
 		return(
-			<div style={[{width:600,height:40,border:"3px solid"+colors.primary,display:"inline-block"},this.props.style]}>
+			<div style={[{width:600,height:40,border:"3px solid "+colors.primary,display:"inline-block"},this.props.style]}>
 				<div style={{display:"inline-block",width:100,height:"100%",verticalAlign:"middle"}}></div>
 				<input style={{display:"inline",width:400,height:40,verticalAlign:"middle",border:"none"}}></input>
 				<button style={{display:"inline",width:100,height:40,verticalAlign:"middle",border:"none",background:colors.primary,color:"#fff",fontHeight:"bolder",fontSize:20}}>搜索</button>
@@ -90,30 +92,6 @@ class MenuLeft extends Component{
 	}
 }
 
-class Carouse extends Component{
-	render(){
-		return (
-			<div style={{height:350,marginBottom:20,background:colors.bg}}></div>
-		)
-	}
-}
-class Carouse2 extends Component{
-	render(){
-		return (
-			<div style={{height:160,background:colors.bg}}></div>
-		)
-	}
-}
-class Reveal extends Component{
-	render(){
-		return (
-			<div style={{display:"inline-block",width:760,height:530,margin:"20px 0 0 20px"}}>
-				<Carouse />
-				<Carouse2 />
-			</div>
-		)
-	}
-}
 
 class InfoPanel extends Component{
 	render(){
@@ -158,18 +136,64 @@ class ItemPanel extends Component{
 		)
 	}
 }
-
+@Radium
+class Carouse extends Component{
+	constructor(props){
+		super(props)
+		this.state={index:0}
+		setInterval(()=>{
+			if(Radium.getState(this.state,'box',':hover'))return
+			this.setState({index:this.state.index+2>this.props.data.length?0:this.state.index+1})
+		},5000)
+	}
+	render(){
+		return (
+			<div ref="box"  style={{":hover":{},height:350,marginBottom:20,position:"relative",overflow:"hidden"}}>
+				<VelocityComponent animation={{marginLeft:-760*this.state.index}} duration={1000}>
+					<ul style={{width:760*(this.props.data.length+1),height:"100%",listStyle:"none"}}>
+						{this.props.data.map((it,i)=>{
+							return (		
+								<a href="#">
+									<li style={{display:"inline-block",width:760,height:"100%"}}>
+										<img src={require("./logo.png")} style={{width:"100%",height:"100%"}} />
+									</li>
+								</a>
+							)
+						})}
+					</ul>
+				</VelocityComponent>
+				<svg src={require("./SVG/chevron-left.svg")}></svg>
+				<ul style={{listStyle:"none",position:"absolute",bottom:20,right:20}}>
+					{this.props.data.map((it,i)=>{
+						return <li key={"item"+i} onClick={()=>this.setState({index:i})} style={{cursor:"pointer",width:18,height:18,border:"1px solid #fff",margin:"0 5px",borderRadius:10,display:"inline-block",background:this.state.index==i?colors.primary:"rgba(200,200,200,0.3)",":hover":this.state.index==i?{}:{background:"rgba(200,200,200,0.6)"}}}></li>
+					})}
+				</ul>
+			</div>
+		)
+	}
+}
+class Carouse2 extends Component{
+	render(){
+		return (
+			<div style={{height:160,background:colors.bg}}></div>
+		)
+	}
+}
 class MainBar extends Component{
 	render(){
 		return (
 			<div style={{width:1200,margin:"0 auto",paddingBottom:20}}>
 				<MenuLeft />
-				<Reveal />
+				<div style={{display:"inline-block",verticalAlign:"top",width:760,height:530,margin:"20px 0 0 20px"}}>
+					<Carouse data={[1,2,3,4,5]} />
+					<Carouse2 />
+				</div>
 				<InfoPanel />
 			</div>
 		)
 	}
 }
+
 @Radium
 class ItemList extends Component{
 	render(){
@@ -196,14 +220,6 @@ class Footer extends Component{
 }
 var z={img:require("./logo.png"),text:"潮流单品",price:300}
 class App extends Component{
-	constructor(props){
-		super(props)
-		request
-			.get("http://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&word=皮卡丘&rn=1&pn=10")
-			.end((err,res)=>{
-				console.log(res)
-			})
-	}
 	render(){
 		return (
 			<div>
@@ -212,6 +228,7 @@ class App extends Component{
 				<LogoBar />
 				<MenuBar />
 				<MainBar />
+				<ItemList title="潮流单品" data={[z,z,z,z,z,z,z,z,z,z]} />
 				<ItemList title="潮流单品" data={[z,z,z,z,z,z,z,z,z,z]} />
 				<Footer />
 			</div>

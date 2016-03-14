@@ -32,6 +32,7 @@
     "react-lite": "0.0.28",
     "superagent": "^1.8.0",
     "url-loader": "^0.5.7",
+    "velocity-react": "^1.1.4",
     "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.10.0"
