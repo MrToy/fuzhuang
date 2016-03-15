@@ -1,8 +1,6 @@
 import React,{Component} from 'react'
-import ReactDOM from 'react-dom'
 import Radium from 'radium'
 import Color from 'color'
-import request from 'superagent'
 import {VelocityComponent,velocityHelpers} from 'velocity-react'
 var colors={
 	bg:Color().rgb(246,246,246).hexString(),
@@ -101,7 +99,9 @@ class InfoPanel extends Component{
 	render(){
 		return (
 			<div style={{display:"inline-block",verticalAlign:"top",width:218,height:528,margin:"20px 0 0 20px",border:"1px solid "+colors.line}}>
-				<div style={{height:100,lineHeight:"100px",textAlign:"center"}}>hello</div>
+				<div style={{height:100,lineHeight:"100px",textAlign:"center",color:"#444"}}>
+				
+				</div>
 				<div style={{height:40,background:colors.bg,borderTop:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
 					<a href="#" style={{color:"#444",display:"inline-block",width:108,height:"100%",borderRight:"1px solid "+colors.line,lineHeight:"40px",textAlign:"center"}}>登录</a>
 					<a href="#" style={{color:"#444",display:"inline-block",width:109,lineHeight:"40px",textAlign:"center"}}>注册</a>
@@ -246,7 +246,7 @@ class Footer extends Component{
 	}
 }
 var z={img:require("./logo.png"),text:"潮流单品",price:300}
-class App extends Component{
+export default class App extends Component{
 	render(){
 		return (
 			<div>
@@ -262,4 +262,3 @@ class App extends Component{
 		)
 	}
 }
-ReactDOM.render(<App />,document.getElementById('app'))

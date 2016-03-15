@@ -4,12 +4,12 @@ var path=require('path')
 var pack=require('./package.json')
 module.exports = {
 	entry: {
-		main: './src/main.jsx'
+		main: './src/app.jsx'
 	},
 	output: {
 		path: path.join(__dirname,'public'),
 		filename: '[name].js',
-		publicPath:"/"
+		publicPath:""
 	},
 	module: {
 		loaders: [
@@ -23,6 +23,9 @@ module.exports = {
 			{ test: /\.css$/, exclude: /node_modules/, loader: "style-loader!css-loader" },
 			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)([\?]?.*)$/, exclude: /node_modules/, loader: 'url-loader?limit=8192' }
 		]
+	},
+	resolve: {
+		extensions: ['', '.js','.jsx']
 	},
 	plugins: [
 		new HtmlWebpackPlugin({title:pack.name,template:"./src/template.ejs"}),
