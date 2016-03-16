@@ -1,5 +1,8 @@
 var koa = require('koa')
 var serve = require('koa-static')
+var route = require('koa-route')
+var rewrite = require('koa-rewrite')
 var app = koa()
+app.use(rewrite('/*.html','/index.html'))
 app.use(serve("public"))
 app.listen(80)

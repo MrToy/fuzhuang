@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "webpack --config ./webpack.config.js",
+    "build": "npm run clean && webpack --config ./webpack.config.js",
     "dev": "node server.dev.js",
     "build-dev": "webpack --config ./webpack.config.dev.js",
     "clean": "rm -rf public/*"
@@ -25,11 +25,13 @@
     "color": "^0.11.1",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.10.0",
+    "koa-webpack-dev-middleware": "^1.2.0",
     "koa-webpack-hot-middleware": "^1.0.3",
     "radium": "^0.16.6",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-lite": "0.0.28",
+    "react-router": "^2.0.1",
+    "react-router-proxy-loader": "^0.5.0",
     "superagent": "^1.8.0",
     "url-loader": "^0.5.7",
     "velocity-react": "^1.1.4",
@@ -41,9 +43,8 @@
     "co-request": "^1.0.0",
     "koa": "^1.2.0",
     "koa-logger": "^1.3.0",
+    "koa-rewrite": "^1.1.1",
     "koa-route": "^2.4.2",
-    "koa-static": "^2.0.0",
-    "koa-webpack-dev-middleware": "^1.2.0",
-    "superagent": "^1.8.0"
+    "koa-static": "^2.0.0"
   }
 }
