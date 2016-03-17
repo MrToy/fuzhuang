@@ -1,0 +1,19 @@
+node:
+  image: daocloud.io/qq08420/fuzhuang:v0.0.1
+  privileged: false
+  restart: always
+  ports:
+  - '80'
+  links:
+  - proxy
+  environment:
+  - VIRTUAL_HOST=www.*,a.*
+proxy:
+  image: jwilder/nginx-proxy:0.1.0
+  privileged: true
+  restart: always
+  volumes:
+  - /var/run/docker.sock:/tmp/docker.sock:ro
+  ports:
+  - 443:443
+  - 80:80

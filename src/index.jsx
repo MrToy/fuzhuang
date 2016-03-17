@@ -76,7 +76,7 @@ class ItemPanel extends Component{
 						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,margin:"auto"}}/>
 					</a>
 				</p>
-				<a href="#" style={{color:"#555",":hover":{color:colors.primary}}}>
+				<a href="#">
 					<p style={{height:38,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
 				</a>
 				<p style={{height:20,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
@@ -124,7 +124,7 @@ class Carouse extends Component{
 						{this.props.data.map((it,i)=>{
 							return (		
 								<a href="#">
-									<li style={{display:"inline-block",width:760,height:"100%"}}>
+									<li key={it} style={{display:"inline-block",width:760,height:"100%"}}>
 										<img src={require("./logo.png")} style={{width:"100%",height:"100%"}} />
 									</li>
 								</a>

@@ -74,8 +74,8 @@ class Footer extends Component{
 export default class Main extends Component{
 	render(){
 		return (
-			<div>
-				<style>{"*{margin:0px;padding:0px}body{font-family:'Microsoft Yahei' !important}a{text-decoration:none}"}</style>
+			<div style={{minWidth:1200}}>
+				<style>{'*{margin:0px;padding:0px}body{font-family:"Microsoft Yahei" !important}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
 				<Head />
 				<LogoBar />
 				{this.props.children}
