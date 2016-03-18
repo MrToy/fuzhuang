@@ -80,7 +80,7 @@ export class Footer extends Component{
 
 export class BodyStyle extends Component{
 	render(){
-		return <style>{'*{margin:0px;padding:0px}body{font-family:"Microsoft Yahei" !important;min-width:1200px}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
+		return <style>{'*{margin:0px;padding:0px}body{font-family:Microsoft YaHei,SimSun,Tahoma,Geneva,sans-serif !important;min-width:1200px}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
 	}
 }
 
@@ -138,16 +138,16 @@ class TitleBar extends Component{
 class ItemPanel extends Component{
 	render(){
 		return (
-			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:270,border:"1px solid "+colors.line}}>
-				<p style={{marginBottom:10,height:200,position:"relative"}}>
-					<Link to={{pathname:"/item.html",query:{id:this.props.id}}} style={{height:"100%"}}>
+			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:280,border:"1px solid "+colors.line}}>
+				<Link to={{pathname:"/item.html",query:{id:this.props.id}}} style={{height:"100%"}}>
+					<p style={{marginBottom:10,height:200,position:"relative"}}>
 						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,margin:"auto"}}/>
-					</Link>
-				</p>
-				<Link to={{pathname:"/item.html",query:{id:this.props.id}}}>
-					<p style={{height:38,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
+					</p>
 				</Link>
-				<p style={{height:20,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
+				<Link to={{pathname:"/item.html",query:{id:this.props.id}}}>
+					<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
+				</Link>
+				<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
 					<b>￥</b>
 					<span>{this.props.price}</span>
 				</p>

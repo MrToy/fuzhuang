@@ -3,11 +3,6 @@ import ReactDOM from 'react-dom'
 import {Router,Route,IndexRoute,Link,browserHistory} from 'react-router'
 import Main from './main'
 
-class Item extends Component{
-	render(){
-		return <div>2333</div>
-	}
-}
 class App extends Component{
 	render(){
 		return (
