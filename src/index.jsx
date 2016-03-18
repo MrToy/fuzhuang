@@ -1,45 +1,8 @@
 import React,{Component} from 'react'
 import Radium from 'radium'
 import {VelocityComponent,velocityHelpers} from 'velocity-react'
-import {colors} from './main';
-@Radium
-class MenuBar extends Component{
-	render(){
-		return (
-			<div style={{background:colors.primary}}>
-				<ul style={{width:1200,height:35,margin:"0 auto"}}>
-					<li style={{width:180,textAlign:"center",float:"left",listStyle:"none",fontWeight:"bold",lineHeight:"35px",color:"#fff",fontSize:16,background:colors.secondary}} >所有商品分类</li>
-					{(this.props.data||[]).map(it=>{
-						return (
-							<li key={it} style={{height:35,float:"left",listStyle:"none",":hover":{background:colors.secondary}}} >
-								<a style={{fontWeight:"bold",float:"left",lineHeight:"35px",color:"#fff",padding:"0px 15px",fontSize:16}} href={"/target/"+it}>{it}</a>
-							</li>
-						)
-					})}
-				</ul>
-			</div>
-		)
-	}
-}
-
-@Radium
-class MenuLeft extends Component{
-	render(){
-		return (
-			<ul style={{width:178,height:549,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
-				{
-					["精品男装","淘款市场","国际名流","意法男装","中纺服饰","一号基地","二号基地","男衬衫","品牌折扣","外贸原单","三号基地","更多市场"].map(ii=>{
-						return (
-							<li key={ii} style={{margin:"10px 0",height:35,listStyle:"none"}}>
-								<a key={ii+".child"} style={{textAlign:"center",fontWeight:"normal",width:"100%",lineHeight:"35px",float:"left",color:"#000",":hover":{color:colors.primary},fontSize:16}} href={"/target/"+ii}>{ii}</a>
-							</li>
-						)
-					})
-				}
-			</ul>
-		)
-	}
-}
+import {colors,BodyStyle,Head,LogoBar,Footer,MenuBar,ItemList,menuData,testItems} from './main'
+import {Link} from 'react-router'
 
 
 class InfoPanel extends Component{
@@ -57,36 +20,7 @@ class InfoPanel extends Component{
 		)
 	}
 }
-class TitleBar extends Component{
-	render(){
-		return (
-			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
-				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
-			</div>
-		)
-	}
-}
-@Radium
-class ItemPanel extends Component{
-	render(){
-		return (
-			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:270,border:"1px solid "+colors.line}}>
-				<p style={{marginBottom:10,height:200,position:"relative"}}>
-					<a href="#" style={{height:"100%"}}>
-						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,margin:"auto"}}/>
-					</a>
-				</p>
-				<a href="#">
-					<p style={{height:38,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
-				</a>
-				<p style={{height:20,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
-					<b>￥</b>
-					<span>{this.props.price}</span>
-				</p>
-			</div>
-		)
-	}
-}
+
 @Radium
 class Carouse extends Component{
 	constructor(props){
@@ -159,8 +93,7 @@ class Carouse2 extends Component{
 class MainBar extends Component{
 	render(){
 		return (
-			<div style={{width:1200,margin:"0 auto",paddingBottom:20}}>
-				<MenuLeft />
+			<div style={{width:1020,margin:"0 auto",paddingBottom:20,paddingLeft:180}}>
 				<div style={{display:"inline-block",verticalAlign:"top",width:760,height:530,margin:"20px 0 0 20px"}}>
 					<Carouse data={[1,2,3,4,5]} />
 					<Carouse2 />
@@ -171,33 +104,20 @@ class MainBar extends Component{
 	}
 }
 
-@Radium
-class ItemList extends Component{
-	render(){
-		return(
-			<div style={{width:1200,margin:"0 auto"}}>
-				<TitleBar title={this.props.title} />
-				<div style={{width:1220}}>
-					{(this.props.data||[]).map((it,index)=>{
-						return <ItemPanel key={index} {...it} />
-					})}
-				</div>
-				<div style={{clear:"both"}}></div>
-			</div>
-		)
-	}
-}
 
-
-var z={img:require("./logo.png"),text:"潮流单品",price:300}
 export default class extends Component{
 	render(){
 		return (
 			<div>
-				<MenuBar data={["网站首页","批发市场","每日新款","款式搜索"]} />
+				<BodyStyle />
+				<Head />
+				<LogoBar />
+				<MenuBar active data={menuData} />
 				<MainBar />
-				<ItemList title="潮流单品" data={[z,z,z,z,z,z,z,z,z,z]} />
-				<ItemList title="潮流单品" data={[z,z,z,z,z,z,z,z,z,z]} />
+				<ItemList title="潮流单品" data={testItems} />
+				<ItemList title="当季促销" data={testItems} />
+				<ItemList title="每日新款" data={testItems} />
+				<Footer />
 			</div>
 		)
 	}	

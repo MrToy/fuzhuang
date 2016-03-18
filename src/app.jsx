@@ -2,13 +2,20 @@ import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Router,Route,IndexRoute,Link,browserHistory} from 'react-router'
 import Main from './main'
+
+class Item extends Component{
+	render(){
+		return <div>2333</div>
+	}
+}
 class App extends Component{
 	render(){
 		return (
 			<Router history={browserHistory}>
-				<Route path="/" component={Main}>
+				<Route path="/">
 					<IndexRoute component={require('react-router-proxy!./index')} />
 					<Route path="/search.html" component={require('react-router-proxy!./search')} />
+					<Route path="/item.html" component={require('react-router-proxy!./item')} />
 				</Route>
 			</Router>
 		)

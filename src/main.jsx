@@ -9,9 +9,13 @@ var colors={
 	line:"#DDD"
 }
 colors.secondary=Color(colors.primary).darken(0.2).hexString()
-export {colors}
+var menuData=[{text:"首页",link:"/"},{text:"批发市场",link:"#"},{text:"每日新款",link:"#"},{text:"款式搜索",link:"#"}]
 
-class Head extends Component{
+var z={img:require("./logo.png"),text:"潮流单品",price:300,id:"233"}
+var testItems=[z,z,z,z,z,z,z,z,z,z]
+export {colors,menuData,testItems}
+
+export class Head extends Component{
 	render(){
 		return (
 			<div style={{background:colors.bg,borderBottom:"1px solid #CCC"}}>
@@ -26,15 +30,18 @@ class Head extends Component{
 }
 
 @Radium
-class Search extends Component{
+export class Search extends Component{
 	constructor(props){
 		super(props)
 		this.state={value:""}
 	}
+	set(val){
+		this.refs.input.value=val||""
+	}
 	render(){
 		return(
 			<div style={[{width:600,height:40,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff"},this.props.style]}>
-				<input onKeyUp={e=>this.setState({value:e.target.value})} placeholder="输入产品名称" style={{fontSize:20,display:"inline",width:470,marginLeft:30,height:40,verticalAlign:"middle",border:"none"}}></input>
+				<input ref="input" onKeyUp={e=>this.setState({value:e.target.value})} placeholder="输入产品名称" style={{fontSize:20,display:"inline",width:470,marginLeft:30,height:40,verticalAlign:"middle",border:"none"}}></input>
 				<Link to={{pathname:"/search.html",query:{word:this.state.value}}}>
 					<button style={{cursor:"pointer",display:"inline",width:100,height:40,verticalAlign:"middle",border:"none",background:colors.primary,color:"#fff",fontHeight:"bolder",fontSize:20}}>
 						<svg style={{fill:"#fff",width:20,height:20,margin:"0 5px",verticalAlign:"middle"}}  viewBox="0 0 16 16">
@@ -48,7 +55,7 @@ class Search extends Component{
 	}
 }
 
-class LogoBar extends Component{
+export class LogoBar extends Component{
 	render(){
 		return (
 			<div style={{background:colors.bg}}>
@@ -57,13 +64,13 @@ class LogoBar extends Component{
 					<Link to="/">
 						<img style={{verticalAlign:"middle",width:100,height:100,margin:"0 30px"}} src={require("./logo.png")} />
 					</Link>
-					<Search style={{verticalAlign:"middle",margin:"0 80px"}} />
+					<Search ref="search" style={{verticalAlign:"middle",margin:"0 80px"}} />
 				</div>
 			</div>
 		)
 	}
 }
-class Footer extends Component{
+export class Footer extends Component{
 	render(){
 		return(
 			<div style={{marginTop:20,background:colors.bg,height:200,borderTop:"1px solid "+colors.line}}></div>
@@ -71,15 +78,95 @@ class Footer extends Component{
 	}
 }
 
-export default class Main extends Component{
+export class BodyStyle extends Component{
+	render(){
+		return <style>{'*{margin:0px;padding:0px}body{font-family:"Microsoft Yahei" !important;min-width:1200px}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
+	}
+}
+
+@Radium
+class MenuLeft extends Component{
 	render(){
 		return (
-			<div style={{minWidth:1200}}>
-				<style>{'*{margin:0px;padding:0px}body{font-family:"Microsoft Yahei" !important}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
-				<Head />
-				<LogoBar />
-				{this.props.children}
-				<Footer />
+			<div ref="box" style={[{display:"inline-block",position:"relative",":hover":{}},this.props.style]}>
+				<div style={{width:180,textAlign:"center",float:"left",listStyle:"none",fontWeight:"bold",lineHeight:"35px",color:"#fff",fontSize:16,background:colors.secondary}} >所有商品分类</div>
+				<ul style={{overflow:"hidden",transition:"all 0.5s",position:"absolute",left:0,top:35,zIndex:4,width:178,height:(Radium.getState(this.state,'box',':hover')||this.props.active)?549:0,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
+					{
+						["精品男装","淘款市场","国际名流","意法男装","中纺服饰","一号基地","二号基地","男衬衫","品牌折扣","外贸原单","三号基地","更多市场"].map(ii=>{
+							return (
+								<li key={ii} style={{margin:"10px 0",height:35,listStyle:"none"}}>
+									<Link to={{pathname:"search.html",query:{word:ii}}} key={ii+".child"} style={{textAlign:"center",fontWeight:"normal",width:"100%",lineHeight:"35px",float:"left",color:"#000",":hover":{color:colors.primary},fontSize:16}} href={"/target/"+ii}>{ii}</Link>
+								</li>
+							)
+						})
+					}
+				</ul>
+			</div>
+		)
+	}
+}
+@Radium
+export class MenuBar extends Component{
+	render(){
+		return (
+			<div style={{background:colors.primary}}>
+				<ul style={{width:1200,height:35,margin:"0 auto"}}>
+					<MenuLeft active={this.props.active} style={{marginRight:100,float:"left"}} />	
+					{(this.props.data||[]).map((it,i)=>{
+						return (
+							<li key={i} style={{height:35,float:"left",listStyle:"none",":hover":{background:colors.secondary}}} >
+								<Link to={it.link} style={{fontWeight:"bold",float:"left",lineHeight:"35px",color:"#fff",padding:"0px 15px",fontSize:16}}>{it.text}</Link>
+							</li>
+						)
+					})}
+				</ul>
+			</div>
+		)
+	}
+}
+class TitleBar extends Component{
+	render(){
+		return (
+			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
+				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
+			</div>
+		)
+	}
+}
+
+@Radium
+class ItemPanel extends Component{
+	render(){
+		return (
+			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:270,border:"1px solid "+colors.line}}>
+				<p style={{marginBottom:10,height:200,position:"relative"}}>
+					<Link to={{pathname:"/item.html",query:{id:this.props.id}}} style={{height:"100%"}}>
+						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,margin:"auto"}}/>
+					</Link>
+				</p>
+				<Link to={{pathname:"/item.html",query:{id:this.props.id}}}>
+					<p style={{height:38,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
+				</Link>
+				<p style={{height:20,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
+					<b>￥</b>
+					<span>{this.props.price}</span>
+				</p>
+			</div>
+		)
+	}
+}
+@Radium
+export class ItemList extends Component{
+	render(){
+		return(
+			<div style={[{width:1200,margin:"0 auto"},this.props.style]}>
+				{this.props.title?<TitleBar title={this.props.title} />:null}
+				<div style={{width:1220}}>
+					{(this.props.data||[]).map((it,index)=>{
+						return <ItemPanel key={index} {...it} />
+					})}
+				</div>
+				<div style={{clear:"both"}}></div>
 			</div>
 		)
 	}
