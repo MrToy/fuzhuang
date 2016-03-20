@@ -147,7 +147,7 @@ export default class extends Component{
 				<Head />
 				<LogoBar ref="logobar" placeholder={this.props.location.query.word} />
 				<MenuBar data={menuData} />
-				<div style={{width:1200,margin:"0 auto"}}>
+				<div style={{width:1200,margin:"0 auto",marginBottom:20}}>
 					<Menu onChange={it=>this.setState({menu:it})} />
 					<SortBar onChange={it=>this.setState({sort:it})}/>
 					<ItemList data={testItems} />

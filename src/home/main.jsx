@@ -70,10 +70,29 @@ export class LogoBar extends Component{
 		)
 	}
 }
+
+@Radium
 export class Footer extends Component{
 	render(){
 		return(
-			<div style={{marginTop:20,background:colors.bg,height:200,borderTop:"1px solid "+colors.line}}></div>
+			<div style={[{color:"#888",padding:30,background:colors.bg,height:80,borderTop:"1px solid "+colors.line,textAlign:"center"},this.props.style]}>
+				<ul style={{listStyle:"none",marginBottom:20}}>
+					<Link to="/">
+						<li style={{display:"inline-block",fontSize:14,padding:10}}>首页</li>
+					</Link>
+					{["关于我们","联系我们","知识产权","著作权与商标声明","法律声明","服务条款","隐私声明"].map(it=>{
+						return (
+							<Link to="#">
+								<li style={{display:"inline-block",fontSize:14,padding:10}}>{it}</li>
+							</Link>
+						)
+					})}
+					<Link to="/admin.html">
+						<li style={{display:"inline-block",fontSize:14,padding:10}}>后台管理</li>
+					</Link>
+				</ul>
+				<p>Copyright © 2016-2020 www.zzwlpf.com 渝 ICP 备 00000000 号</p>
+			</div>
 		)
 	}
 }
