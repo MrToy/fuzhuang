@@ -2,14 +2,14 @@ var webpack = require("webpack")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var path=require('path')
 var pack=require('./package.json')
-module.exports = {
+var config = {
 	entry: {
 		main: './src/app.jsx'
 	},
 	output: {
 		path: path.join(__dirname,'public'),
 		filename: '[name].[hash].js',
-		publicPath:""
+		publicPath:"/"
 	},
 	module: {
 		loaders: [
@@ -33,3 +33,13 @@ module.exports = {
 		new webpack.optimize.UglifyJsPlugin({compress:{warnings: false}})
 	]
 }
+if(process.env.NODE_ENV=='debug'){
+	config.module.loaders[0].query.presets.push('react-hmre')
+	for(var i in config.entry)config.entry[i]=['webpack-hot-middleware/client',config.entry[i]]
+	config.plugins=[
+		config.plugins[0],
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoErrorsPlugin()
+	]
+}
+module.exports = config

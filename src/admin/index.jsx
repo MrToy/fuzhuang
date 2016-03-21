@@ -11,10 +11,10 @@ export default class App extends Component{
 			<AppBar title={<Link to="/" style={{color:"#fff"}}>第壹印象</Link>} style={{background:colors.primary}} iconElementLeft={<IconButton><ActionHome /></IconButton>} />
 			<div style={{position:"relative"}}>
 				<List style={{width:200,background:"#333",position:"absolute",top:0,bottom:0,overflow:"auto"}}>
-					<ListItem primaryText="test" style={{color:"#fff"}} leftIcon={<ActionGrade />} />
-					<ListItem primaryText="test" style={{color:"#fff"}} leftIcon={<ActionGrade />} />
+					<ListItem primaryText="商品管理" style={{color:"#fff"}} leftIcon={<ActionGrade />} />
+					<ListItem primaryText="用户管理" style={{color:"#fff"}} leftIcon={<ActionGrade />} />
 				</List>
-				<div style={{background:colors.bg,minHeight:900}}>233</div>
+				<div style={{background:colors.bg,minHeight:800,marginLeft:200}}>{this.props.children}</div>
 			</div>
 			<Footer style={{background:"#000",borderTop:"none"}} />
   		</div>
