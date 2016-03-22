@@ -28,7 +28,7 @@ var config = {
 		extensions: ['', '.js','.jsx']
 	},
 	plugins: [
-		new HtmlWebpackPlugin({title:pack.name,template:"./src/template.ejs"}),
+		new HtmlWebpackPlugin({title:"郑州第壹印象",template:"./src/template.ejs"}),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.UglifyJsPlugin({compress:{warnings: false}})
 	]

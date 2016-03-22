@@ -1,10 +1,10 @@
 node:
-  image: daocloud.io/qq08420/fuzhuang:master-3e4e2eb
+  image: daocloud.io/qq08420/fuzhuang:master-a80bb72
   restart: always
+  links:
+  - mongo:mongo
   ports:
   - '80'
-  links:
-  - mongo
   environment:
   - VIRTUAL_HOST=www.*,a.*
 mongo:
@@ -13,7 +13,7 @@ mongo:
   ports:
   - '27017'
 proxy:
-  image: index.docker.io/jwilder/nginx-proxy:0.1.0
+  image: daocloud.io/qq08420/nginx-proxy:master-init
   privileged: true
   restart: always
   ports:
