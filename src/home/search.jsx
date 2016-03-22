@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {colors,BodyStyle,Head,LogoBar,Footer,MenuBar,ItemList,menuData,testItems} from './main'
+import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,ItemList,menuData,testItems} from './main'
 import Radium from 'radium'
 @Radium
 class MenuList extends Component{
@@ -53,7 +53,7 @@ class Menu extends Component{
 }
 
 @Radium
-class MenuButton extends Component{
+export class MenuButton extends Component{
 	render(){
 		return (
 			<div {...this.props} style={
@@ -136,16 +136,15 @@ export default class extends Component{
 		super(props)
 		this.state={sort:"",menu:{}}
 	}
-	componentDidMount(){
-		this.refs.logobar.refs.search.set(this.props.location.query.word)
-	}
 	render(){
-		if(this.refs.logobar)this.refs.logobar.refs.search.set(this.props.location.query.word)
+		if(this.refs.search)this.refs.search.set(this.props.location.query.word)
 		return (
 			<div>
 				<BodyStyle />
 				<Head />
-				<LogoBar ref="logobar" placeholder={this.props.location.query.word} />
+				<TitleBar>
+					<Search refs="search" placeholder={this.props.location.query.word} />
+				</TitleBar>
 				<MenuBar data={menuData} />
 				<div style={{width:1200,margin:"0 auto",marginBottom:20}}>
 					<Menu onChange={it=>this.setState({menu:it})} />

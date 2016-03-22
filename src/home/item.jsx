@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {colors,BodyStyle,Head,LogoBar,Footer,MenuBar,menuData} from './main'
+import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,menuData} from './main'
 import Radium from 'radium'
 
 class ItemInfo extends Component{
@@ -7,17 +7,17 @@ class ItemInfo extends Component{
 		return(
 			<div style={{border:"1px solid "+colors.line,padding:20}}>
 				<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
-					<img style={{width:360,height:360}} src={require('./logo.png')} />
+					<img style={{width:400,height:400}} src={require('./logo.png')} />
 					<div>
-						<img style={{width:68,height:68,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
-						<img style={{width:68,height:68,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
-						<img style={{width:68,height:68,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
-						<img style={{width:68,height:68,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
+						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
+						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
+						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
+						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
 					</div>
 				</div>
-				<div style={{display:'inline-block',verticalAlign:"top"}}>
-					<p style={{fontSize:20,width:540}}>2016夏季新款韩版修身显瘦白色T恤女士短袖圆领紧身纯色打底裤</p>
-					<div style={{padding:20,marginTop:20,background:colors.bg,lineHeight:"50px",color:"#888"}}>
+				<div style={{display:'inline-block',verticalAlign:"top",marginLeft:20}}>
+					<p style={{fontSize:20,width:680,textAlign:"center"}}>2016夏季新款韩版修身显瘦白色T恤女士短袖圆领紧身纯色打底裤</p>
+					<div style={{padding:"20px 50px",margin:"20px 0",background:colors.bg,lineHeight:"50px",color:"#888"}}>
 						<p>
 							<span style={{marginRight:50}}>批发价</span>
 							<span style={{color:colors.primary,fontSize:30}}>¥10.00</span>
@@ -39,25 +39,37 @@ class ItemInfo extends Component{
 					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
 						<span style={{color:"#888"}}>颜色</span>
 					</div>
-					<div>
-						<div style={{margin:20,cursor:"pointer",background:colors.primary,color:"#fff",padding:"5px 20px",display:"inline-block",textAlign:"center",fontSize:20}}>立即购买</div>
-						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",textAlign:"center",fontSize:20}}>收藏</div>
-						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",textAlign:"center",fontSize:20}}>加入购物车</div>
+					<div style={{textAlign:"center"}}>
+						<div style={{margin:20,cursor:"pointer",background:colors.primary,color:"#fff",padding:"5px 20px",display:"inline-block",fontSize:20}}>立即购买</div>
+						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",fontSize:20}}>收藏</div>
+						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",fontSize:20}}>加入购物车</div>
 					</div>
 				</div>
 			</div>
 		)
 	}
 }
-
-
-class ShopInfo extends Component{
+class ImageInfo extends Component{
 	render(){
 		return (
-			<div style={{color:"#888",border:"1px solid "+colors.line,padding:20,fontSize:12,lineHeight:"30px"}}>
-				<p style={{fontSize:20,color:"#000"}}>店铺名</p>
-				<p>地址：</p>
-				<p>商品：</p>
+			<div style={{marginTop:30,border:"1px solid "+colors.line}}>
+				<h2 style={{borderBottom:"1px solid "+colors.line,padding:"15px 20px",background:colors.bg,fontSize:16,color:"#333"}}>商品详情</h2>
+				<div style={{padding:20}}>
+					<ul style={{listStyle:"none",fontSize:13,margin:"0 40px 20px 40px"}}>
+						{[{k:"裤长",v:"七分裤"},{k:"货号",v:"872"},{k:"女裤裤型",v:"毛裤"}].map(it=>{
+							return (
+								<li style={{display:"inline-block",margin:20}}>
+									<span style={{marginRight:10,color:"#888"}}>{it.k}:</span>
+									<span style={{color:"#333"}}>{it.v}</span>
+								</li>
+							)
+						})}
+					</ul>
+					<p style={{overflow:"hidden",textAlign:"center"}}>
+						<img style={{maxWidth:860}} src={require('./404.jpg')} />
+						<img style={{maxWidth:860}} src={require('./404.jpg')} />
+					</p>
+				</div>
 			</div>
 		)
 	}
@@ -70,15 +82,13 @@ export default class extends Component{
 			<div>
 				<BodyStyle />
 				<Head />
-				<LogoBar ref="logobar" placeholder={this.props.location.query.word} />
+				<TitleBar>
+					<Search />
+				</TitleBar>
 				<MenuBar data={menuData} />
 				<div style={{width:1200,margin:"20px auto"}}>
-					<div style={{width:980,display:'inline-block',verticalAlign:"top",paddingRight:20}} >
-						<ItemInfo />
-					</div>
-					<div style={{width:200,display:'inline-block',verticalAlign:"top"}} >
-						<ShopInfo />
-					</div>
+					<ItemInfo />
+					<ImageInfo />
 				</div>	
 				<Footer />
 			</div>

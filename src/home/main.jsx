@@ -29,19 +29,15 @@ export class Head extends Component{
 	}
 }
 
-@Radium
 export class Search extends Component{
 	constructor(props){
 		super(props)
 		this.state={value:""}
 	}
-	set(val){
-		this.refs.input.value=val||""
-	}
 	render(){
 		return(
-			<div style={[{width:600,height:40,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff"},this.props.style]}>
-				<input ref="input" onKeyUp={e=>this.setState({value:e.target.value})} placeholder="输入产品名称" style={{fontSize:20,display:"inline",width:470,marginLeft:30,height:40,verticalAlign:"middle",border:"none"}}></input>
+			<div style={{width:600,height:40,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff",marginLeft:120}}>
+				<input onKeyUp={e=>this.setState({value:e.target.value})} placeholder={this.props.placeholder||"输入产品名称"} style={{fontSize:20,display:"inline",width:470,marginLeft:30,height:40,verticalAlign:"middle",border:"none"}}></input>
 				<Link to={{pathname:"/search.html",query:{word:this.state.value}}}>
 					<button style={{cursor:"pointer",display:"inline",width:100,height:40,verticalAlign:"middle",border:"none",background:colors.primary,color:"#fff",fontHeight:"bolder",fontSize:20}}>
 						<svg style={{fill:"#fff",width:20,height:20,margin:"0 5px",verticalAlign:"middle"}}  viewBox="0 0 16 16">
@@ -55,16 +51,18 @@ export class Search extends Component{
 	}
 }
 
-export class LogoBar extends Component{
+export class TitleBar extends Component {
 	render(){
 		return (
-			<div style={{background:colors.bg}}>
+			<div style={this.props.text?{borderBottom:"2px solid "+colors.primary}:{}}>
 				<div style={{width:1200,height:110,margin:"0 auto"}}>
 					<span style={{height:"100%",display:"inline-block",verticalAlign:"middle"}}></span>
 					<Link to="/">
 						<img style={{verticalAlign:"middle",width:100,height:100,margin:"0 30px"}} src={require("./logo.png")} />
 					</Link>
-					<Search ref="search" style={{verticalAlign:"middle",margin:"0 80px"}} />
+					{this.props.text?(
+						<span style={{color:"#888",fontSize:35,verticalAlign:"middle"}}>{this.props.children}</span>
+					):this.props.children}
 				</div>
 			</div>
 		)
@@ -87,7 +85,7 @@ export class Footer extends Component{
 							</Link>
 						)
 					})}
-					<Link to="/admin.html">
+					<Link to="/admin">
 						<li style={{display:"inline-block",fontSize:14,padding:10}}>后台管理</li>
 					</Link>
 				</ul>
@@ -143,7 +141,7 @@ export class MenuBar extends Component{
 		)
 	}
 }
-class TitleBar extends Component{
+class TipBar extends Component{
 	render(){
 		return (
 			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
@@ -179,7 +177,7 @@ export class ItemList extends Component{
 	render(){
 		return(
 			<div style={[{width:1200,margin:"0 auto"},this.props.style]}>
-				{this.props.title?<TitleBar title={this.props.title} />:null}
+				{this.props.title?<TipBar title={this.props.title} />:null}
 				<div style={{width:1220}}>
 					{(this.props.data||[]).map((it,index)=>{
 						return <ItemPanel key={index} {...it} />
