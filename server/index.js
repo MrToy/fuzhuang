@@ -17,7 +17,7 @@ if(process.env.NODE_ENV=="debug"){
 	app.use(convert(require("koa-webpack-dev-middleware")(compiler, {noInfo: true, publicPath: config.output.publicPath})))
 	app.use(convert(require("koa-webpack-hot-middleware")(compiler)))
 }
-app.use(convert(mongo({host:process.env.host||'localhost',port:process.env.port||27017,db:"main"})))
+app.use(convert(mongo({host:process.env['MONGO_PORT_27017_TCP_ADDR']||'localhost',port:27017,db:"main"})))
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.use(bodyParser())

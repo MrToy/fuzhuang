@@ -1,19 +1,24 @@
 node:
-  image: daocloud.io/qq08420/fuzhuang:v0.0.1
-  privileged: false
+  image: daocloud.io/qq08420/fuzhuang:master-3e4e2eb
   restart: always
   ports:
   - '80'
+  links:
+  - mongo
   environment:
   - VIRTUAL_HOST=www.*,a.*
+mongo:
+  image: library/mongo:3.2.4
+  restart: always
+  ports:
+  - '27017'
 proxy:
-  image: jwilder/nginx-proxy:0.1.0
+  image: index.docker.io/jwilder/nginx-proxy:0.1.0
   privileged: true
   restart: always
-  volumes:
-  - /var/run/docker.sock:/tmp/docker.sock:ro
-  links:
-  - proxy
   ports:
   - 443:443
   - 80:80
+  volumes:
+  - /root/cache.conf:/etc/nginx/conf.d/cache.conf
+  - /var/run/docker.sock:/tmp/docker.sock
