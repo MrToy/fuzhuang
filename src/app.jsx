@@ -14,8 +14,8 @@ class App extends Component{
 					<Route path="login.html" component={require('react-router-proxy!./home/login')} />
 					<Route path="register.html" component={require('react-router-proxy!./home/register')} />
 				</Route>
-				<Route path="/admin"  component={require('react-router-proxy!./admin')} >
-					<Route path="info.html" component={require('react-router-proxy!./home/item')} />
+				<Route path="/admin.html"  component={require('react-router-proxy!./admin')} >
+					<Route path="/info.html" component={require('react-router-proxy!./home/item')} />
 				</Route>
 				<Route path="*" component={require('react-router-proxy!./home/404')} />
 			</Router>

@@ -85,7 +85,7 @@ export class Footer extends Component{
 							</Link>
 						)
 					})}
-					<Link to="/admin">
+					<Link to="/admin.html">
 						<li style={{display:"inline-block",fontSize:14,padding:10}}>后台管理</li>
 					</Link>
 				</ul>

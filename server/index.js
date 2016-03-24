@@ -4,6 +4,7 @@ import serve from 'koa-static'
 import rewrite from 'koa-rewrite'
 import mongo from 'koa-mongo'
 import router from './router'
+import favicon from 'koa-favicon'
 
 var app = new Koa()
 
@@ -21,4 +22,5 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 app.use(convert(rewrite('/*.html','/index.html')))
 app.use(convert(serve("public")))
+app.use(convert(favicon('./src/favicon.ico')))
 app.listen(80)
