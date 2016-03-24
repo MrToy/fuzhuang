@@ -18,7 +18,11 @@ class App extends Component{
 					<IndexRoute component={require('react-router-proxy!./home')} />
 				</Route>
 				<Route path="/user.html"  component={require('react-router-proxy!./user')} >
-					<IndexRoute component={require('react-router-proxy!./user')} />
+					<IndexRoute component={require('react-router-proxy!./user/info')} />
+					<Route path="chart.html" component={require('react-router-proxy!./user/chart')} />
+					<Route path="deal.html" component={require('react-router-proxy!./user/deal')} />
+					<Route path="serve.html" component={require('react-router-proxy!./user/serve')} />
+					<Route path="track.html" component={require('react-router-proxy!./user/track')} />
 				</Route>
 				<Route path="*" component={require('react-router-proxy!./home/404')} />
 			</Router>

@@ -2,7 +2,7 @@ import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
 import {BodyStyle,colors,Footer,Head,TitleBar} from '../home/main'
-import {Cart,Stack,User} from '../home/icons'
+import {Cart,Stack,User,PushPin,UserTie} from '../home/icons'
 import Radium from 'radium'
 
 @Radium
@@ -28,8 +28,14 @@ class LeftNav extends Component{
 	}
 	render(){
 		return (
-			<div style={{width:250,padding:"50px 0",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
-				{[{text:"个人信息",link:"/user.html",icon:User},{text:"购物车",link:"/user.html",icon:Cart},{text:"我的订单",link:"/user.html",icon:Stack}].map((it,i)=>{
+			<div style={{width:250,padding:"30px 0",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
+				{[
+					{text:"个人信息",link:"/user.html",icon:User},
+					{text:"购物车",link:"/user.html/chart.html",icon:Cart},
+					{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+					{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
+					{text:"消费足迹",link:"/user.html/track.html",icon:PushPin}
+				].map((it,i)=>{
 					return <NavItem active={this.state.choosed==i} onClick={()=>this.setState({choosed:i})} to={it.link} icon={it.icon}>{it.text}</NavItem>
 				})}
 			</div>
@@ -37,20 +43,15 @@ class LeftNav extends Component{
 	}
 }
 
-export default class App extends Component{
+export default class extends Component{
 	render(){
 		return(
 			<div>
 				<BodyStyle />
-				<Head />
 				<div style={{position:"relative"}}>
 					<LeftNav />
 					<div style={{marginLeft:250}}>
-						<div style={{padding:"0 30px"}}>
-							<TitleBar text>个人信息</TitleBar>
-							<div style={{minHeight:700}}></div>
-						</div>
-						<Footer />
+						{this.props.children}
 					</div>
 				</div>
   			</div>
