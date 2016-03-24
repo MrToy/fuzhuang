@@ -10,7 +10,7 @@ class LinkButton extends Component{
 	render(){
 		return (
 			<Link to={this.props.to}>
-				<div style={[{display:"inline-block",padding:"8px 25px",color:"#fff",background:colors.primary},this.props.style]}>{this.props.children}</div>
+				<div style={[{display:"inline-block",padding:"8px 22px",color:"#fff",background:colors.primary},this.props.style]}>{this.props.children}</div>
 			</Link>
 		)
 	}
@@ -168,7 +168,10 @@ class UserPanel extends Component{
 				<p style={{padding:15,color:"#AAA",fontSize:15}}>欢迎来到第壹印象</p>
 				{
 					this.state.user?(
-						<div onClick={()=>this.logout()} style={{cursor:"pointer",display:"inline-block",padding:"8px 25px",color:"#fff",background:"#AAA"}}>注销</div>
+						<div>
+							<LinkButton to="/user.html" style={{marginRight:8}}>用户中心</LinkButton>
+							<div onClick={()=>this.logout()} style={{cursor:"pointer",display:"inline-block",padding:"8px 22px",color:"#fff",background:"#AAA"}}>注销</div>
+						</div>
 					):(
 						<div>
 							<LinkButton to="/login.html" style={{margin:8}}>登录</LinkButton>

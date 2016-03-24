@@ -45,7 +45,6 @@ class LoginPanel extends Component{
 
 export default class extends Component{
 	render(){
-		console.log()
 		return(
 			<div>
 				<BodyStyle />
