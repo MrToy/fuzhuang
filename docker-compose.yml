@@ -1,8 +1,8 @@
 node:
-  image: daocloud.io/qq08420/fuzhuang:master-a80bb72
+  image: daocloud.io/qq08420/fuzhuang:master-e40517b
   restart: always
   links:
-  - mongo:mongo
+  - mongo
   ports:
   - '80'
   environment:

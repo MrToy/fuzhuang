@@ -22,8 +22,10 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "color": "^0.11.1",
+    "exports-loader": "^0.6.3",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.10.0",
+    "imports-loader": "^0.6.5",
     "koa-webpack-dev-middleware": "^1.2.0",
     "koa-webpack-hot-middleware": "^1.0.3",
     "material-ui": "^0.15.0-alpha.2",
@@ -33,25 +35,28 @@
     "react-router": "^2.0.1",
     "react-router-proxy-loader": "^0.5.0",
     "react-tap-event-plugin": "^0.2.2",
+    "store": "^1.3.20",
     "superagent": "^1.8.0",
     "url-loader": "^0.5.7",
     "velocity-react": "^1.1.4",
     "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.5.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-hot-middleware": "^2.10.0",
+    "whatwg-fetch": "^0.11.0"
   },
   "dependencies": {
     "babel-core": "^6.7.2",
     "babel-preset-es2015-node5": "^1.2.0",
     "babel-preset-stage-0": "^6.5.0",
+    "co-body": "^4.0.0",
     "jsonwebtoken": "^5.7.0",
     "koa": "^2.0.0-alpha.3",
-    "koa-bodyparser": "^3.0.0",
     "koa-convert": "^1.2.0",
     "koa-logger": "^1.3.0",
     "koa-mongo": "^0.5.0",
     "koa-rewrite": "^1.1.1",
     "koa-router": "^7.0.1",
-    "koa-static": "^2.0.0"
+    "koa-static": "^2.0.0",
+    "validator": "^5.1.0"
   }
 }

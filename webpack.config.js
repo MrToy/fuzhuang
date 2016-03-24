@@ -30,7 +30,8 @@ var config = {
 	plugins: [
 		new HtmlWebpackPlugin({title:"郑州第壹印象",template:"./src/template.ejs"}),
 		new webpack.optimize.DedupePlugin(),
-		new webpack.optimize.UglifyJsPlugin({compress:{warnings: false}})
+		new webpack.optimize.UglifyJsPlugin({compress:{warnings: false}}),
+		new webpack.ProvidePlugin({fetch:'imports?this=>global!exports?global.fetch!whatwg-fetch'})
 	]
 }
 if(process.env.NODE_ENV=='debug'){

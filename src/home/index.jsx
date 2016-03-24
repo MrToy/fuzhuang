@@ -3,6 +3,7 @@ import Radium from 'radium'
 import {VelocityComponent,velocityHelpers} from 'velocity-react'
 import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,ItemList,menuData,testItems} from './main'
 import {Link} from 'react-router'
+import store from 'store'
 
 @Radium
 class LinkButton extends Component{
@@ -153,15 +154,28 @@ class UserPanel extends Component{
 		}else{
 			tt="晚上"
 		}
-		this.state={tt}
+		var user=store.get('user')
+		this.state={tt,user}
+	}
+	logout(){
+		store.remove('user')
+		location.reload()
 	}
 	render(){
 		return (
 			<div style={{textAlign:"center",verticalAlign:"top",height:150,marginBottom:20,border:"1px solid "+colors.primary}}>
-				<p style={{paddingTop:15,color:colors.primary,fontSize:20}}>Hi~ {this.state.tt}好</p>
+				<p style={{paddingTop:15,color:colors.primary,fontSize:20}}>Hi， {this.state.user?this.state.user.account:(this.state.tt+"好")}</p>
 				<p style={{padding:15,color:"#AAA",fontSize:15}}>欢迎来到第壹印象</p>
-				<LinkButton to="/login.html" style={{margin:8}}>登录</LinkButton>
-				<LinkButton to="/register.html" style={{margin:8,background:"#AAA"}}>注册</LinkButton>
+				{
+					this.state.user?(
+						<div onClick={()=>this.logout()} style={{cursor:"pointer",display:"inline-block",padding:"8px 25px",color:"#fff",background:"#AAA"}}>注销</div>
+					):(
+						<div>
+							<LinkButton to="/login.html" style={{margin:8}}>登录</LinkButton>
+							<LinkButton to="/register.html" style={{margin:8,background:"#AAA"}}>注册</LinkButton>
+						</div>
+					)
+				}
 			</div>
 		)
 	}
@@ -184,23 +198,6 @@ class NoticePanel extends Component{
 	}
 }
 
-class MainBar extends Component{
-	render(){
-		return (
-			<div style={{width:1020,margin:"0 auto",paddingBottom:20,paddingLeft:180}}>
-				<div style={{display:"inline-block",verticalAlign:"top",width:760,height:530,margin:"20px 0 0 20px"}}>
-					<Carouse data={[1,2,3,4,5]} />
-					<MultiCarouse data={[1,2,3,4,5,6,7,8,9,10]} />
-				</div>
-				<div style={{display:"inline-block",width:220,margin:"20px 0 0 20px"}}>
-					<UserPanel />
-					<NoticePanel />
-				</div>
-			</div>
-		)
-	}
-}
-
 
 export default class extends Component{
 	render(){
@@ -212,7 +209,16 @@ export default class extends Component{
 					<Search />
 				</TitleBar>
 				<MenuBar active data={menuData} />
-				<MainBar />
+				<div style={{width:1020,margin:"0 auto",paddingBottom:20,paddingLeft:180}}>
+					<div style={{display:"inline-block",verticalAlign:"top",width:760,height:530,margin:"20px 0 0 20px"}}>
+						<Carouse data={[1,2,3,4,5]} />
+						<MultiCarouse data={[1,2,3,4,5,6,7,8,9,10]} />
+					</div>
+					<div style={{display:"inline-block",width:220,margin:"20px 0 0 20px"}}>
+						<UserPanel />
+						<NoticePanel />
+					</div>
+				</div>
 				<ItemList title="潮流单品" data={testItems} />
 				<ItemList title="当季促销" data={testItems} />
 				<ItemList title="每日新款" data={testItems} />
