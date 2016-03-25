@@ -3,6 +3,9 @@ import {colors,BodyStyle,Head,Footer,TitleBar} from './main'
 import Radium from 'radium'
 import {Link} from 'react-router'
 import store from 'store'
+import swal from 'sweetalert'
+import 'sweetalert/dist/sweetalert.css'
+
 @Radium
 class LoginPanel extends Component{
 	async post(){
@@ -10,9 +13,8 @@ class LoginPanel extends Component{
 		var pass=this.refs.pass.value
 		var res=await fetch('/auth',{method:'post',body:JSON.stringify({account,pass})})
 		if(!res.ok)
-			return alert(await res.text())
+			return swal("错误",await res.text(),"error")
 		store.set('user',await res.json())
-		alert("登录成功")
 		if(this.props.onSuccess)this.props.onSuccess()
 	}
 	render(){

@@ -23,6 +23,7 @@ class App extends Component{
 					<Route path="deal.html" component={require('react-router-proxy!./user/deal')} />
 					<Route path="serve.html" component={require('react-router-proxy!./user/serve')} />
 					<Route path="track.html" component={require('react-router-proxy!./user/track')} />
+					<Route path="diliver.html" component={require('react-router-proxy!./user/diliver')} />
 				</Route>
 				<Route path="*" component={require('react-router-proxy!./home/404')} />
 			</Router>

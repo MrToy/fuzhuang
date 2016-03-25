@@ -20,7 +20,7 @@ var config = {
 					plugins: ['transform-runtime', 'add-module-exports','transform-decorators-legacy']
 				}
 			},
-			{ test: /\.css$/, exclude: /node_modules/, loader: "style-loader!css-loader" },
+			{ test: /\.css$/,  loader: "style-loader!css-loader" },
 			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)([\?]?.*)$/, exclude: /node_modules/, loader: 'url-loader?limit=8192' }
 		]
 	},

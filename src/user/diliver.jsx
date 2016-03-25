@@ -10,7 +10,7 @@ export default class extends Component{
 			<div>
 				<Head />
 				<div style={{padding:"0 30px"}}>
-					<TitleBar text>客户服务</TitleBar>
+					<TitleBar text>物流信息</TitleBar>
 					<div style={{minHeight:700}}></div>
 				</div>
 				<Footer />

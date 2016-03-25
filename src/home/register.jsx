@@ -3,6 +3,9 @@ import {colors,BodyStyle,Head,Footer,TitleBar} from './main'
 import Radium from 'radium'
 import {Link} from 'react-router'
 import {LinkButton} from './index'
+import swal from 'sweetalert'
+import 'sweetalert/dist/sweetalert.css'
+
 class SwitchTap extends Component{
 	constructor(props){
 		super(props)
@@ -57,8 +60,8 @@ class RegForm extends Component{
 		console.log({account,pass,captcha,target})
 		if(pass!=repass)return alert("两次输入密码不一致")
 		var res=await fetch('/users',{method:'post',body:JSON.stringify({account,pass,captcha,target})})
-		if(!res.ok)return alert(await res.text())
-		alert("注册成功")
+		if(!res.ok)return swal("错误",await res.text(),"error")
+		swal("注册成功","","success")
 		if(this.props.onSuccess)this.props.onSuccess()
 	}
 	render(){

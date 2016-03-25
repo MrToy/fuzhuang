@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import jwt from 'jsonwebtoken'
 import parse from 'co-body'
 import validator from 'validator'
+import imgdata from './imgdata'
 function checkAdmin(ctx,next){
 	try{
 		var decoded=jwt.verify(ctx.query.token,"testKey")
@@ -47,4 +48,5 @@ router.post('/users',async ctx=>{
 		ctx.throw("该账号已被注册",400)
 	}
 })
+router.use('/imgdata',imgdata.routes(),imgdata.allowedMethods())
 export default router

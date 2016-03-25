@@ -162,7 +162,7 @@ class ItemPanel extends Component{
 					</p>
 				</Link>
 				<Link to={{pathname:"/item.html",query:{id:this.props.id}}}>
-					<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis"}}>{this.props.text}</p>
+					<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{this.props.text}</p>
 				</Link>
 				<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
 					<b>￥</b>

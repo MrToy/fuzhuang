@@ -55,7 +55,7 @@ class Carouse extends Component{
 							return (		
 								<Link to="#">
 									<li key={it} style={{display:"inline-block",width:760,height:"100%"}}>
-										<img src={require("./logo.png")} style={{width:"100%",height:"100%"}} />
+										<img src={it.url} style={{width:"100%",height:"100%"}} />
 									</li>
 								</Link>
 							)
@@ -118,7 +118,7 @@ class MultiCarouse extends Component{
 							return (		
 								<Link to="#">
 									<li key={it} style={{display:"inline-block",width:190,height:"100%",margin:"0 5px"}}>
-										<img src={require("./logo.png")} style={{width:"100%",height:"100%"}} />
+										<img src={it.url} style={{width:"100%",height:"100%"}} />
 									</li>
 								</Link>
 							)
@@ -203,6 +203,28 @@ class NoticePanel extends Component{
 
 
 export default class extends Component{
+	constructor(props){
+		super(props)
+		this.state={carouse:[],carouse2:[],item1:[],item2:[],item3:[]}
+		fetch("/imgdata?word=服装&len=10&start=15").then(res=>res.json()).then(data=>{
+			this.setState({carouse:data})
+		})
+		fetch("/imgdata?word=服装&len=20&start=200").then(res=>res.json()).then(data=>{
+			this.setState({carouse2:data})
+		})
+		fetch("/imgdata?word=服装&len=20&start=50").then(res=>res.json()).then(data=>{
+			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
+			this.setState({item1:data})
+		})
+		fetch("/imgdata?word=服装&len=20&start=80").then(res=>res.json()).then(data=>{
+			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
+			this.setState({item2:data})
+		})
+		fetch("/imgdata?word=服装&len=20&start=110").then(res=>res.json()).then(data=>{
+			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
+			this.setState({item3:data})
+		})
+	}
 	render(){
 		return (
 			<div>
@@ -214,17 +236,17 @@ export default class extends Component{
 				<MenuBar active data={menuData} />
 				<div style={{width:1020,margin:"0 auto",paddingBottom:20,paddingLeft:180}}>
 					<div style={{display:"inline-block",verticalAlign:"top",width:760,height:530,margin:"20px 0 0 20px"}}>
-						<Carouse data={[1,2,3,4,5]} />
-						<MultiCarouse data={[1,2,3,4,5,6,7,8,9,10]} />
+						<Carouse data={this.state.carouse} />
+						<MultiCarouse data={this.state.carouse2} />
 					</div>
 					<div style={{display:"inline-block",width:220,margin:"20px 0 0 20px"}}>
 						<UserPanel />
 						<NoticePanel />
 					</div>
 				</div>
-				<ItemList title="潮流单品" data={testItems} />
-				<ItemList title="当季促销" data={testItems} />
-				<ItemList title="每日新款" data={testItems} />
+				<ItemList title="潮流单品" data={this.state.item1} />
+				<ItemList title="当季促销" data={this.state.item2} />
+				<ItemList title="每日新款" data={this.state.item3} />
 				<Footer />
 			</div>
 		)
