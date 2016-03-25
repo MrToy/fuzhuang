@@ -5,6 +5,7 @@ import rewrite from 'koa-rewrite'
 import mongo from 'koa-mongo'
 import router from './router'
 import favicon from 'koa-favicon'
+import cache from 'koa-static-cache'
 
 var app = new Koa()
 
@@ -20,6 +21,7 @@ if(process.env.NODE_ENV=="debug"){
 app.use(convert(mongo({host:process.env['MONGO_PORT_27017_TCP_ADDR']||'localhost',port:27017,db:"main"})))
 app.use(router.routes())
 app.use(router.allowedMethods())
+app.use(convert(cache("public",{maxAge:30*60*60})))
 app.use(convert(rewrite('/*.html','/index.html')))
 app.use(convert(serve("public")))
 app.use(convert(favicon('./src/favicon.ico')))
