@@ -206,21 +206,21 @@ export default class extends Component{
 	constructor(props){
 		super(props)
 		this.state={carouse:[],carouse2:[],item1:[],item2:[],item3:[]}
-		fetch("/imgdata?word=服装&len=10&start=15").then(res=>res.json()).then(data=>{
+		fetch("/imgdata?word=服装&len=15&start=15").then(res=>res.json()).then(data=>{
 			this.setState({carouse:data})
 		})
-		fetch("/imgdata?word=服装&len=20&start=200").then(res=>res.json()).then(data=>{
+		fetch("/imgdata?word=服装&len=30&start=200").then(res=>res.json()).then(data=>{
 			this.setState({carouse2:data})
 		})
-		fetch("/imgdata?word=服装&len=20&start=50").then(res=>res.json()).then(data=>{
+		fetch("/imgdata?word=服装&len=30&start=50").then(res=>res.json()).then(data=>{
 			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
 			this.setState({item1:data})
 		})
-		fetch("/imgdata?word=服装&len=20&start=80").then(res=>res.json()).then(data=>{
+		fetch("/imgdata?word=服装&len=30&start=80").then(res=>res.json()).then(data=>{
 			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
 			this.setState({item2:data})
 		})
-		fetch("/imgdata?word=服装&len=20&start=110").then(res=>res.json()).then(data=>{
+		fetch("/imgdata?word=服装&len=30&start=110").then(res=>res.json()).then(data=>{
 			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
 			this.setState({item3:data})
 		})

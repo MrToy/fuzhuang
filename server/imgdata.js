@@ -1,6 +1,8 @@
 import Router from 'koa-router'
 import fetch from "node-fetch"
 import url from "url"
+
+
 function decodeObjUrl(objUrl){
     if(objUrl == '') return '' 
     var map ={'w' : "a", 'k': "b", 'v': "c", '1': "d",  
@@ -21,7 +23,7 @@ function decodeObjUrl(objUrl){
     }
     return objUrl.join('')
 } 
-
+var tested={}
 var router=new Router()
 router.get('/',async ctx=>{
 	var {word,start,len}=ctx.query
@@ -35,21 +37,28 @@ router.get('/',async ctx=>{
            if(typeof it=='object'&&it.objURL){
                 var title=it.fromPageTitle.replace("</strong>","").replace("<strong>","")
                 var u=decodeObjUrl(it.objURL)
-                try{
-                    var res=await fetch(u,{follow:0,timeout:200,headers:{
-                        "Host":url.parse(u).host,
-                        "User-Agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0",
-                        "Accept": "image/png,image/*;q=0.8,*/*;q=0.5",
-                        "Accept-Language": "en-US,en;q=0.5",
-                        "Accept-Encoding": "gzip, deflate",
-                        "Referer": "http://localhost/",
-                        "Connection": "keep-alive"
+                if(tested[u]==true){
+                     data.push({title,url:u})
+                }else if(tested[u]==false){
+                }else{
+                    tested[u]=false
+                    try{
+                        var res=await fetch(u,{follow:0,timeout:200,headers:{
+                            "Host":url.parse(u).host,
+                            "User-Agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0",
+                            "Accept": "image/png,image/*;q=0.8,*/*;q=0.5",
+                            "Accept-Language": "en-US,en;q=0.5",
+                            "Accept-Encoding": "gzip, deflate",
+                            "Referer": "http://localhost/",
+                            "Connection": "keep-alive"
+                            }
+                        })
+                        if(res.status==200){
+                            tested[u]=true
+                            data.push({title,url:u})
                         }
-                    })
-                    if(res.status==200){
-                        data.push({title,url:u})
+                    }catch(err){
                     }
-                }catch(err){
                 }
            }
         }
