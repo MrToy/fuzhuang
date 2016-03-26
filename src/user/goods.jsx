@@ -15,11 +15,11 @@ class DataTable extends Component{
 export default class extends Component{
 	render(){
 		return(
-			<Box title="订单管理">
+			<Box title="店铺管理">
 				<MenuPanel>
-					<DataTable title="等待发货订单" />
-					<DataTable title="已发货的订单" />
-					<DataTable title="被取消的订单" />
+					<DataTable title="发布商品" />
+					<DataTable title="出售中的商品" />
+					<DataTable title="已删除商品" />
 				</MenuPanel>
 			</Box>
 		)
