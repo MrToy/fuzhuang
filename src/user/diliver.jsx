@@ -1,20 +1,14 @@
 import React,{Component} from "react"
 import ReactDOM from "react-dom"
-import {Link} from 'react-router'
-import {colors,Footer,Head,TitleBar} from '../home/main'
-import Radium from 'radium'
+import {Box} from './'
+
 
 export default class extends Component{
 	render(){
-		return (
-			<div>
-				<Head />
-				<div style={{padding:"0 30px"}}>
-					<TitleBar text>物流信息</TitleBar>
-					<div style={{minHeight:700}}></div>
-				</div>
-				<Footer />
-			</div>
+		return(
+			<Box title="物流信息">
+				233
+			</Box>
 		)
 	}
 }
