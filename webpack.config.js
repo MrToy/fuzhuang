@@ -13,15 +13,15 @@ var config = {
 	},
 	module: {
 		loaders: [
-			{ test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel',
+			{ test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel',
 				query: {
 					cacheDirectory:"temp",
-					presets: ['react', 'es2015', 'stage-0'],
+					presets: [ 'es2015','react', 'stage-0'],
 					plugins: ['transform-runtime', 'add-module-exports','transform-decorators-legacy']
 				}
 			},
 			{ test: /\.css$/,  loader: "style-loader!css-loader" },
-			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)([\?]?.*)$/, exclude: /node_modules/, loader: 'url-loader?limit=8192' }
+			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)([\?]?.*)$/, exclude: /node_modules/, loader: 'url-loader?limit=8192' }
 		]
 	},
 	resolve: {

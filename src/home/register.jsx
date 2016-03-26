@@ -66,7 +66,7 @@ class RegForm extends Component{
 	}
 	render(){
 		return(
-			<div>
+			<div onKeyDown={event=>{if(event.keyCode==13)this.post()}}>
 				<FormInput ref="account" title="手机号"/>
 				<FormInput ref="pass" type="password" title="密码" style={{marginTop:30}}/>
 				<FormInput ref="repass" type="password" title="确认密码" style={{marginTop:30}}/>

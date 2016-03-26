@@ -158,7 +158,7 @@ class ItemPanel extends Component{
 			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:280,border:"1px solid "+colors.line}}>
 				<Link to={{pathname:"/item.html",query:{id:this.props.id}}} style={{height:"100%"}}>
 					<p style={{marginBottom:10,height:200,position:"relative"}}>
-						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,margin:"auto"}}/>
+						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
 					</p>
 				</Link>
 				<Link to={{pathname:"/item.html",query:{id:this.props.id}}}>
