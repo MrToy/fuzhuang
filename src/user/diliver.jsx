@@ -7,7 +7,7 @@ export default class extends Component{
 	render(){
 		return(
 			<Box title="物流信息">
-				233
+				344
 			</Box>
 		)
 	}

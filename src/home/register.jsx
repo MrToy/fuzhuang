@@ -1,10 +1,11 @@
 import React,{Component} from 'react'
 import {colors,BodyStyle,Head,Footer,TitleBar} from './main'
 import Radium from 'radium'
-import {Link} from 'react-router'
+import {Link,browserHistory} from 'react-router'
 import {LinkButton} from './index'
 import swal from 'sweetalert'
 import 'sweetalert/dist/sweetalert.css'
+import {register,getUser} from './user'
 
 class SwitchTap extends Component{
 	constructor(props){
@@ -57,12 +58,15 @@ class RegForm extends Component{
 		var repass=this.refs.repass.getValue()
 		var captcha=this.refs.captcha.getValue()
 		var target=this.props.target
-		console.log({account,pass,captcha,target})
-		if(pass!=repass)return alert("两次输入密码不一致")
-		var res=await fetch('/users',{method:'post',body:JSON.stringify({account,pass,captcha,target})})
-		if(!res.ok)return swal("错误",await res.text(),"error")
+		if(pass!=repass)return swal("错误","两次输入密码不一致","error")
+		try{
+			var token=await register(account,pass,target,captcha)
+			await getUser(token)
+		}catch(err){
+			return swal("错误",err,"error")
+		}
+		browserHistory.push("/")
 		swal("注册成功","","success")
-		if(this.props.onSuccess)this.props.onSuccess()
 	}
 	render(){
 		return(
@@ -87,8 +91,8 @@ export default class extends Component{
 				<div style={{position:"relative",height:600,width:1200,margin:"0 auto"}}>
 					<div style={{margin:100,height:400,padding:"50px 200px",border:"1px solid "+colors.line}}>
 						<SwitchTap>
-							<RegForm target="buyer" onSuccess={()=>this.props.history.pushState(null,"/")} />
-							<RegForm target="saler" onSuccess={()=>this.props.history.pushState(null,"/")}  />
+							<RegForm target="buyer" />
+							<RegForm target="saler" />
 						</SwitchTap>
 					</div>
 				</div>

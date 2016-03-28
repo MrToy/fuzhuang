@@ -2,7 +2,7 @@
   "name": "web",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/_index.js",
     "build": "npm run clean && webpack",
@@ -62,6 +62,7 @@
     "koa-router": "^7.0.1",
     "koa-static": "^2.0.0",
     "koa-static-cache": "^3.1.6",
+    "mongodb": "^2.1.11",
     "node-fetch": "^1.4.1",
     "validator": "^5.1.0"
   }

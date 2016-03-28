@@ -1,21 +1,25 @@
 import React,{Component} from 'react'
 import {colors,BodyStyle,Head,Footer,TitleBar} from './main'
 import Radium from 'radium'
-import {Link} from 'react-router'
+import {Link,browserHistory} from 'react-router'
 import store from 'store'
 import swal from 'sweetalert'
 import 'sweetalert/dist/sweetalert.css'
+import {auth,getUser} from './user'
 
 @Radium
 class LoginPanel extends Component{
 	async post(){
 		var account=this.refs.account.value
 		var pass=this.refs.pass.value
-		var res=await fetch('/auth',{method:'post',body:JSON.stringify({account,pass})})
-		if(!res.ok)
-			return swal("错误",await res.text(),"error")
-		store.set('user',await res.json())
-		if(this.props.onSuccess)this.props.onSuccess()
+		try{
+			var token=await auth(account,pass)
+			await getUser(token)
+		}catch(err){
+			return swal("错误",err,"error")
+		}
+		browserHistory.push("/")
+		swal("登录成功","","success")
 	}
 	render(){
 		return (
@@ -56,7 +60,7 @@ export default class extends Component{
 					<div style={{width:450,height:350,float:"left"}}>
 						<img src={require("./logo.png")} style={{width:"100%",height:"100%"}} />
 					</div>
-					<LoginPanel onSuccess={()=>this.props.history.pushState(null,"/")} style={{width:350,height:250,float:"right"}} />
+					<LoginPanel style={{width:350,height:250,float:"right"}} />
 				</div>
 				<Footer />
 			</div>

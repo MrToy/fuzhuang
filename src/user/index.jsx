@@ -2,7 +2,7 @@ import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
 import {BodyStyle,colors,Footer,Head,TitleBar} from '../home/main'
-import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer} from '../home/icons'
+import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer,FilesEmpty} from '../home/icons'
 import Radium from 'radium'
 import store from 'store'
 
@@ -72,7 +72,8 @@ class WithNav extends Component{
 			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
 			{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
-			{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane}
+			{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
+			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
 		var list2=[
 			{text:"用户中心",link:"/user.html",icon:User},
@@ -80,21 +81,26 @@ class WithNav extends Component{
 			{text:"商品管理",link:"/user.html/goods.html",icon:Drawer},
 			{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
 			{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
-			{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane}
+			{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane},
+			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
 		this.state={choosed:0,list:user&&user.target=="saler"?list2:list}
 	}
 	render(){
 		return (
 			<div style={{position:"relative"}}>
-				<div ref="nav" style={{marginLeft:-35,width:105,":hover":{width:250,marginLeft:0},overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
+				<div ref="nav" style={{width:250,
+					//width:105,marginLeft:-35,":hover":{width:250,marginLeft:0},
+					overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
 					<div style={{width:250}}>
 						{this.state.list.map((it,i)=>{
 							return <NavItem active={this.state.choosed==i} onClick={()=>this.setState({choosed:i})} to={it.link} icon={it.icon}>{it.text}</NavItem>
 						})}
 					</div>
 				</div>
-				<div style={{marginLeft:Radium.getState(this.state,'nav',':hover')?220:40,transition:"all 0.5s"}}>
+				<div style={{marginLeft:220
+					//Radium.getState(this.state,'nav',':hover')?220:40
+					,transition:"all 0.5s"}}>
 					{this.props.children}
 				</div>
 			</div>

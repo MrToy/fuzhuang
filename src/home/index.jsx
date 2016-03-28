@@ -2,8 +2,9 @@ import React,{Component} from 'react'
 import Radium from 'radium'
 import {VelocityComponent,velocityHelpers} from 'velocity-react'
 import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,ItemList,menuData,testItems} from './main'
-import {Link} from 'react-router'
+import {Link,browserHistory} from 'react-router'
 import store from 'store'
+import {logout} from './user'
 
 @Radium
 class LinkButton extends Component{
@@ -158,7 +159,7 @@ class UserPanel extends Component{
 		this.state={tt,user}
 	}
 	logout(){
-		store.remove('user')
+		logout()
 		location.reload()
 	}
 	render(){

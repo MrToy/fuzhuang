@@ -2,16 +2,20 @@ import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {MenuPanel,Box} from './'
 import {Link} from 'react-router'
+import store from 'store'
 
 class UserInfo extends Component{
+	componentDidMount(){
+		this.refs.account.value=store.get('user').account
+	}
 	render(){
 		return(
 			<div {...this.props}>
 				<div style={{margin:20}}>
-					昵称：<input />
+					昵称：<input ref="nickname" />
 				</div>
 				<div style={{margin:20}}>
-					账号：<input disabled />
+					账号：<input disabled ref="account" />
 				</div>
 				<div style={{margin:20}}>
 					密码：<Link to="#">更改密码</Link>

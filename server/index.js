@@ -3,12 +3,17 @@ import convert from 'koa-convert'
 import serve from 'koa-static'
 import rewrite from 'koa-rewrite'
 import mongo from 'koa-mongo'
-import router from './router'
 import favicon from 'koa-favicon'
 import cache from 'koa-static-cache'
+import Router from 'koa-router'
+
+import imgdata from './imgdata'
+import user from './user'
+var router=new Router()
+router.use('/imgdata',imgdata.routes(),imgdata.allowedMethods())
+router.use('/users',user.routes(),user.allowedMethods())
 
 var app = new Koa()
-
 if(process.env.NODE_ENV=="debug"){
 	var logger = require('koa-logger')
 	var webpack = require('webpack')
