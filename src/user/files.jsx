@@ -17,7 +17,7 @@ class Tree extends Component{
 		var Icon=FilesEmpty
 		var data=this.props.data
 		var place=this.props.place||[]
-		var lineStyle=this.props.selected.toString()==place.toString()?{position:"relative",display:"inline-block",cursor:"pointer",background:"#FFE6B0",padding:"2px 5px",border:"1px solid #FFB951"}:{position:"relative",display:"inline-block",cursor:"pointer",padding:"2px 5px",border:"1px solid rgba(0,0,0,0)"}
+		var lineStyle=this.props.selected.toString()==place.toString()?{whiteSpace:"nowrap",position:"relative",display:"inline-block",cursor:"pointer",background:"#FFE6B0",padding:"2px 5px",border:"1px solid #FFB951"}:{whiteSpace:"nowrap",position:"relative",display:"inline-block",cursor:"pointer",padding:"2px 5px",border:"1px solid rgba(0,0,0,0)"}
 		var FolderIcon=this.state.isOpen?Minus:Plus
 		switch(data.type){
 			case "Folder":
@@ -37,7 +37,7 @@ class Tree extends Component{
 				{
 					data.children&&data.children.length?(
 						<div style={{display:data.type=="Folder"&&!this.state.isOpen?"none":"block"}}>
-							{data.children.map((it,i)=><Tree key={it+i} data={it} selected={this.props.selected} place={place.concat(i)} onSelect={this.props.onSelect} />)}
+							{data.children.map((it,i)=><Tree key={place+i} data={it} selected={this.props.selected} place={place.concat(i)} onSelect={this.props.onSelect} />)}
 						</div>
 					):null
 				}
@@ -97,15 +97,30 @@ class FileGrid extends Component{
 		}else{
 			data=(
 				<div style={{margin:30}}>
-					<h2 style={{margin:30}}>文件详情,略</h2>
 					<FilesEmpty style={{width:150,height:150}} />
+					<h2 style={{margin:30}}>本文件暂不支持在线预览</h2>
 				</div>
 			)
 		}
 		return <div>{data}</div>
 	}
 }
+class FileMenu extends Component{
+	render(){
+		return(
+			<div>
+				<div style={{float:"right",cursor:"pointer",overflow:"hidden",marginRight:20,position:"relative",padding:"0 20px",lineHeight:"30px",background:"#000",color:"#fff",textAlign:"center"}}>
+					<input style={{cursor:"pointer",position:"absolute",top:0,left:0,border:"none",background:"none",opacity:0}} type="file"></input>
+					<span>上传文件</span>
+				</div>
+				<div style={{float:"right",cursor:"pointer",marginRight:20,padding:"0 20px",lineHeight:"30px",background:"#000",color:"#fff",textAlign:"center"}}>新建文件夹</div>
+				<div style={{clear:"both"}}></div>
+			</div>
+		)
+	}
+}
 
+@Radium
 class FileManager extends Component{
 	constructor(props){
 		super(props)
@@ -114,31 +129,42 @@ class FileManager extends Component{
 			type:"Folder",
 			children:[
 				{text:"test-1",type:"Folder",children:[
-					{text:"test1-1"},{text:"test1-2"}
+					{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"},{text:"test1-1"},{text:"test1-2"}
 				]},
 				{text:"test-2",type:"Folder",children:[
 					{text:"test1-2.jpg",type:"image"},
 					{text:"test2-2",type:"Folder",children:[
-						{text:"test2-2.jpg",type:"image"}
+						{text:"test2-2",type:"Folder",children:[
+							{text:"test2-2",type:"Folder",children:[
+								{text:"test2-2",type:"Folder",children:[
+									{text:"test2-2.jpg",type:"image"}
+								]}
+							]}
+						]}
 					]}
-				]}
+				]},
+				{text:"test2-2.jpg",type:"image"}
 			]
 		}
 		this.state={data,sel:[]}
 	}
 	render(){
 		return (
-			<div style={{height:500}}>
-				<div style={{display:"inline-block",verticalAlign:"top"}}>
-					<h4 style={{marginLeft:30}} >文件目录</h4>
-					<input style={{margin:20}} />
+			<div style={[{padding:20,position:"relative",border:"1px solid "+colors.line},this.props.style]}>
+				<div style={{position:"absolute",top:20,bottom:20,width:180,overflow:"auto",borderRight:"1px solid "+colors.line}}>
+					<h4 style={{textAlign:"center",padding:10,margin:"0 20px 10px 10px",borderBottom:"1px solid "+colors.line}} >文件目录</h4>
 					<Tree isOpen data={this.state.data} selected={this.state.sel} onSelect={it=>this.setState({sel:it})} />
 				</div>
-				<div style={{display:"inline-block",verticalAlign:"top",marginLeft:30,width:900}}>
-					<div style={{padding:"0 20px 20px 20px",borderBottom:"1px solid "+colors.line}}>
+				<div style={{marginLeft:200,height:"100%"}}>
+					<div style={{overflow:"auto",whiteSpace:"nowrap",padding:10,borderBottom:"1px solid "+colors.line}}>
 						<FileNav data={this.state.data} part={this.state.sel} selected={this.state.sel} noArrow onSelect={it=>this.setState({sel:it})} />
 					</div>
-					<FileGrid data={this.state.data} selected={this.state.sel} onSelect={it=>this.setState({sel:it})} />
+					<div style={{whiteSpace:"nowrap",padding:10,borderBottom:"1px solid "+colors.line}}>
+						<FileMenu />
+					</div>
+					<div style={{overflow:"auto",height:"calc(100% - 40px)"}}>
+						<FileGrid data={this.state.data} selected={this.state.sel} onSelect={it=>this.setState({sel:it})} />
+					</div>
 				</div>
 			</div>
 		)
@@ -149,7 +175,7 @@ export default class extends Component{
 	render(){
 		return(
 			<Box title="文件管理">
-				<FileManager />
+				<FileManager style={{height:500}} />
 			</Box>
 		)
 	}
