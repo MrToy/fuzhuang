@@ -41,7 +41,9 @@ export default class extends Component{
 			form.append(i,files[i])
 		}
 		try{
-			await fetch("/files?token="+store.get("token")+"&pid="+pid,{method:"POST",body:form})
+			var res=await fetch("/files?token="+store.get("token")+"&pid="+pid,{method:"POST",body:form})
+			if(!res.ok)
+				throw await res.text()
 		}catch(err){
 			return swal("错误",err,"error")
 		}
@@ -51,7 +53,9 @@ export default class extends Component{
 	async onAdd(){
 		var pid=this.refs.fm.getSelected()["id"]
 		try{
-			await fetch("/files?token="+store.get("token")+"&pid="+pid+"&target=folder",{method:"POST"})
+			var res=await fetch("/files?token="+store.get("token")+"&pid="+pid+"&target=folder",{method:"POST"})
+			if(!res.ok)
+				throw await res.text()
 		}catch(err){
 			return swal("错误",err,"error")
 		}
