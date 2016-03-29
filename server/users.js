@@ -25,11 +25,11 @@ export async function getUser(ctx){
 	try{
 		var decoded=jwt.verify(ctx.query.token,jwtKey)
 	}catch(err){
-		throw "登录过期"
+		ctx.throw("登录过期",400)
 	}
 	var res=await ctx.mongo.collection("users").findOne({_id:mongodb.ObjectID(decoded.id)})
 	if(!res)
-		throw "请尝试重新登录"
+		ctx.throw("请尝试重新登录",400)
 	return res
 }
 
