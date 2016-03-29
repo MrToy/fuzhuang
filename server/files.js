@@ -4,6 +4,7 @@ import formidable from 'formidable'
 import serve from 'koa-static'
 import convert from 'koa-convert'
 import Path from 'path'
+import fs from 'fs'
 import {ObjectID} from 'mongodb'
 var router=new Router()
 
@@ -27,6 +28,7 @@ router.post('/',async ctx=>{
 		if(ctx.query.target=="folder"){
 			await ctx.mongo.collection("files").insert({name:"新建文件夹",type:"folder",pid,owner:user["_id"]})
 		}else{
+			if(!fs.existsSync(Path.join(__dirname,"../upload")))fs.mkdirSync(Path.join(__dirname,"../upload"))
 			var {fields,files}=await parseFile(ctx)
 			for(var i in files){
 				var {path,size,name,type}=files[i]
