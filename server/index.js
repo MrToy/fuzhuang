@@ -6,7 +6,7 @@ import mongo from 'koa-mongo'
 import favicon from 'koa-favicon'
 import cache from 'koa-static-cache'
 import Router from 'koa-router'
-
+import logger from 'koa-logger'
 import imgdata from './imgdata'
 import users from './users'
 import files from './files'
@@ -14,7 +14,6 @@ import files from './files'
 var app = new Koa()
 var router=new Router()
 if(process.env.NODE_ENV=="debug"){
-	var logger = require('koa-logger')
 	var webpack = require('webpack')
 	var config = require('../webpack.config')
 	var compiler = webpack(config)
