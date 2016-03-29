@@ -90,6 +90,8 @@ class FileGrid extends Component{
 					</div>
 				)
 			})
+		}else if(node.type=="image"){
+			data= <img src={node.path} />
 		}else{
 			data=(
 				<div style={{margin:30}}>

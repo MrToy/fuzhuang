@@ -10,7 +10,7 @@ var router=new Router()
 
 async function parseFile(ctx){
 	return new Promise((resolve,reject)=>{
-		var form = new formidable.IncomingForm({uploadDir:"upload"})
+		var form = new formidable.IncomingForm({uploadDir:"upload",keepExtensions:true})
 		form.parse(ctx.req,function(err,fields,files){
 			err?reject(err):resolve({fields,files})
 		})
@@ -32,7 +32,7 @@ router.post('/',async ctx=>{
 			var {fields,files}=await parseFile(ctx)
 			for(var i in files){
 				var {path,size,name,type}=files[i]
-				path="/"+Path.relative("upload",path)+"?ext="+Path.extname(name)
+				path="/"+Path.relative("upload",path)
 				await ctx.mongo.collection("files").insert({path,size,name,type,pid,owner:user["_id"]})
 			}
 		}
