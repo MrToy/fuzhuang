@@ -9,6 +9,7 @@ var jwtKey="testKey"
 var router=new Router()
 router.post('/auth',async ctx=>{
 	var data=await parse.json(ctx)
+	console.log(data)
 	var account=data.account+""
 	var pass=data.pass+""
 	var sum=crypto.createHash('sha1')
@@ -19,16 +20,25 @@ router.post('/auth',async ctx=>{
 		ctx.throw("登录失败，请检查账号密码是否正确",400)
 	ctx.body={token:jwt.sign({id:res._id},jwtKey,{expiresIn:"7d"})}  
 })
-router.get('/info',async ctx=>{
+
+export async function getUser(ctx){
 	try{
 		var decoded=jwt.verify(ctx.query.token,jwtKey)
 	}catch(err){
-		ctx.throw("登录过期",400)
+		throw "登录过期"
 	}
 	var res=await ctx.mongo.collection("users").findOne({_id:mongodb.ObjectID(decoded.id)})
 	if(!res)
-		ctx.throw("请尝试重新登录",400)
-	ctx.body=res
+		throw "请尝试重新登录"
+	return res
+}
+
+router.get('/info',async ctx=>{
+	try{
+		ctx.body=await getUser(ctx)
+	}catch(err){
+		ctx.throw(err,400)
+	}
 })
 router.post('/',async ctx=>{
 	var data=await parse.json(ctx)

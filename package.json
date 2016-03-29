@@ -52,6 +52,7 @@
     "babel-preset-es2015-node5": "^1.2.0",
     "babel-preset-stage-0": "^6.5.0",
     "co-body": "^4.0.0",
+    "formidable": "^1.0.17",
     "jsonwebtoken": "^5.7.0",
     "koa": "^2.0.0-alpha.3",
     "koa-convert": "^1.2.0",

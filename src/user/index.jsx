@@ -98,7 +98,7 @@ class WithNav extends Component{
 						})}
 					</div>
 				</div>
-				<div style={{marginLeft:220
+				<div style={{marginLeft:250
 					//Radium.getState(this.state,'nav',':hover')?220:40
 					,transition:"all 0.5s"}}>
 					{this.props.children}

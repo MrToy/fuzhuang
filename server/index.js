@@ -8,26 +8,29 @@ import cache from 'koa-static-cache'
 import Router from 'koa-router'
 
 import imgdata from './imgdata'
-import user from './user'
-var router=new Router()
-router.use('/imgdata',imgdata.routes(),imgdata.allowedMethods())
-router.use('/users',user.routes(),user.allowedMethods())
+import users from './users'
+import files from './files'
 
 var app = new Koa()
+var router=new Router()
 if(process.env.NODE_ENV=="debug"){
 	var logger = require('koa-logger')
 	var webpack = require('webpack')
 	var config = require('../webpack.config')
 	var compiler = webpack(config)
-	app.use(convert(logger()))
 	app.use(convert(require("koa-webpack-dev-middleware")(compiler, {noInfo: true, publicPath: config.output.publicPath})))
 	app.use(convert(require("koa-webpack-hot-middleware")(compiler)))
 }
+app.use(convert(logger()))
 app.use(convert(mongo({host:process.env['MONGO_PORT_27017_TCP_ADDR']||'localhost',port:27017,db:"main"})))
-app.use(router.routes())
-app.use(router.allowedMethods())
 app.use(convert(cache("public",{maxAge:30*60*60})))
 app.use(convert(rewrite('/*.html','/index.html')))
 app.use(convert(serve("public")))
+app.use(convert(serve("upload")))
 app.use(convert(favicon('./src/favicon.ico')))
+router.use('/imgdata',imgdata.routes(),imgdata.allowedMethods())
+router.use('/users',users.routes(),users.allowedMethods())
+router.use('/files',files.routes(),files.allowedMethods())
+app.use(router.routes())
+app.use(router.allowedMethods())
 app.listen(80)
