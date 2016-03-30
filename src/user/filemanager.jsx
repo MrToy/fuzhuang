@@ -166,6 +166,10 @@ export default class extends Component{
 		}
 		if(this.props.onCheck)this.props.onCheck(this.state.checked)
 	}
+	async onDel(){
+		await this.props.onDel()
+		this.setState({checked:[]})
+	}
 	render(){
 		return (
 			<div style={[{padding:20,position:"relative",border:"1px solid #CCC"},this.props.style]}>
@@ -178,13 +182,14 @@ export default class extends Component{
 						<FileNav data={this.props.data} part={this.state.sel} selected={this.state.sel} noArrow onSelect={it=>this.select(it)} />
 					</div>
 					<div style={{whiteSpace:"nowrap",padding:10,borderBottom:"1px solid #CCC"}}>
-						<MenuButton disable={!this.state.checked.length} onClick={this.props.onDel} style={{marginRight:20,float:"right"}}>删除</MenuButton>
+						<MenuButton disable={!this.state.checked.length} onClick={this.onDel.bind(this)} style={{marginRight:20,float:"right"}}>删除</MenuButton>
 						<MenuButton disable={this.getIndex().type!="folder"} onClick={this.props.onAdd} style={{marginRight:20,float:"right"}}>新建文件夹</MenuButton>
+						<MenuButton disable={this.state.checked.length!=1} onClick={this.props.onRename} style={{marginRight:20,float:"right"}}>重命名</MenuButton>						
 						<MenuFileButton disable={this.getIndex().type!="folder"} onFile={this.props.onUpload} style={{marginRight:20,float:"right"}}>上传文件</MenuFileButton>
 						<div style={{clear:"both"}}></div>
 					</div>
 					<div style={{overflow:"auto",height:"calc(100% - 40px)"}}>
-						<FileGrid checked={this.state.checked} data={this.props.data} selected={this.state.sel} onSelect={it=>this.select(it)} onCheck={it=>this.onCheck(it)} />
+						<FileGrid checked={this.state.checked} data={this.props.data} selected={this.state.sel} onSelect={this.select.bind(this)} onCheck={this.onCheck.bind(this)} />
 					</div>
 				</div>
 			</div>

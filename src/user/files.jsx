@@ -7,7 +7,7 @@ import swal from 'sweetalert'
 import FileManager from './filemanager'
 import 'sweetalert/dist/sweetalert.css'
 
-export default class extends Component{
+class FullFileManager extends Component{
 	constructor(props){
 		super(props)
 		var data={text:"root",type:"folder",children:[]}
@@ -76,11 +76,49 @@ export default class extends Component{
 		swal("删除成功","","success")
 		this.getData()
 	}
+	async onRename(){
+		var dialog=async function(){
+			return new Promise((resolve,reject)=>{
+				swal({
+					title: "请输入新的文件名",
+					type: "input",
+					showCancelButton: true,
+					closeOnConfirm: false,
+					animation: "slide-from-top",
+				}, function(inputValue) {
+					if (inputValue === false)
+						return false;
+					if (inputValue === "") {
+						swal.showInputError("请输入!");
+						return false
+					}
+					resolve(inputValue)
+				})	
+			})		
+		}
+		try{
+			var name=await dialog()
+			var checked=this.refs.fm.state.checked
+			var res=await fetch("/files/"+checked[0]+"?token="+store.get("token"),{method:"PUT",body:JSON.stringify({name})})
+			if(!res.ok)
+				throw await res.text()
+		}catch(err){
+			return swal("错误",err,"error")
+		}
+		swal("删除成功","","success")
+		this.getData()
+	}
+	render(){
+		return <FileManager ref="fm" style={{height:500}} data={this.state.data} onUpload={this.onUpload.bind(this)} onAdd={this.onAdd.bind(this)} onDel={this.onDel.bind(this)} onRename={this.onRename.bind(this)} />
+	}
+}
+
+export default class extends Component{
 	render(){
 		return(
 			<Box title="文件管理">
-				<FileManager ref="fm" style={{height:500}} data={this.state.data} onUpload={files=>this.onUpload(files)} onAdd={()=>this.onAdd()} onDel={()=>this.onDel()} />
+				<FullFileManager />
 			</Box>
 		)
-	}
+	}	
 }

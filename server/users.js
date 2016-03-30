@@ -9,7 +9,6 @@ var jwtKey="testKey"
 var router=new Router()
 router.post('/auth',async ctx=>{
 	var data=await parse.json(ctx)
-	console.log(data)
 	var account=data.account+""
 	var pass=data.pass+""
 	var sum=crypto.createHash('sha1')

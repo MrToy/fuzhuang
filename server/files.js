@@ -6,6 +6,7 @@ import convert from 'koa-convert'
 import Path from 'path'
 import fs from 'fs'
 import {ObjectID} from 'mongodb'
+import parse from 'co-body'
 var router=new Router()
 
 async function parseFile(ctx){
@@ -47,7 +48,7 @@ router.get('/',async ctx=>{
 	try{
 		ctx.body=await ctx.mongo.collection("files").find({owner:user["_id"]}).toArray()
 	}catch(err){
-		ctx.throw("上传失败")
+		ctx.throw("获取失败")
 	}
 })
 router.delete('/:id',async ctx=>{
@@ -65,6 +66,18 @@ router.delete('/:id',async ctx=>{
 	}catch(err){
 		ctx.throw("删除失败")
 	}
-	ctx.body={id}
+	ctx.body={success:true}
+})
+router.put('/:id',async ctx=>{
+	var user=await getUser(ctx)
+	var data=await parse.json(ctx)
+	try{
+		var id=ObjectID(ctx.params.id)
+		if(data&&data.name)
+			await ctx.mongo.collection("files").update({"_id":id},{"$set":{name:data.name}})
+	}catch(err){
+		ctx.throw("修改失败")
+	}
+	ctx.body={success:true}
 })
 export default router
