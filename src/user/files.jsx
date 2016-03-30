@@ -36,7 +36,7 @@ export default class extends Component{
 	}
 	async onUpload(files){
 		var form=new FormData()
-		var pid=this.refs.fm.getSelected()["id"]
+		var pid=this.refs.fm.getIndex()["id"]
 		for(var i=0;i<files.length;i++){
 			form.append(i,files[i])
 		}
@@ -51,7 +51,7 @@ export default class extends Component{
 		this.getData()
 	}
 	async onAdd(){
-		var pid=this.refs.fm.getSelected()["id"]
+		var pid=this.refs.fm.getIndex()["id"]
 		try{
 			var res=await fetch("/files?token="+store.get("token")+"&pid="+pid+"&target=folder",{method:"POST"})
 			if(!res.ok)
@@ -62,10 +62,24 @@ export default class extends Component{
 		swal("新建成功","","success")
 		this.getData()
 	}
+	async onDel(){
+		try{
+			var checked=this.refs.fm.state.checked
+			for(var i=0;i<checked.length;i++){
+				var res=await fetch("/files/"+checked[i]+"?token="+store.get("token"),{method:"DELETE"})
+				if(!res.ok)
+					throw await res.text()
+			}
+		}catch(err){
+			return swal("错误",err,"error")
+		}
+		swal("删除成功","","success")
+		this.getData()
+	}
 	render(){
 		return(
 			<Box title="文件管理">
-				<FileManager ref="fm" style={{height:500}} data={this.state.data} onUpload={files=>this.onUpload(files)} onAdd={()=>this.onAdd()} />
+				<FileManager ref="fm" style={{height:500}} data={this.state.data} onUpload={files=>this.onUpload(files)} onAdd={()=>this.onAdd()} onDel={()=>this.onDel()} />
 			</Box>
 		)
 	}

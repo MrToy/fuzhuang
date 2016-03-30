@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import parse from 'co-body'
 import validator from 'validator'
 import crypto from 'crypto'
-import mongodb from 'mongodb'
+import {ObjectID} from 'mongodb'
 
 var jwtKey="testKey"
 var router=new Router()
@@ -27,7 +27,7 @@ export async function getUser(ctx){
 	}catch(err){
 		ctx.throw("登录过期",400)
 	}
-	var res=await ctx.mongo.collection("users").findOne({_id:mongodb.ObjectID(decoded.id)})
+	var res=await ctx.mongo.collection("users").findOne({_id:ObjectID(decoded.id)})
 	if(!res)
 		ctx.throw("请尝试重新登录",400)
 	return res

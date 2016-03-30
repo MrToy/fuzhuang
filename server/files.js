@@ -50,5 +50,21 @@ router.get('/',async ctx=>{
 		ctx.throw("上传失败")
 	}
 })
-
+router.delete('/:id',async ctx=>{
+	var user=await getUser(ctx)
+	try{
+		var id=ObjectID(ctx.params.id)
+		async function recur(id){
+			await ctx.mongo.collection("files").remove({"_id":id})
+			var arr=await ctx.mongo.collection("files").find({pid:id}).toArray()
+			for(var i=0;i<arr.length;i++){
+				await recur(arr[i]["_id"])
+			}
+		}
+		await recur(id)
+	}catch(err){
+		ctx.throw("删除失败")
+	}
+	ctx.body={id}
+})
 export default router

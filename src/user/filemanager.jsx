@@ -1,9 +1,11 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import {FilesEmpty,Folder,FolderOpen,FilePicture,Plus,Minus} from '../home/icons'
+import {FilesEmpty,Folder,FolderOpen,FilePicture,Plus,Minus,CheckMark,CheckMark2} from '../home/icons'
 
 function getIcon(type){
 	var icon=FilesEmpty
+	if(type.match(/image/))
+		icon=FilePicture
 	switch(type){
 		case "folder":
 			icon=Folder
@@ -11,9 +13,7 @@ function getIcon(type){
 		case "folderOpen":
 			icon=Folder
 			break
-		case "image":
-			icon=FilePicture
-			break
+
 	}
 	return icon
 }
@@ -72,6 +72,26 @@ class FileNav extends Component{
 	}
 }
 
+@Radium
+class FileInfo extends Component{
+	render(){
+		var it=this.props.data
+		var Icon=getIcon(it.type)
+		var checked=this.props.checked
+		var CheckIcon=checked?CheckMark:CheckMark2
+		var isHover=Radium.getState(this.state,'box',':hover')
+		return(
+			<div ref="box" style={{":hover":{},position:"relative",display:"inline-block",verticalAlign:"top",margin:20,padding:10,border:"2px solid "+(checked||isHover?"#AAA":"rgba(0,0,0,0)")}}>
+				{checked||isHover?<CheckIcon onClick={this.props.onCheck} style={{fill:"#AAA",cursor:"pointer",width:20,height:20,position:"absolute",right:3,top:3}} />:null}
+				<div onClick={this.props.onClick} style={{cursor:"pointer",textAlign:"center"}}>
+					<Icon style={{width:50,height:50}} />
+					<p style={{width:80,overflow:"hidden",textOverflow:"ellipsis"}}>{it.text}</p>
+				</div>
+			</div>
+		)
+	}
+}
+
 class FileGrid extends Component{
 	render(){
 		function recur(data,selected){
@@ -82,15 +102,9 @@ class FileGrid extends Component{
 		var data
 		if(node.type=="folder"){
 			data=node.children.map((it,i)=>{
-				var Icon=getIcon(it.type)
-				return (
-					<div onClick={()=>this.props.onSelect(this.props.selected.concat(i))} style={{cursor:"pointer",textAlign:"center",margin:30,display:"inline-block",verticalAlign:"top"}}>
-						<Icon style={{width:50,height:50}} />
-						<p style={{width:100}}>{it.text}</p>
-					</div>
-				)
+				return <FileInfo checked={this.props.checked.indexOf(it.id)>-1} onCheck={()=>this.props.onCheck(it.id)} data={it} onClick={()=>this.props.onSelect(this.props.selected.concat(i))} />
 			})
-		}else if(node.type=="image"){
+		}else if(node.type.match(/image/)){
 			data= <img src={node.path} />
 		}else{
 			data=(
@@ -107,7 +121,7 @@ class FileGrid extends Component{
 @Radium
 class MenuButton extends Component{
 	render(){
-		return <div title={this.props.disable?"请选择一个文件夹":null} onClick={this.props.disable?null:this.props.onClick} style={[{cursor:this.props.disable?"not-allowed":"pointer",padding:"0 20px",lineHeight:"30px",background:this.props.disable?"#888":"#000",color:"#fff",textAlign:"center"},this.props.style]}>{this.props.children}</div>
+		return <div title={this.props.disable?"请选择一个文件":null} onClick={this.props.disable?null:this.props.onClick} style={[{cursor:this.props.disable?"not-allowed":"pointer",padding:"0 20px",lineHeight:"30px",background:this.props.disable?"#888":"#000",color:"#fff",textAlign:"center"},this.props.style]}>{this.props.children}</div>
 	}
 }
 
@@ -127,17 +141,30 @@ class MenuFileButton extends Component{
 export default class extends Component{
 	constructor(props){
 		super(props)
-		this.state={sel:[]}
+		this.state={sel:[],checked:[]}
 	}
 	select(place){
-		this.setState({sel:place})
+		this.setState({sel:place,checked:[]})
 	}
-	getSelected(){
+	getIndex(){
 		function recur(data,selected){
 			var selected=selected.slice(0)
 			return selected.length?recur(data.children[selected.shift()],selected):data
 		}
 		return recur(this.props.data,this.state.sel)
+	}
+	onCheck(id){
+		if(this.state.checked.indexOf(id)>-1){
+			var arr1=this.state.checked.slice(0,this.state.checked.indexOf(id))
+			var arr2=this.state.checked.slice(this.state.checked.indexOf(id)+1,this.state.checked.length)
+			var arr=arr1.concat(arr2)
+			this.setState({checked:arr})
+		}else{
+			var arr=this.state.checked.slice(0)
+			arr.push(id)
+			this.setState({checked:arr})
+		}
+		if(this.props.onCheck)this.props.onCheck(this.state.checked)
 	}
 	render(){
 		return (
@@ -151,12 +178,13 @@ export default class extends Component{
 						<FileNav data={this.props.data} part={this.state.sel} selected={this.state.sel} noArrow onSelect={it=>this.select(it)} />
 					</div>
 					<div style={{whiteSpace:"nowrap",padding:10,borderBottom:"1px solid #CCC"}}>
-						<MenuButton disable={this.getSelected().type!="folder"} onClick={this.props.onAdd} style={{marginRight:20,float:"right"}}>新建文件夹</MenuButton>
-						<MenuFileButton disable={this.getSelected().type!="folder"} onFile={this.props.onUpload} style={{marginRight:20,float:"right"}}>上传文件</MenuFileButton>
+						<MenuButton disable={!this.state.checked.length} onClick={this.props.onDel} style={{marginRight:20,float:"right"}}>删除</MenuButton>
+						<MenuButton disable={this.getIndex().type!="folder"} onClick={this.props.onAdd} style={{marginRight:20,float:"right"}}>新建文件夹</MenuButton>
+						<MenuFileButton disable={this.getIndex().type!="folder"} onFile={this.props.onUpload} style={{marginRight:20,float:"right"}}>上传文件</MenuFileButton>
 						<div style={{clear:"both"}}></div>
 					</div>
 					<div style={{overflow:"auto",height:"calc(100% - 40px)"}}>
-						<FileGrid data={this.props.data} selected={this.state.sel} onSelect={it=>this.select(it)} />
+						<FileGrid checked={this.state.checked} data={this.props.data} selected={this.state.sel} onSelect={it=>this.select(it)} onCheck={it=>this.onCheck(it)} />
 					</div>
 				</div>
 			</div>
