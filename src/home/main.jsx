@@ -36,7 +36,7 @@ export class Search extends Component{
 	}
 	render(){
 		return(
-			<div style={{width:600,height:40,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff",marginLeft:120}}>
+			<div style={{width:606,height:46,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff",marginLeft:120}}>
 				<input onKeyUp={e=>this.setState({value:e.target.value})} placeholder={this.props.placeholder||"输入产品名称"} style={{fontSize:20,display:"inline",width:470,marginLeft:30,height:40,verticalAlign:"middle",border:"none"}}></input>
 				<Link to={{pathname:"/search.html",query:{word:this.state.value}}}>
 					<button style={{cursor:"pointer",display:"inline",width:100,height:40,verticalAlign:"middle",border:"none",background:colors.primary,color:"#fff",fontHeight:"bolder",fontSize:20}}>
@@ -73,7 +73,7 @@ export class TitleBar extends Component {
 export class Footer extends Component{
 	render(){
 		return(
-			<div style={[{color:"#888",padding:30,background:colors.bg,height:80,borderTop:"1px solid "+colors.line,textAlign:"center"},this.props.style]}>
+			<div style={[{color:"#888",padding:30,background:colors.bg,height:140,borderTop:"1px solid "+colors.line,textAlign:"center"},this.props.style]}>
 				<ul style={{listStyle:"none",marginBottom:20}}>
 					<Link to="/">
 						<li style={{display:"inline-block",fontSize:14,padding:10}}>首页</li>
@@ -97,7 +97,7 @@ export class Footer extends Component{
 
 export class BodyStyle extends Component{
 	render(){
-		return <style>{'*{margin:0px;padding:0px}body{font-family:Microsoft YaHei,SimSun,Tahoma,Geneva,sans-serif !important;min-width:1200px}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
+		return <style>{'*{box-sizing:border-box;margin:0px;padding:0px}body{font-family:Microsoft YaHei,SimSun,Tahoma,Geneva,sans-serif ;min-width:1200px}a,a:link,a:visited{color:#555;text-decoration:none}a:hover{color:'+colors.primary+'}'}</style>
 	}
 }
 
@@ -107,17 +107,17 @@ class MenuLeft extends Component{
 		return (
 			<div ref="box" style={[{display:"inline-block",position:"relative",":hover":{}},this.props.style]}>
 				<div style={{width:180,textAlign:"center",float:"left",listStyle:"none",fontWeight:"bold",lineHeight:"35px",color:"#fff",fontSize:16,background:colors.secondary}} >所有商品分类</div>
-				<ul style={{overflow:"hidden",transition:"all 0.5s",position:"absolute",left:0,top:35,zIndex:4,width:178,height:(Radium.getState(this.state,'box',':hover')||this.props.active)?549:0,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
+				<div style={{overflow:"hidden",transition:"all 0.5s",position:"absolute",left:0,top:35,zIndex:4,width:180,height:(Radium.getState(this.state,'box',':hover')||this.props.active)?549:0,display:"inline-block",background:colors.bg,borderLeft:"1px solid "+colors.line,borderRight:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line}}>
 					{
 						["精品男装","淘款市场","国际名流","意法男装","中纺服饰","一号基地","二号基地","男衬衫","品牌折扣","外贸原单","三号基地","更多市场"].map(ii=>{
 							return (
-								<li key={ii} style={{margin:"10px 0",height:35,listStyle:"none"}}>
+								<div key={ii} style={{margin:"10px 0",height:35,listStyle:"none"}}>
 									<Link to={{pathname:"search.html",query:{word:ii}}} key={ii+".child"} style={{textAlign:"center",fontWeight:"normal",width:"100%",lineHeight:"35px",float:"left",color:"#000",":hover":{color:colors.primary},fontSize:16}} href={"/target/"+ii}>{ii}</Link>
-								</li>
+								</div>
 							)
 						})
 					}
-				</ul>
+				</div>
 			</div>
 		)
 	}
@@ -127,16 +127,16 @@ export class MenuBar extends Component{
 	render(){
 		return (
 			<div style={{background:colors.primary}}>
-				<ul style={{width:1200,height:35,margin:"0 auto"}}>
+				<div style={{width:1200,height:35,margin:"0 auto"}}>
 					<MenuLeft active={this.props.active} style={{marginRight:100,float:"left"}} />	
 					{(this.props.data||[]).map((it,i)=>{
 						return (
-							<li key={i} style={{height:35,float:"left",listStyle:"none",":hover":{background:colors.secondary}}} >
+							<div key={i} style={{height:35,float:"left",listStyle:"none",":hover":{background:colors.secondary}}} >
 								<Link to={it.link} style={{fontWeight:"bold",float:"left",lineHeight:"35px",color:"#fff",padding:"0px 15px",fontSize:16}}>{it.text}</Link>
-							</li>
+							</div>
 						)
 					})}
-				</ul>
+				</div>
 			</div>
 		)
 	}
@@ -155,16 +155,16 @@ class TipBar extends Component{
 class ItemPanel extends Component{
 	render(){
 		return (
-			<div style={{padding:10,float:"left",width:202,margin:"0 20px 20px 0",height:280,border:"1px solid "+colors.line}}>
-				<Link to={{pathname:"/item.html",query:{id:this.props.id}}} style={{height:"100%"}}>
-					<p style={{marginBottom:10,height:200,position:"relative"}}>
+			<div style={{padding:10,float:"left",width:222,margin:"0 20px 20px 0",height:300,border:"1px solid "+colors.line}}>
+				<Link to={{pathname:"/item.html",query:{id:this.props.id}}} >
+					<div style={{marginBottom:10,height:200,position:"relative"}}>
 						<img src={this.props.img} style={{maxWidth:"100%",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
-					</p>
+					</div>
 				</Link>
 				<Link to={{pathname:"/item.html",query:{id:this.props.id}}}>
-					<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{this.props.text}</p>
+					<div style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{this.props.text}</div>
 				</Link>
-				<p style={{padding:10,overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
+				<p style={{overflow:"hidden",textOverflow:"ellipsis",color:colors.primary}}>
 					<b>￥</b>
 					<span>{this.props.price}</span>
 				</p>

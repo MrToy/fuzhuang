@@ -1,63 +1,84 @@
 import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Box,MenuPanel} from './'
-
-
-class Info extends Component{
-	render(){
-		return (
-			<div {...this.props} style={{lineHeight:"50px",textAlign:"center"}}>
-				<div style={{display:"inline-block",width:500,height:250,verticalAlign:"top"}}>
-					<h3>店铺名</h3>
-					<p>累计信用评价:0</p>
-					<p>保证金金额：0</p>
-				</div>
-				<div style={{display:"inline-block",width:500,height:250,verticalAlign:"top"}}>
-					<h4>店铺评分</h4>
-					<span style={{marginRight:30}}>服务态度:0</span>
-					<span style={{marginRight:30}}>物流服务:0</span>
-					<span style={{marginRight:30}}>售后速度:0</span>
-				</div>
-			</div>
-		)
-	}
-}
+import Button from '../lib/Button'
+import store from 'store'
+import Ajax from '../lib/Ajax'
+import Card from '../lib/Card'
+import Input,{FormGroup} from '../lib/Input'
+import {Home} from '../lib/icons'
+import Col from '../lib/Col'
+import ButtonGroup from '../lib/ButtonGroup'
+import Table from '../lib/Table'
+import Paging from '../lib/Paging'
 
 class Config extends Component{
+	static propTypes ={
+		data:React.PropTypes.object.isRequired
+	}
+	state=this.props.data
 	render(){
 		return (
-			<div {...this.props} style={{lineHeight:"50px"}}>
-				<p>店铺名称 <input /></p>
-				<p>联系地址 <input /></p>
-				<p>店铺介绍 <textarea /></p>
+			<div {...this.props}>
+				<Input value={this.state.name} onChange={e=>this.setState({name:e.target.value})} horizontal label="店铺名" />
+				<Input value={this.state.info} onChange={e=>this.setState({info:e.target.value})} horizontal label="店铺介绍" type="textarea" />
+				<FormGroup horizontal>
+					<Button collapse onClick={()=>this.refs.ajax.request()}>保存</Button>
+				</FormGroup>
+				<Ajax ref="ajax" url={"/shops?token="+store.get("token")} data={JSON.stringify({name:this.state.name,info:this.state.info})} method="put" alert />
 			</div>
 		)
 	}
 }
-class Identity extends Component{
+
+class Goods extends Component{
 	render(){
 		return (
-			<div {...this.props} style={{lineHeight:"50px"}}>
-				<h3>认证信息</h3>
-				<p>姓名：xx</p>
-				<p>电话：xxxxxxxxx</p>
-				<p>地址：xxxxxxxxx</p>
-				<p>证件号码：xxxxxxxxx</p>
-				<p>认证有效期：xxxxxxxxx</p>
+			<div>
+				<Col sm={2} offset={10}>
+					<Button>添加</Button>
+					<Button>删除</Button>
+				</Col>
+				<Table border keys={["a","b","c"]} data={[{a:1,b:2,c:"fvw"},{a:2,b:3,c:5},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2}]} />
+				<Paging  style={{marginTop:20}} total={100} />
 			</div>
+		)
+	}
+}
+
+class Apply extends Component{
+	state={active:false,name:"",info:""}
+	render(){
+		return this.state.active?(
+			<Card title="店铺申请" size="xl" >
+				<Input onChange={e=>this.setState({name:e.target.value})} label="店铺名" />
+				<Input onChange={e=>this.setState({info:e.target.value})} label="简介" type="textarea" />
+				<Button onClick={()=>this.refs.ajax.request()}>提交申请</Button>
+				<Ajax ref="ajax" url={"/shops?token="+store.get("token")} method="post" data={JSON.stringify({name:this.state.name,info:this.state.info})} alert></Ajax>
+			</Card>
+		):(
+			<Card title={<Home />} style={{textAlign:"center"}}>
+				<div style={{margin:"80px 0"}}>申请店铺进行中</div>
+				<Button collapse onClick={()=>this.setState({active:true})}>申请店铺</Button>
+			</Card>
 		)
 	}
 }
 
 export default class extends Component{
+	state={info:null}
 	render(){
 		return(
 			<Box title="店铺管理">
-				<MenuPanel>
-					<Info title="概览" />
-					<Config title="设置" />
-					<Identity title="认证" />
-				</MenuPanel>
+				{this.state.info?(
+					<MenuPanel>
+						<Goods title="商品管理" data={this.state.info} />
+						<Config title="店铺设置" data={this.state.info} />
+					</MenuPanel>
+				):(
+					<Apply />
+				)}
+				<Ajax auto url={"/shops/info?token="+store.get("token")} onData={info=>this.setState({info})} />
 			</Box>
 		)
 	}

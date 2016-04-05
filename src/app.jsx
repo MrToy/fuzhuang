@@ -1,9 +1,9 @@
 import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Router,Route,IndexRoute,Link,browserHistory} from 'react-router'
-import Main from './home/main'
+import {StyleRoot,Style} from 'radium'
 
-class App extends Component{
+class RouterList extends Component{
 	render(){
 		return (
 			<Router history={browserHistory}>
@@ -30,6 +30,22 @@ class App extends Component{
 				</Route>
 				<Route path="*" component={require('react-router-proxy!./home/404')} />
 			</Router>
+		)
+	}
+}
+
+class App extends Component{
+	render(){
+		return (
+			<StyleRoot>
+				<Style rules={{
+					"*":{boxSizing:"border-box",margin:0,padding:0},
+					body:{fontFamily:"Microsoft YaHei,SimSun,Tahoma,Geneva,sans-serif",minWidth:1200},
+					a:{color:"#555",textDecoration:"none"},
+					"button::-moz-focus-inner,input::-moz-focus-inner":{border: 0,padding:0}
+				}} />
+				<RouterList />
+			</StyleRoot>
 		)
 	}
 }

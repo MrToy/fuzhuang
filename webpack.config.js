@@ -20,8 +20,9 @@ var config = {
 					plugins: ['transform-runtime', 'add-module-exports','transform-decorators-legacy']
 				}
 			},
-			{ test: /\.css$/,  loader: "style-loader!css-loader" },
-			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)([\?]?.*)$/, exclude: /node_modules/, loader: 'url-loader?limit=8192' }
+			{ test: /\.css$/,  loader: "style!css" },
+			{ test: /\.less$/,  loader: "style!css!less" },
+			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)([\?]?.*)$/, loader: 'url-loader?limit=8192' }
 		]
 	},
 	resolve: {

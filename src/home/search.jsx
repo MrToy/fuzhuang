@@ -124,7 +124,7 @@ class Paging extends Component{
 				{arr}
 				<MenuButton disable={this.state.index==this.props.total} onClick={()=>this.next()} full style={{marginLeft:20}}>下一页</MenuButton>
 				<span style={{margin:"0 10px"}}>共{this.props.total}页</span>
-				到第<input ref="page" type="number" style={{margin:"0 5px",width:40,height:40,lineHeight:"40px",padding:"0 10px",border:"1px solid "+colors.line}} />页
+				到第<input ref="page" type="number" style={{margin:"0 5px",width:60,height:40,lineHeight:"40px",padding:"0 10px",border:"1px solid "+colors.line}} />页
 				<MenuButton full style={{margin:"0 5px"}} onClick={()=>this.go(parseInt(this.refs.page.value))}>确定</MenuButton>
 			</div>
 		)

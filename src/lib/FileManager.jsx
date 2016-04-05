@@ -1,11 +1,9 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import {FilesEmpty,Folder,FolderOpen,FilePicture,Plus,Minus,CheckMark,CheckMark2} from '../home/icons'
+import {FilesEmpty,Folder,FolderOpen,FilePicture,Plus,Minus,CheckMark,CheckMark2} from '../lib/icons'
 
 function getIcon(type){
 	var icon=FilesEmpty
-	if(type.match(/image/))
-		icon=FilePicture
 	switch(type){
 		case "folder":
 			icon=Folder
@@ -13,7 +11,9 @@ function getIcon(type){
 		case "folderOpen":
 			icon=Folder
 			break
-
+		case "image":
+			icon=FilePicture
+			break
 	}
 	return icon
 }
@@ -36,11 +36,11 @@ class Tree extends Component{
 		}
 		return (
 			<div style={{marginLeft:20}}>
-				<p style={lineStyle} onClick={()=>this.select(place)} >
-					{data.type=="folder"?<FolderIcon onClick={()=>this.setState({isOpen:!this.state.isOpen})} style={{padding:4,cursor:"pointer",position:"absolute",left:-20,width:10,height:10,marginRight:5}} />:null}
+				<div style={lineStyle} onClick={()=>this.select(place)} >
+					{data.type=="folder"?<FolderIcon onClick={()=>this.setState({isOpen:!this.state.isOpen})} style={{cursor:"pointer",position:"absolute",left:-20,padding:5,width:20,height:20}} />:null}
 					<Icon style={{width:15,height:15,marginRight:5}} />
 					<span>{data.text}</span>
-				</p>
+				</div>
 				{
 					data.children&&data.children.length?(
 						<div style={{display:data.type=="folder"&&!this.state.isOpen?"none":"block"}}>
@@ -85,7 +85,7 @@ class FileInfo extends Component{
 				{checked||isHover?<CheckIcon onClick={this.props.onCheck} style={{fill:"#AAA",cursor:"pointer",width:20,height:20,position:"absolute",right:3,top:3}} />:null}
 				<div onClick={this.props.onClick} style={{cursor:"pointer",textAlign:"center"}}>
 					<Icon style={{width:50,height:50}} />
-					<p style={{width:80,overflow:"hidden",textOverflow:"ellipsis"}}>{it.text}</p>
+					<div style={{width:80,overflow:"hidden",textOverflow:"ellipsis"}}>{it.text}</div>
 				</div>
 			</div>
 		)
@@ -119,7 +119,7 @@ class FileGrid extends Component{
 }
 
 @Radium
-class MenuButton extends Component{
+export class MenuButton extends Component{
 	render(){
 		return <div title={this.props.disable?"请选择一个文件":null} onClick={this.props.disable?null:this.props.onClick} style={[{cursor:this.props.disable?"not-allowed":"pointer",padding:"0 20px",lineHeight:"30px",background:this.props.disable?"#888":"#000",color:"#fff",textAlign:"center"},this.props.style]}>{this.props.children}</div>
 	}
@@ -144,7 +144,7 @@ export default class extends Component{
 		this.state={sel:[],checked:[]}
 	}
 	select(place){
-		this.setState({sel:place,checked:[]})
+		this.setState({sel:place})
 	}
 	getIndex(){
 		function recur(data,selected){
@@ -157,18 +157,32 @@ export default class extends Component{
 		if(this.state.checked.indexOf(id)>-1){
 			var arr1=this.state.checked.slice(0,this.state.checked.indexOf(id))
 			var arr2=this.state.checked.slice(this.state.checked.indexOf(id)+1,this.state.checked.length)
-			var arr=arr1.concat(arr2)
-			this.setState({checked:arr})
+			this.setCheck(arr1.concat(arr2))
 		}else{
 			var arr=this.state.checked.slice(0)
 			arr.push(id)
-			this.setState({checked:arr})
+			this.setCheck(arr)
 		}
-		if(this.props.onCheck)this.props.onCheck(this.state.checked)
+	}
+	setCheck(data){
+		this.setState({checked:data})
+		if(this.props.onCheck){
+			var arr=[]
+			function recur(d){
+				var c=d.children||[]
+				for(var i in c){
+					if(data.indexOf(c[i].id)>-1)
+						arr.push(c[i])
+					recur(c[i])
+				}
+			}
+			recur(this.props.data)
+			this.props.onCheck(arr)
+		}
 	}
 	async onDel(){
 		await this.props.onDel()
-		this.setState({checked:[]})
+		this.setCheck([])
 	}
 	render(){
 		return (
@@ -188,7 +202,7 @@ export default class extends Component{
 						<MenuFileButton disable={this.getIndex().type!="folder"} onFile={this.props.onUpload} style={{marginRight:20,float:"right"}}>上传文件</MenuFileButton>
 						<div style={{clear:"both"}}></div>
 					</div>
-					<div style={{overflow:"auto",height:"calc(100% - 40px)"}}>
+					<div style={{overflow:"auto",height:"calc(100% - 90px)"}}>
 						<FileGrid checked={this.state.checked} data={this.props.data} selected={this.state.sel} onSelect={this.select.bind(this)} onCheck={this.onCheck.bind(this)} />
 					</div>
 				</div>

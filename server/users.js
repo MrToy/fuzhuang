@@ -33,11 +33,7 @@ export async function getUser(ctx){
 }
 
 router.get('/info',async ctx=>{
-	try{
-		ctx.body=await getUser(ctx)
-	}catch(err){
-		ctx.throw(err,400)
-	}
+	ctx.body=await getUser(ctx)
 })
 router.post('/',async ctx=>{
 	var data=await parse.json(ctx)
@@ -62,4 +58,20 @@ router.post('/',async ctx=>{
 	}
 	ctx.body={token:jwt.sign({id:res.ops[0]['_id']},jwtKey,{expiresIn:"7d"})}
 })
+
+router.put('/',async ctx=>{
+	var user=await getUser(ctx)
+	var data=await parse.json(ctx)
+	var nickname=data.nickname+""
+	if(!validator.isLength(nickname,{max:30}))
+		ctx.throw("昵称最长为30位",400)
+	try{
+		var id=ObjectID(user["_id"])
+		await ctx.mongo.collection("users").update({"_id":id},{"$set":{nickname}})
+	}catch(err){
+		ctx.throw("修改失败")
+	}
+	ctx.body={success:true}
+})
+
 export default router

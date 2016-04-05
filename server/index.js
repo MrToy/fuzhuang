@@ -10,6 +10,7 @@ import logger from 'koa-logger'
 import imgdata from './imgdata'
 import users from './users'
 import files from './files'
+import shops from './shops'
 
 var app = new Koa()
 var router=new Router()
@@ -30,6 +31,7 @@ app.use(convert(favicon('./src/favicon.ico')))
 router.use('/imgdata',imgdata.routes(),imgdata.allowedMethods())
 router.use('/users',users.routes(),users.allowedMethods())
 router.use('/files',files.routes(),files.allowedMethods())
+router.use('/shops',shops.routes(),shops.allowedMethods())
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.listen(80)

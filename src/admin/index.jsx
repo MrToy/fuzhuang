@@ -2,7 +2,7 @@ import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
 import {BodyStyle,colors,Footer,Head,TitleBar} from '../home/main'
-import {Cart,Stack,User,PushPin,UserTie,Airplane} from '../home/icons'
+import {Cart,Stack,User,PushPin,UserTie,Airplane} from '../lib/icons'
 import Radium from 'radium'
 import store from 'store'
 

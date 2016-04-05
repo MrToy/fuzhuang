@@ -2,7 +2,7 @@ import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
 import {BodyStyle,colors,Footer,Head,TitleBar} from '../home/main'
-import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer,FilesEmpty} from '../home/icons'
+import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer,FilesEmpty} from '../lib/icons'
 import Radium from 'radium'
 import store from 'store'
 
@@ -26,10 +26,7 @@ export class Box extends Component{
 }
 
 export class  MenuPanel extends Component{
-	constructor(props){
-		super(props)
-		this.state={choosed:0}
-	}
+	state={choosed:0}
 	render(){
 		return(
 			<div>

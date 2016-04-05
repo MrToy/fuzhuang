@@ -89,7 +89,7 @@ export default class extends Component{
 				<Head />
 				<TitleBar text>注册</TitleBar>
 				<div style={{position:"relative",height:600,width:1200,margin:"0 auto"}}>
-					<div style={{margin:100,height:400,padding:"50px 200px",border:"1px solid "+colors.line}}>
+					<div style={{margin:100,height:500,padding:"50px 200px",border:"1px solid "+colors.line}}>
 						<SwitchTap>
 							<RegForm target="buyer" />
 							<RegForm target="saler" />
