@@ -11,6 +11,7 @@ import imgdata from './imgdata'
 import users from './users'
 import files from './files'
 import shops from './shops'
+import goods from './goods'
 
 var app = new Koa()
 var router=new Router()
@@ -32,6 +33,7 @@ router.use('/imgdata',imgdata.routes(),imgdata.allowedMethods())
 router.use('/users',users.routes(),users.allowedMethods())
 router.use('/files',files.routes(),files.allowedMethods())
 router.use('/shops',shops.routes(),shops.allowedMethods())
+router.use('/goods',goods.routes(),goods.allowedMethods())
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.listen(80)

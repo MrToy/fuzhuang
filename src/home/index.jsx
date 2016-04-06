@@ -61,7 +61,7 @@ class UserPanel extends Component{
 						</div>
 					)
 				}
-				<Ajax auto url={"/users/info?token="+store.get("token")} onData={user=>this.setState({user:user})} />
+				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>this.setState({user:user})} />
 			</div>
 		)
 	}

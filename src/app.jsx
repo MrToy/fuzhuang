@@ -25,7 +25,6 @@ class RouterList extends Component{
 					<Route path="track.html" component={require('react-router-proxy!./user/track')} />
 					<Route path="diliver.html" component={require('react-router-proxy!./user/diliver')} />
 					<Route path="shop.html" component={require('react-router-proxy!./user/shop')} />
-					<Route path="goods.html" component={require('react-router-proxy!./user/goods')} />
 					<Route path="files.html" component={require('react-router-proxy!./user/files')} />
 				</Route>
 				<Route path="*" component={require('react-router-proxy!./home/404')} />

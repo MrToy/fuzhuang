@@ -11,6 +11,9 @@ import Col from '../lib/Col'
 import ButtonGroup from '../lib/ButtonGroup'
 import Table from '../lib/Table'
 import Paging from '../lib/Paging'
+import Modal from '../lib/Modal'
+import {FormImageButton} from '../lib/ImageFileModal'
+import Image from '../lib/Image'
 
 class Config extends Component{
 	static propTypes ={
@@ -32,15 +35,46 @@ class Config extends Component{
 }
 
 class Goods extends Component{
+	state={addModal:false,name:"",info:"",price:9999,imgs:[],data:[],pages:0,index:1}
+	onData(it){
+		var data=it.data.map(it=>({id:it._id,name:it.name,price:it.price,info:it.info,img:(
+			<Image style={{width:100,height:100}} src={(it.imgs[0]||{}).path}/>
+		),buttons:(
+			<Button onClick={()=>{
+				this.refs.del.request("/goods/"+it._id+"?token="+store.get("token"))
+				this.refs.get.request()
+			}}>删除</Button>
+		)}))
+		this.setState({data,pages:Math.ceil(it.total/5)})
+	}
+	onPaging(i){
+		this.refs.get.request()
+	}
 	render(){
 		return (
 			<div>
-				<Col sm={2} offset={10}>
-					<Button>添加</Button>
-					<Button>删除</Button>
-				</Col>
-				<Table border keys={["a","b","c"]} data={[{a:1,b:2,c:"fvw"},{a:2,b:3,c:5},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2}]} />
-				<Paging  style={{marginTop:20}} total={100} />
+				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true})}>添加</Button>
+				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})}>
+					<Input onChange={e=>this.setState({name:e.target.value})} label="商品名" />
+					<Input onChange={e=>this.setState({price:e.target.value})} type="number" label="价格" />
+					<Input onChange={e=>this.setState({info:e.target.value})} label="商品介绍" type="textarea" />
+					<FormImageButton onCheck={imgs=>this.setState({imgs})} />
+					<Col sm={4} offset={8}>
+						<Button onClick={()=>this.refs.post.request()}>确定</Button>
+						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
+					</Col>
+				</Modal>
+				<Table border keys={["ID","商品名","价格","商品简介","主图","操作"]} data={this.state.data} />
+				<Paging  style={{marginTop:20}} total={this.state.pages} onPaging={i=>{
+					this.setState({index:i})
+					this.refs.get.request("/goods?shop="+this.props.data._id+"&limit=5&skip="+(i-1)*5)
+				}} />
+				<Ajax ref="post" url={"/goods?token="+store.get("token")} method="post" data={JSON.stringify({name:this.state.name,info:this.state.info,imgs:this.state.imgs,price:this.state.price})} onSuccess={()=>{
+					this.setState({addModal:false})
+					this.refs.get.request()
+				}} alert />
+				<Ajax ref="del" method="delete"  alert />
+				<Ajax auto ref="get" url={"/goods?shop="+this.props.data._id+"&limit=5&skip="+(this.state.index-1)*5} onSuccess={this.onData.bind(this)} />
 			</div>
 		)
 	}
@@ -78,7 +112,7 @@ export default class extends Component{
 				):(
 					<Apply />
 				)}
-				<Ajax auto url={"/shops/info?token="+store.get("token")} onData={info=>this.setState({info})} />
+				<Ajax auto url={"/shops/info?token="+store.get("token")} onSuccess={info=>this.setState({info})} />
 			</Box>
 		)
 	}

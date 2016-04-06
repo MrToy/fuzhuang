@@ -63,7 +63,7 @@ export default class extends Component{
 					<Image src={require("../home/404.jpg")} />
 				</Carouse>
 				<Paging  total={100} />
-				<Ajax url={"/users/info?token="+store.get("token")} onData={data=>console.log(data)} />
+				<Ajax url={"/users/info?token="+store.get("token")} onSuccess={data=>console.log(data)} />
 			</div>
 		)
 	}

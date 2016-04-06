@@ -75,7 +75,6 @@ class WithNav extends Component{
 		var list2=[
 			{text:"用户中心",link:"/user.html",icon:User},
 			{text:"店铺管理",link:"/user.html/shop.html",icon:Home},
-			{text:"商品管理",link:"/user.html/goods.html",icon:Drawer},
 			{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
 			{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
 			{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane},

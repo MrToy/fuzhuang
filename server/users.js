@@ -67,7 +67,7 @@ router.put('/',async ctx=>{
 		ctx.throw("昵称最长为30位",400)
 	try{
 		var id=ObjectID(user["_id"])
-		await ctx.mongo.collection("users").update({"_id":id},{"$set":{nickname}})
+		await ctx.mongo.collection("users").updateOne({"_id":id},{"$set":{nickname}})
 	}catch(err){
 		ctx.throw("修改失败")
 	}

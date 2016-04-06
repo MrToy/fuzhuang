@@ -29,7 +29,7 @@ router.put('/',async ctx=>{
 	var {_id}=await getUser(ctx)
 	var {name,info}=await parse.json(ctx)
 	try{
-		await ctx.mongo.collection("shops").update({owner:_id},{"$set":{name,info}})
+		await ctx.mongo.collection("shops").updateOne({owner:_id},{"$set":{name,info}})
 	}catch(err){
 		ctx.throw("修改失败",403)
 	}

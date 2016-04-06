@@ -22,7 +22,7 @@ class UserInfo extends Component{
 				</FormGroup>
 				<Ajax ref="ajax" url={"/users?token="+store.get("token")} data={JSON.stringify({nickname:this.state.nickname})}
 					method="put" alert />
-				<Ajax auto url={"/users/info?token="+store.get("token")} onData={user=>this.setState(user)} />
+				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>this.setState(user)} />
 			</div>
 		)
 	}

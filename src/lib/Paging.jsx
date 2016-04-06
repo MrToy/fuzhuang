@@ -7,7 +7,8 @@ export default class extends Component{
 	static propTypes ={
 		total:React.PropTypes.number,
 		color:React.PropTypes.string,
-		size:React.PropTypes.string
+		size:React.PropTypes.string,
+		onPaging:React.PropTypes.func
 	}
 	state={index:1}
 	pre(){
@@ -37,9 +38,9 @@ export default class extends Component{
 		}
 		return (
 			<div {...this.props}>
-				<Button color={this.props.color} size={this.props.size} disable={this.state.index==1} onClick={()=>this.pre()}  full style={{marginRight:20}}>上一页</Button>
+				<Button key="pre" color={this.props.color} size={this.props.size} disable={this.state.index==1} onClick={()=>this.pre()}  full style={{marginRight:20}}>上一页</Button>
 				{arr}
-				<Button color={this.props.color} size={this.props.size} disable={this.state.index==this.props.total} onClick={()=>this.next()} full style={{marginLeft:20}}>下一页</Button>
+				<Button key="next" color={this.props.color} size={this.props.size} disable={this.state.index==this.props.total} onClick={()=>this.next()} full style={{marginLeft:20}}>下一页</Button>
 				<span style={{margin:"0 10px"}}>共{this.props.total}页</span>
 				<span>到第</span>
 				<Input color={this.props.color} size={this.props.size} ref="page" type="number" inline style={{width:70}} />
