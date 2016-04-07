@@ -26,6 +26,10 @@ var colors={
 	link:{
 		backgroundColor:"transparent",
 		color:"#0E90D2"
+	},
+	red:{
+		backgroundColor:"#C81624",
+		color:"#fff"
 	}
 }
 var sizes={

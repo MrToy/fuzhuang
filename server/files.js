@@ -32,7 +32,7 @@ router.post('/',async ctx=>{
 			for(var i in files){
 				var {path,size,name,type}=files[i]
 				path="/"+Path.relative("upload",path)
-				await ctx.mongo.collection("files").insert({path,size,name,type,pid,owner:user["_id"]})
+				await ctx.mongo.collection("files").insert({path,size,name,type,pid,owner:user["_id"],createTime:new Date()})
 			}
 		}
 	}catch(err){
@@ -72,7 +72,7 @@ router.put('/:id',async ctx=>{
 	try{
 		var id=ObjectID(ctx.params.id)
 		if(data&&data.name)
-			await ctx.mongo.collection("files").update({"_id":id},{"$set":{name:data.name}})
+			await ctx.mongo.collection("files").update({"_id":id,owner:user._id},{"$set":{name:data.name}})
 	}catch(err){
 		ctx.throw("修改失败")
 	}

@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import Radium from 'radium'
-import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,ItemList,menuData,testItems} from './main'
+import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,menuData,testItems} from './main'
 import {Link,browserHistory} from 'react-router'
 import store from 'store'
 import {logout} from './user'
@@ -8,6 +8,7 @@ import {logout} from './user'
 import Carouse from '../lib/Carouse'
 import Image from '../lib/Image'
 import Ajax from '../lib/Ajax'
+import GoodsList from './GoodsList'
 
 @Radium
 class LinkButton extends Component{
@@ -45,7 +46,7 @@ class UserPanel extends Component{
 	}
 	render(){
 		return (
-			<div style={{paddingTop:15,textAlign:"center",verticalAlign:"top",height:160,marginBottom:20,border:"1px solid "+colors.primary}}>
+			<div style={{padding:"15px 0",textAlign:"center",verticalAlign:"top",marginBottom:20,border:"1px solid "+colors.primary}}>
 				<p style={{color:colors.primary,fontSize:20}}>Hi， {this.state.user?(this.state.user.nickname||this.state.user.account):(this.state.tt+"好")}</p>
 				<p style={{color:"#AAA",fontSize:15,margin:20}}>欢迎来到第壹印象</p>
 				{
@@ -84,28 +85,38 @@ class NoticePanel extends Component{
 	}
 }
 
+class TipBar extends Component{
+	render(){
+		return (
+			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
+				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
+			</div>
+		)
+	}
+}
+@Radium
+export class ItemList extends Component{
+	render(){
+		return(
+			<div style={[{width:1200,margin:"0 auto"},this.props.style]}>
+				{this.props.title?<TipBar title={this.props.title} />:null}
+				<div style={{width:1220}}>{this.props.children}</div>
+				<div style={{clear:"both"}}></div>
+			</div>
+		)
+	}
+}
+
 
 export default class extends Component{
+	state={carouse:[],carouse2:[],item1:[],item2:[],item3:[],data3:[]}
 	constructor(props){
 		super(props)
-		this.state={carouse:[],carouse2:[],item1:[],item2:[],item3:[]}
 		fetch("/imgdata?word=服装&len=15&start=15").then(res=>res.json()).then(data=>{
 			this.setState({carouse:data})
 		})
 		fetch("/imgdata?word=服装&len=30&start=200").then(res=>res.json()).then(data=>{
 			this.setState({carouse2:data})
-		})
-		fetch("/imgdata?word=服装&len=30&start=50").then(res=>res.json()).then(data=>{
-			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
-			this.setState({item1:data})
-		})
-		fetch("/imgdata?word=服装&len=30&start=80").then(res=>res.json()).then(data=>{
-			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
-			this.setState({item2:data})
-		})
-		fetch("/imgdata?word=服装&len=30&start=110").then(res=>res.json()).then(data=>{
-			data=data.map(it=>({img:it.url,text:it.title,price:parseInt(Math.random()*300),id:"233"}))
-			this.setState({item3:data})
 		})
 	}
 	render(){
@@ -136,9 +147,15 @@ export default class extends Component{
 						</Carouse>
 					</div>
 				</div>
-				<ItemList title="潮流单品" data={this.state.item1} />
-				<ItemList title="当季促销" data={this.state.item2} />
-				<ItemList title="每日新款" data={this.state.item3} />
+				<ItemList title="潮流单品">
+					<GoodsList url="/goods?limit=5" />
+				</ItemList>
+				<ItemList title="当季促销">
+					<GoodsList url="/goods?limit=5&sort=price,+" />
+				</ItemList>
+				<ItemList title="每日新款">
+					<GoodsList url="/goods?limit=5&sort=createTime,-" />
+				</ItemList>
 				<Footer />
 			</div>
 		)

@@ -34,13 +34,7 @@ class LeftNav extends Component{
 			{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane}
 		]
-		var list2=[
-			{text:"店铺管理",link:"/user.html",icon:User},
-			{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
-			{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
-			{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane}
-		]
-		this.state={choosed:0,list:user&&user.target=="saler"?list2:list}
+		this.state={choosed:0,list}
 	}
 	render(){
 		return (

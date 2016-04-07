@@ -52,7 +52,7 @@ router.post('/',async ctx=>{
 	pass=sum.digest('hex')
 	await ctx.mongo.collection("users").ensureIndex({account:1},{unique: true})
 	try{
-		var res=await ctx.mongo.collection("users").insert({account,pass,target})
+		var res=await ctx.mongo.collection("users").insert({account,pass,target,createTime:new Date()})
 	}catch(err){
 		ctx.throw("该账号已被注册",400)
 	}

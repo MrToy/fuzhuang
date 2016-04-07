@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import Radium from 'radium'
 import Color from 'color'
-import {Link} from 'react-router'
+import {Link,browserHistory} from 'react-router'
 var colors={
 	bg:Color().rgb(246,246,246).hexString(),
 	//primary:"green",
@@ -30,22 +30,21 @@ export class Head extends Component{
 }
 
 export class Search extends Component{
-	constructor(props){
-		super(props)
-		this.state={value:""}
+	state={value:""}
+	onSearch(){
+		this.props.onSearch&&this.props.onSearch(this.state.value)
+		browserHistory.push("/search.html?word="+this.state.value)
 	}
 	render(){
 		return(
-			<div style={{width:606,height:46,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff",marginLeft:120}}>
+			<div  onKeyDown={event=>{if(event.keyCode==13)this.onSearch()}} style={{width:606,height:46,border:"3px solid "+colors.primary,display:"inline-block",background:"#fff",marginLeft:120}}>
 				<input onKeyUp={e=>this.setState({value:e.target.value})} placeholder={this.props.placeholder||"输入产品名称"} style={{fontSize:20,display:"inline",width:470,marginLeft:30,height:40,verticalAlign:"middle",border:"none"}}></input>
-				<Link to={{pathname:"/search.html",query:{word:this.state.value}}}>
-					<button style={{cursor:"pointer",display:"inline",width:100,height:40,verticalAlign:"middle",border:"none",background:colors.primary,color:"#fff",fontHeight:"bolder",fontSize:20}}>
-						<svg style={{fill:"#fff",width:20,height:20,margin:"0 5px",verticalAlign:"middle"}}  viewBox="0 0 16 16">
-							<path d="M15.504 13.616l-3.79-3.223c-0.392-0.353-0.811-0.514-1.149-0.499 0.895-1.048 1.435-2.407 1.435-3.893 0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.486 0 2.845-0.54 3.893-1.435-0.016 0.338 0.146 0.757 0.499 1.149l3.223 3.79c0.552 0.613 1.453 0.665 2.003 0.115s0.498-1.452-0.115-2.003zM6 10c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"></path>
-						</svg>
-						<span>搜索</span>
-					</button>
-				</Link>
+				<button onClick={this.onSearch.bind(this)} style={{cursor:"pointer",display:"inline",width:100,height:40,verticalAlign:"middle",border:"none",background:colors.primary,color:"#fff",fontHeight:"bolder",fontSize:20}}>
+					<svg style={{fill:"#fff",width:20,height:20,margin:"0 5px",verticalAlign:"middle"}}  viewBox="0 0 16 16">
+						<path d="M15.504 13.616l-3.79-3.223c-0.392-0.353-0.811-0.514-1.149-0.499 0.895-1.048 1.435-2.407 1.435-3.893 0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.486 0 2.845-0.54 3.893-1.435-0.016 0.338 0.146 0.757 0.499 1.149l3.223 3.79c0.552 0.613 1.453 0.665 2.003 0.115s0.498-1.452-0.115-2.003zM6 10c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"></path>
+					</svg>
+					<span>搜索</span>
+				</button>
 			</div>
 		)
 	}
@@ -141,15 +140,7 @@ export class MenuBar extends Component{
 		)
 	}
 }
-class TipBar extends Component{
-	render(){
-		return (
-			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
-				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
-			</div>
-		)
-	}
-}
+
 
 @Radium
 class ItemPanel extends Component{
@@ -168,6 +159,16 @@ class ItemPanel extends Component{
 					<b>￥</b>
 					<span>{this.props.price}</span>
 				</p>
+			</div>
+		)
+	}
+}
+
+class TipBar extends Component{
+	render(){
+		return (
+			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
+				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
 			</div>
 		)
 	}

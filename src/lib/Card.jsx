@@ -15,7 +15,7 @@ export default class extends Component{
 		return (
 			<div {...this.props} style={[{width:size*15,height:size*20,border:"1px solid "+color.backgroundColor},this.props.boxStyle]}>
 				{this.props.title&&(<div style={{...color,height:"2em",lineHeight:2,fontSize:size*1.5,textAlign:"center"}}>{this.props.title}</div>)}
-				<div style={[{padding:"1em"},this.props.style]}>{this.props.children}</div>
+				<div style={[{padding:"1em",color:color.backgroundColor},this.props.style]}>{this.props.children}</div>
 			</div>
 		)
 	}

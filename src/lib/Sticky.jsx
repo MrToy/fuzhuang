@@ -25,7 +25,7 @@ export default class extends Component{
 	}
 	render(){
 		return(
-			<div ref="box" {...this.props} style={this.state.isTop?{position:"fixed",top:this.props.top||0}:{position: '',top:''}}></div>
+			<div ref="box" {...this.props} style={this.state.isTop?{position:"fixed",top:this.props.top||0,width:"100%"}:{position: '',top:''}}></div>
 		)
 	}
 }

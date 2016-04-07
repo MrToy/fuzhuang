@@ -25,7 +25,7 @@ export default class extends Component{
 		var Icon=this.props.icon
 		var activeColor=Color(colors[color].backgroundColor).darken(0.3).rgbString()
 		var focusColor=Color(colors[color].backgroundColor).darken(0.2).rgbString()
-		var disableColor=Color(colors[color].backgroundColor).lighten(0.4).rgbString()
+		var disableColor=Color(colors[color].backgroundColor).lighten(0.8).rgbString()
 		return(
 			<button type="button" {...this.props} onClick={this.props.disable?null:this.props.onClick} style={[
 				{

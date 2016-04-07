@@ -9,7 +9,7 @@ router.post('/',async ctx=>{
 	try{
 		var {name,info}=await parse.json(ctx)
 		await ctx.mongo.collection("shops").ensureIndex({owner:1},{unique: true})
-		await ctx.mongo.collection("shops").insert({owner:_id,name,info})
+		await ctx.mongo.collection("shops").insert({owner:_id,name,info,createTime:new Date()})
 	}catch(err){
 		ctx.throw("创建失败",403)
 	}

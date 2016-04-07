@@ -42,9 +42,9 @@ export default class extends Component{
 				{arr}
 				<Button key="next" color={this.props.color} size={this.props.size} disable={this.state.index==this.props.total} onClick={()=>this.next()} full style={{marginLeft:20}}>下一页</Button>
 				<span style={{margin:"0 10px"}}>共{this.props.total}页</span>
-				<span>到第</span>
+				<span style={{marginRight:"1em"}}>到第</span>
 				<Input color={this.props.color} size={this.props.size} ref="page" type="number" inline style={{width:70}} />
-				<span>页</span>
+				<span style={{marginLeft:"1em"}}>页</span>
 				<Button color={this.props.color} size={this.props.size} full onClick={()=>this.go(parseInt(this.refs.page.getValue()))}>确定</Button>
 			</div>
 		)

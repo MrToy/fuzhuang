@@ -1,6 +1,12 @@
 import React,{Component} from 'react'
 import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,ItemList,menuData,testItems} from './main'
 import Radium from 'radium'
+import Paging from '../lib/Paging'
+import Ajax from '../lib/Ajax'
+import ButtonGroup from '../lib/ButtonGroup'
+import Button from '../lib/Button'
+import GoodsList from './GoodsList'
+
 @Radium
 class MenuList extends Component{
 	constructor(props){
@@ -67,74 +73,19 @@ export class MenuButton extends Component{
 	}
 }
 
-@Radium
-class SortBar extends Component{
-	constructor(props){
-		super(props)
-		this.state={selected:"综合"}
-	}
-	set(it){
-		this.setState({selected:it})
-		if(this.props.onChange)this.props.onChange(it)
-	}
-	render(){
-		return(
-			<div style={{marginBottom:20,color:"#999"}}>
-				{["综合","价格","上新时间","热度"].map((it,i)=>{
-					return <MenuButton full={i==0} onClick={()=>this.set(it)} active={this.state.selected==it}>{it}</MenuButton>
-				})}
-			</div>
-		)
-	}
-}
-
-class Paging extends Component{
-	constructor(props){
-		super(props)
-		this.state={index:1}
-	}
-	pre(){
-		this.go(this.state.index-1)
-	}
-	next(){
-		this.go(this.state.index+1)
-	}
-	go(i){
-		if(i<1||i>this.props.total)return
-		this.setState({index:i})
-		if(this.props.onPaging)this.props.onPaging(i)
-		this.refs.page.value=i
-	}
-	render(){
-		var arr=[]
-		for(var i=1;i<=this.props.total;i++){
-			(i=>{
-				arr.push(<MenuButton full={i==1||(this.state.index>5&&i==this.state.index-2)||(this.state.index<this.props.total-5&&i==this.props.total)} active={i==this.state.index} onClick={()=>this.go(i)}>{i}</MenuButton>)
-			})(i)
-		}
-		if(this.state.index>5){
-			arr.splice(1,this.state.index-4,(<div style={{margin:"0 10px",display:"inline-block"}}>...</div>))
-		}
-		if(this.state.index<this.props.total-5){
-			arr.splice(this.state.index>5?7:this.state.index+2,this.props.total-this.state.index-3,(<div style={{margin:"0 10px",display:"inline-block"}}>...</div>))
-		}
-		return (
-			<div {...this.props}>
-				<MenuButton disable={this.state.index==1} onClick={()=>this.pre()}  full style={{marginRight:20}}>上一页</MenuButton>
-				{arr}
-				<MenuButton disable={this.state.index==this.props.total} onClick={()=>this.next()} full style={{marginLeft:20}}>下一页</MenuButton>
-				<span style={{margin:"0 10px"}}>共{this.props.total}页</span>
-				到第<input ref="page" type="number" style={{margin:"0 5px",width:60,height:40,lineHeight:"40px",padding:"0 10px",border:"1px solid "+colors.line}} />页
-				<MenuButton full style={{margin:"0 5px"}} onClick={()=>this.go(parseInt(this.refs.page.value))}>确定</MenuButton>
-			</div>
-		)
-	}
-}
 
 export default class extends Component{
-	constructor(props){
-		super(props)
-		this.state={sort:"",menu:{}}
+	state={sort:"",menu:{},index:1,direct:0,pages:0,data:[],word:null}
+	onSort(i){
+		var sort=""
+		switch(i){
+			case 1:
+				sort="price"
+				break
+			case 2:
+				sort="createTime"
+		}
+		this.setState({sort},()=>this.refs.get.request())
 	}
 	render(){
 		if(this.refs.search)this.refs.search.set(this.props.location.query.word)
@@ -143,16 +94,21 @@ export default class extends Component{
 				<BodyStyle />
 				<Head />
 				<TitleBar>
-					<Search refs="search" placeholder={this.props.location.query.word} />
+					<Search refs="search" placeholder={this.props.location.query.word} onSearch={word=>this.setState({word},()=>this.refs.get.request())} />
 				</TitleBar>
 				<MenuBar data={menuData} />
 				<div style={{width:1200,margin:"0 auto",marginBottom:20}}>
 					<Menu onChange={it=>this.setState({menu:it})} />
-					<SortBar onChange={it=>this.setState({sort:it})}/>
-					<ItemList data={testItems} />
-					<div style={{textAlign:"center"}}>
-						<Paging total={100} style={{display:"inline-block"}} />
-					</div>
+					<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>
+						<Button color="red">综合</Button>
+						<Button color="red">价格</Button>
+						<Button color="red">上新时间</Button>
+						<Button color="red">销量</Button>
+					</ButtonGroup>
+					<Button color="red" onClick={()=>this.setState({direct:!this.state.direct},()=>this.refs.get.request())}>{this.state.direct?"↑升序":"↓降序"}</Button>
+					<GoodsList data={this.state.data} />
+					<Paging color="red" total={this.state.pages} style={{display:"inline-block"}} onPaging={i=>this.setState({index:i},()=>this.refs.get.request())} />
+					<Ajax auto ref="get" url={"/goods?limit=15&sort="+this.state.sort+","+(this.state.direct?"+":"-")+"&word="+(this.state.word||this.props.location.query.word)+"&onSale=true&skip="+(this.state.index-1)*15} onSuccess={it=>this.setState({data:it.data,pages:Math.ceil(it.total/15)})} />
 				</div>	
 				<Footer />
 			</div>
