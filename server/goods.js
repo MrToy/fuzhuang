@@ -51,10 +51,11 @@ router.get('/',async ctx=>{
 	}
 })
 router.delete('/:id',async ctx=>{
-	var user=await getUser(ctx)
+	var {_id}=await getUser(ctx)
 	try{
 		var id=ObjectID(ctx.params.id)
-		await ctx.mongo.collection("goods").remove({"_id":id})
+		var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
+		await ctx.mongo.collection("goods").remove({"_id":id,shop:shop._id})
 	}catch(err){
 		ctx.throw("删除失败")
 	}
