@@ -1,30 +1,32 @@
 import React,{Component} from 'react'
 import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,menuData} from './main'
 import Radium from 'radium'
+import Ajax from '../lib/Ajax'
+import Image from '../lib/Image'
 
 class ItemInfo extends Component{
 	render(){
+		var data=this.props.data||{imgs:[]}
 		return(
 			<div style={{border:"1px solid "+colors.line,padding:20}}>
 				<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
-					<img style={{width:400,height:400}} src={require('./logo.png')} />
+					<Image border style={{width:400,height:400}} src={data.imgs[0]?data.imgs[0].path:require('./014-image.png')} />
 					<div>
-						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
-						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
-						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
-						<img style={{width:78,height:78,margin:10,border:"1px solid"+colors.primary}} src={require('./logo.png')} />
+						{data.imgs.slice(1).map((it,i)=>(
+							<Image border style={{width:78,height:78,margin:10}} src={it.path||require('./014-image.png')} />
+						))}
 					</div>
 				</div>
 				<div style={{display:'inline-block',verticalAlign:"top",marginLeft:20}}>
-					<p style={{fontSize:20,width:680,textAlign:"center"}}>2016夏季新款韩版修身显瘦白色T恤女士短袖圆领紧身纯色打底裤</p>
+					<p style={{fontSize:20,width:680,textAlign:"center"}}>{data.name}</p>
 					<div style={{padding:"20px 50px",margin:"20px 0",background:colors.bg,lineHeight:"50px",color:"#888"}}>
 						<p>
 							<span style={{marginRight:50}}>批发价</span>
-							<span style={{color:colors.primary,fontSize:30}}>¥10.00</span>
+							<span style={{color:colors.primary,fontSize:30}}>¥{data.price}</span>
 						</p>
 						<p>
 							<span style={{marginRight:50}}>淘宝价</span>
-							<span>¥30.00</span>
+							<span>¥{data.price}</span>
 						</p>
 					</div>
 					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
@@ -51,23 +53,20 @@ class ItemInfo extends Component{
 }
 class ImageInfo extends Component{
 	render(){
+		var data=this.props.data||{imgs:[]}
 		return (
 			<div style={{marginTop:30,border:"1px solid "+colors.line}}>
 				<h2 style={{borderBottom:"1px solid "+colors.line,padding:"15px 20px",background:colors.bg,fontSize:16,color:"#333"}}>商品详情</h2>
 				<div style={{padding:20}}>
 					<ul style={{listStyle:"none",fontSize:13,margin:"0 40px 20px 40px"}}>
-						{[{k:"裤长",v:"七分裤"},{k:"货号",v:"872"},{k:"女裤裤型",v:"毛裤"}].map(it=>{
-							return (
-								<li style={{display:"inline-block",margin:20}}>
-									<span style={{marginRight:10,color:"#888"}}>{it.k}:</span>
-									<span style={{color:"#333"}}>{it.v}</span>
-								</li>
-							)
-						})}
+						{data.info}
 					</ul>
 					<p style={{overflow:"hidden",textAlign:"center"}}>
-						<img style={{maxWidth:860}} src={require('./404.jpg')} />
-						<img style={{maxWidth:860}} src={require('./404.jpg')} />
+						{data.imgs.map(it=>(
+							<div style={{padding:50}}>
+								<Image style={{width:"auto",height:"auto"}} src={it.path} />
+							</div>
+						))}
 					</p>
 				</div>
 			</div>
@@ -77,6 +76,7 @@ class ImageInfo extends Component{
 
 
 export default class extends Component{
+	state={data:null}
 	render(){
 		return (
 			<div>
@@ -87,10 +87,11 @@ export default class extends Component{
 				</TitleBar>
 				<MenuBar data={menuData} />
 				<div style={{width:1200,margin:"20px auto"}}>
-					<ItemInfo />
-					<ImageInfo />
+					<ItemInfo data={this.state.data} />
+					<ImageInfo data={this.state.data} />
 				</div>	
 				<Footer />
+				<Ajax auto url={"/goods/"+this.props.location.query.id} onSuccess={it=>this.setState({data:it})} />
 			</div>
 		)
 	}

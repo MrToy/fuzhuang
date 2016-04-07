@@ -14,9 +14,6 @@ class RouterList extends Component{
 					<Route path="login.html" component={require('react-router-proxy!./home/login')} />
 					<Route path="register.html" component={require('react-router-proxy!./home/register')} />
 				</Route>
-				<Route path="/admin.html"  component={require('react-router-proxy!./admin')} >
-					<IndexRoute component={require('react-router-proxy!./home')} />
-				</Route>
 				<Route path="/user.html"  component={require('react-router-proxy!./user')} >
 					<IndexRoute component={require('react-router-proxy!./user/info')} />
 					<Route path="chart.html" component={require('react-router-proxy!./user/chart')} />
@@ -26,6 +23,7 @@ class RouterList extends Component{
 					<Route path="diliver.html" component={require('react-router-proxy!./user/diliver')} />
 					<Route path="shop.html" component={require('react-router-proxy!./user/shop')} />
 					<Route path="files.html" component={require('react-router-proxy!./user/files')} />
+					<Route path="web.html" component={require('react-router-proxy!./user/web')} />
 				</Route>
 				<Route path="*" component={require('react-router-proxy!./home/404')} />
 			</Router>

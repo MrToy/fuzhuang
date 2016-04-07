@@ -11,7 +11,7 @@ class RollLine extends Component{
 			'100%':{width:'90%'}
 		})
 		return (
-			<div style={{width:"100%",height:2,animation:"x 1s ease 0s infinite",animationName:keys,position:"fixed",top:0,left:0,zIndex:999,background:"#0E90D2"}}></div>
+			<div style={{width:"100%",height:2,animation:"x 0.3s ease 0s infinite",animationName:keys,position:"fixed",top:0,left:0,zIndex:999,background:"#0E90D2"}}></div>
 		)
 	}
 }

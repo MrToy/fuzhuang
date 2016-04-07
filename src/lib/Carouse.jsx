@@ -8,7 +8,8 @@ export default class extends Component{
 	static propTypes ={
 		total:React.PropTypes.number,
 		button:React.PropTypes.bool,
-		list:React.PropTypes.bool
+		list:React.PropTypes.bool,
+		speed:React.PropTypes.number
 	}
 	state={index:0}
 	componentDidMount(){
@@ -21,7 +22,7 @@ export default class extends Component{
 		this.timer=setInterval(()=>{
 			if(Radium.getState(this.state,'box',':hover'))return
 			this.next()
-		},5000)
+		},this.props.speed||5000)
 	}
 	stop(){
 		clearInterval(this.timer)

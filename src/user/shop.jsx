@@ -1,5 +1,4 @@
 import React,{Component} from "react"
-import ReactDOM from "react-dom"
 import {Box,MenuPanel} from './'
 import Button from '../lib/Button'
 import store from 'store'

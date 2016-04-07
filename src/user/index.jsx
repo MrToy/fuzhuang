@@ -5,16 +5,16 @@ import {BodyStyle,colors,Footer,Head,TitleBar} from '../home/main'
 import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer,FilesEmpty} from '../lib/icons'
 import Radium from 'radium'
 import store from 'store'
+import Ajax from '../lib/Ajax'
 
 export class Box extends Component{
 	render(){
 		return (
 			<div>
 				<Head />
-				<div style={{padding:"0 30px",background:colors.bg}}>
-					<TitleBar text>{this.props.title}</TitleBar>
-					<div style={{minHeight:700}}>
-						<div style={{margin:"50px 100px",padding:50,border:"1px solid "+colors.line,background:"#fff"}}>
+				<div style={{padding:100,background:colors.bg}}>
+					<div style={{minHeight:620}}>
+						<div style={{padding:50,border:"1px solid "+colors.line,background:"#fff"}}>
 							{this.props.children}
 						</div>
 					</div>
@@ -62,43 +62,58 @@ class NavItem extends Component{
 class WithNav extends Component{
 	constructor(props){
 		super(props)
-		var user=store.get('user')
+		this.state={choosed:0,list:[]}
+	}
+	render(){
 		var list=[
 			{text:"用户中心",link:"/user.html",icon:User},
-			{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
-			{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
-			{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
-			{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
+			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
+			//{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
+			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
+			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
 			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
 		var list2=[
 			{text:"用户中心",link:"/user.html",icon:User},
 			{text:"店铺管理",link:"/user.html/shop.html",icon:Home},
-			{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
-			{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
-			{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane},
+			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
+			//{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
+			//{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane},
 			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
-		this.state={choosed:0,list:user&&user.target=="saler"?list2:list}
-	}
-	render(){
+		var list3=[
+			{text:"用户中心",link:"/user.html",icon:User},
+			{text:"网站管理",link:"/user.html/web.html",icon:Home},
+			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
+			//{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
+			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
+			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
+			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty},
+			{text:"店铺管理",link:"/user.html/shop.html",icon:Home},
+			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack}
+		]
 		return (
 			<div style={{position:"relative"}}>
-				<div ref="nav" style={{width:250,
-					//width:105,marginLeft:-35,":hover":{width:250,marginLeft:0},
-					overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
+				<div ref="nav" style={{width:250,overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
 					<div style={{width:250}}>
 						{this.state.list.map((it,i)=>{
 							return <NavItem active={this.state.choosed==i} onClick={()=>this.setState({choosed:i})} to={it.link} icon={it.icon}>{it.text}</NavItem>
 						})}
 					</div>
 				</div>
-				<div style={{marginLeft:250
-					//Radium.getState(this.state,'nav',':hover')?220:40
-					,transition:"all 0.5s"}}>
+				<div style={{marginLeft:250,transition:"all 0.5s"}}>
 					{this.props.children}
 				</div>
+				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>{
+					if(user.target=="saler")
+						this.setState({list:list2})
+					if(user.target=="buyer")
+						this.setState({list:list})
+					if(user.target=="admin")
+						this.setState({list:list3})
+				}} />
 			</div>
 		)
 	}

@@ -168,15 +168,16 @@ export default class extends Component{
 		this.setState({checked:data})
 		if(this.props.onCheck){
 			var arr=[]
-			function recur(d){
+			function recur(d,id){
 				var c=d.children||[]
 				for(var i in c){
-					if(data.indexOf(c[i].id)>-1)
+					if(id==c[i].id)
 						arr.push(c[i])
-					recur(c[i])
+					recur(c[i],id)
 				}
 			}
-			recur(this.props.data)
+			for(var i in data)
+				recur(this.props.data,data[i])
 			this.props.onCheck(arr)
 		}
 	}

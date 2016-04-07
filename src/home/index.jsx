@@ -109,16 +109,16 @@ export class ItemList extends Component{
 
 
 export default class extends Component{
-	state={carouse:[],carouse2:[],item1:[],item2:[],item3:[],data3:[]}
-	constructor(props){
-		super(props)
-		fetch("/imgdata?word=服装&len=15&start=15").then(res=>res.json()).then(data=>{
-			this.setState({carouse:data})
-		})
-		fetch("/imgdata?word=服装&len=30&start=200").then(res=>res.json()).then(data=>{
-			this.setState({carouse2:data})
-		})
-	}
+	state={carouse:[],carouse2:[],item1:[],item2:[],item3:[],data3:[],config:{}}
+	// constructor(props){
+	// 	super(props)
+	// 	fetch("/imgdata?word=服装&len=15&start=15").then(res=>res.json()).then(data=>{
+	// 		this.setState({carouse:data})
+	// 	})
+	// 	fetch("/imgdata?word=服装&len=30&start=200").then(res=>res.json()).then(data=>{
+	// 		this.setState({carouse2:data})
+	// 	})
+	// }
 	render(){
 		return (
 			<div>
@@ -130,8 +130,8 @@ export default class extends Component{
 				<div style={{width:1200,margin:"0 auto 20px auto",paddingLeft:180}}>
 					<div style={{display:"inline-block",verticalAlign:"top",width:780,height:370,padding:"20px 0 0 20px"}}>
 						<Carouse style={{height:350,width:760}} button list>
-							{this.state.carouse.map(it=>{
-								return <Image src={it.url} />
+							{(this.state.config.imgs1||[]).map(it=>{
+								return <Image src={it.path} />
 							})}
 						</Carouse>
 					</div>
@@ -140,12 +140,13 @@ export default class extends Component{
 							<NoticePanel />
 					</div>
 					<div style={{width:240,padding:"20px 0 0 20px"}}>
-						<Carouse style={{height:160,width:1000}} button total={5}>
-							{this.state.carouse2.map(it=>{
-								return <Image src={it.url} />
+						<Carouse style={{height:160,width:1000}} button total={5} speed={2000}>
+							{(this.state.config.imgs2||[]).map(it=>{
+								return <Image src={it.path} />
 							})}
 						</Carouse>
 					</div>
+					<Ajax ref="config" auto url={"/configs/index"} onSuccess={it=>this.setState({config:it.data})} />
 				</div>
 				<ItemList title="潮流单品">
 					<GoodsList url="/goods?limit=5" />

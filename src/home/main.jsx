@@ -84,9 +84,6 @@ export class Footer extends Component{
 							</Link>
 						)
 					})}
-					<Link to="/admin.html">
-						<li style={{display:"inline-block",fontSize:14,padding:10}}>后台管理</li>
-					</Link>
 				</ul>
 				<p>Copyright © 2016-2020 www.zzwlpf.com 渝 ICP 备 00000000 号</p>
 			</div>
