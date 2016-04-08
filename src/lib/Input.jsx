@@ -68,8 +68,8 @@ export default class extends Component{
 		var LabelIcon=this.props.icon
 		var defaultInput=LabelIcon?(
 			<div style={{display:"table",width:"100%"}}>
-				<span style={{display:"table-cell",width:"1%",padding:"0 1em",verticalAlign:"middle",textAlign:"center",...color,fill:color.color}}>
-					<LabelIcon style={{height:size}} />
+				<span style={{fontSize:size,display:"table-cell",width:"1%",padding:"0 1em",verticalAlign:"middle",textAlign:"center",...color,fill:color.color}}>
+					<LabelIcon />
 				</span>
 				<input ref="input" disabled={this.props.disable}  {...this.props} style={styles.input} />
 			</div>
@@ -95,7 +95,7 @@ export default class extends Component{
 		defaultInput=this.props.inline?(
 			<div style={[{display:"inline-block",verticalAlign:"middle"},this.props.style]}>{defaultInput}</div>
 		):(
-			<div style={{marginBottom:15}}>{defaultInput}</div>
+			<div style={{marginBottom:"2em"}}>{defaultInput}</div>
 		)
 		return defaultInput
 	}
@@ -120,14 +120,14 @@ export class FormGroup extends Component{
 			}
 		}
 		return this.props.horizontal?(
-			<div style={{marginBottom:15}}>
+			<div style={{marginBottom:"2em"}}>
 				<Col sm={this.props.horizontal[0]||2}>
 					{this.props.label&&<label style={[styles.label,{paddingTop:"0.6em",float:"right"}]}>{this.props.label}</label>}
 				</Col>
 				<Col sm={this.props.horizontal[0]||10}>{this.props.children}</Col>
 			</div>
 		):(
-			<div style={{marginBottom:15}}>
+			<div style={{marginBottom:"2em"}}>
 				{this.props.label&&<label style={styles.label}>{this.props.label}</label>}
 				<div>{this.props.children}</div>
 			</div>

@@ -3,7 +3,6 @@ import Radium from 'radium'
 import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,menuData,testItems} from './main'
 import {Link,browserHistory} from 'react-router'
 import store from 'store'
-import {logout} from './user'
 
 import Carouse from '../lib/Carouse'
 import Image from '../lib/Image'
@@ -41,7 +40,7 @@ class UserPanel extends Component{
 		this.state={tt,user:null}
 	}
 	logout(){
-		logout()
+		store.remove('token')
 		location.reload()
 	}
 	render(){

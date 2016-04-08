@@ -50,11 +50,13 @@ class Goods extends Component{
 						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
 					</Col>
 				</Modal>
-				<Table border keys={["ID","商品名","价格","商品简介","主图","创建时间","操作"]} data={this.state.data.map(it=>({
-					id:it._id,name:it.name,
-					price:it.price,info:it.info.length>10?it.info.slice(0,10)+"...":it.info,img:(
-						<Image style={{width:100,height:100}} src={(it.imgs[0]||{}).path}/>
-					),createTime:it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),buttons:(
+				<Table border keys={["ID","商品名","价格","商品简介","主图","创建时间","操作"]} data={this.state.data.map(it=>([
+					it._id,it.name,
+					it.price,
+					it.info.length>10?it.info.slice(0,10)+"...":it.info,
+					<Image style={{width:100,height:100}} src={(it.imgs[0]||{}).path}/>,
+					it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),
+					(
 						<div>
 							<Button color={it.onSale?"default":"primary"} onClick={()=>{
 								this.setState({put:{onSale:!it.onSale}},()=>{
@@ -67,8 +69,8 @@ class Goods extends Component{
 								this.refs.get.request()
 							}}>删除</Button>	
 						</div>
-					)})
-				)} />
+					)
+				]))} />
 				<Paging  style={{marginTop:20}} total={this.state.pages} onPaging={i=>this.setState({index:i},()=>this.refs.get.request())} />
 				<Ajax ref="post" url={"/goods?token="+store.get("token")} method="post" data={JSON.stringify({name:this.state.name,info:this.state.info,imgs:this.state.imgs,price:this.state.price})} onSuccess={()=>this.setState({addModal:false},()=>this.refs.get.request())} alert />
 				<Ajax ref="del" method="delete"  alert />
