@@ -54,9 +54,13 @@ export default class ImageFileModal extends Component{
 }
 
 export class FormImageButton extends Component{
-	state={isOpen:false,checked:[]}
+	static propTypes ={
+		data:React.PropTypes.array,
+		onCheck:React.PropTypes.func
+	}
+	state={isOpen:false}
 	onConfirm(data){
-		this.setState({checked:data,isOpen:false})
+		this.setState({isOpen:false})
 		this.props.onCheck&&this.props.onCheck(data)
 	}
 	render(){
@@ -64,7 +68,7 @@ export class FormImageButton extends Component{
 			<FormGroup>
 				<Button collapse onClick={()=>this.setState({isOpen:true})}>选择图片</Button>
 				<ImageFileModal onConfirm={this.onConfirm.bind(this)} onCancel={()=>this.setState({isOpen:false})} isOpen={this.state.isOpen} />
-				<ImageLine data={this.state.checked} style={{margin:"5px 0 0 0"}} />
+				<ImageLine data={this.props.data} style={{margin:"5px 0 0 0"}} />
 			</FormGroup>
 		)
 	}
