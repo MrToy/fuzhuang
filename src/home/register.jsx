@@ -5,6 +5,7 @@ import {Link,browserHistory} from 'react-router'
 import {LinkButton} from './index'
 import swal from 'sweetalert'
 import 'sweetalert/dist/sweetalert.css'
+import Image from '../lib/Image'
 
 import Ajax from '../lib/Ajax'
 import Input,{FormGroup} from '../lib/Input'
@@ -71,17 +72,49 @@ class RegForm extends Component{
 				<Input label="确认密码" type="password" horizontal
 					color={repass.length==0?"default":(pass==repass?"success":"danger")}
 					onChange={e=>this.setState({repass:e.target.value})}  />
-				<Input label="短信验证码" horizontal
+				<Input label="验证码" horizontal
 					color={captcha.length==0?"default":(captcha.length==4?"success":"danger")}
 					onChange={e=>this.setState({captcha:e.target.value})}  />
+                {/*<Image style="height:22px!important" src={this.state.vfcPicture} */}
 				<FormGroup horizontal>
-					<Button onClick={()=>this.refs.post.request()}>注册</Button>
+					<Button onClick={()=>this.refs.sms.request()}>注册</Button>
 				</FormGroup>
-				<Ajax ref="post" method="post" url={"/users"} data={JSON.stringify({account,pass,repass,captcha,target})} onSuccess={data=>{
-					store.set('token',data.token)
-					browserHistory.push("/")
-				}} alert />
-			</div>	
+				<Ajax auto url={"/users/vfc"} onSuccess={data=>{
+					store.set('content',data.content)
+					this.setState({vfcPicture:data.pic})
+				}} />
+				<Ajax ref="sms" method="post" url={"/users/vfc?content="+store.get('content')} data={JSON.stringify({account,pass,repass,captcha,target})}
+					onSuccess={data=>{
+						//TODO:处理data.result
+						store.set('msg',data.msg)
+						return swal({
+                            title:"信息发送成功！",
+                            text:'请填写6位的验证码，10分钟内有效。',
+                            html:true,
+                            confirmButtonColor:"#26a69a",
+                            cancelButtonText:"取消",
+                            confirmButtonText:"提交",
+                            showCancelButton:true,
+                            closeOnConfirm: false,
+                            inputPlaceholder: "验证码",
+                            type:"input"},
+                        function(value){
+                            if(!value)
+                                return swal.showInputError("请填写验证码_(:зゝ∠)_")
+                            if(value.length!=6)
+                                return swal.showInputError("请正确填写6位验证码_(:зゝ∠)_")
+							this.setState({userSmsCode:value})
+							this.refs.post.request()
+                        }.bind(this))
+					}}
+				/>
+				<Ajax ref="post" method="post" url={"/users?msg="+store.get('msg')} data={JSON.stringify({userSmsCode:this.state.userSmsCode})}
+					onSuccess={data=>{
+						store.set('token',data.token)
+						swal({title:"注册成功！",type:'success',showConfirmButton: false,allowOutsideClick:true,timer:820})
+						browserHistory.push("/")
+				}} alertShowInputError/>
+			</div>
 		)
 	}
 }

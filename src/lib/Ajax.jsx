@@ -27,6 +27,7 @@ export default class extends Component{
 			this.props.alert&&swal("成功",j.info||"","success")
 		}catch(err){
 			this.props.alert&&swal("错误",err,"error")
+			this.props.alertShowInputError&&swal.showInputError(err)
 		}
 	}
 	render(){
