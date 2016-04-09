@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
-import {BodyStyle,colors,Footer,Head,TitleBar} from '../home/main'
+import {colors,Footer,Head,TitleBar} from '../home/main'
 import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer,FilesEmpty} from '../lib/icons'
 import Radium from 'radium'
 import store from 'store'
@@ -11,12 +11,10 @@ export class Box extends Component{
 	render(){
 		return (
 			<div>
-				<Head />
-				<div style={{padding:100,background:colors.bg}}>
-					<div style={{minHeight:620}}>
-						<div style={{padding:50,border:"1px solid "+colors.line,background:"#fff"}}>
+				<TitleBar text>{this.props.title}</TitleBar>
+				<div style={{padding:"50px 100px"}}>
+					<div style={{minHeight:600}}>
 							{this.props.children}
-						</div>
 					</div>
 				</div>
 				<Footer />
@@ -58,12 +56,10 @@ class NavItem extends Component{
 		)
 	}
 }
+
 @Radium
-class WithNav extends Component{
-	constructor(props){
-		super(props)
-		this.state={choosed:0,list:[]}
-	}
+export default class extends Component{
+	state={choosed:0,list:[]}
 	render(){
 		var list=[
 			{text:"用户中心",link:"/user.html",icon:User},
@@ -95,37 +91,29 @@ class WithNav extends Component{
 			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack}
 		]
 		return (
-			<div style={{position:"relative"}}>
-				<div ref="nav" style={{width:250,overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
-					<div style={{width:250}}>
-						{this.state.list.map((it,i)=>{
-							return <NavItem active={this.state.choosed==i} onClick={()=>this.setState({choosed:i})} to={it.link} icon={it.icon}>{it.text}</NavItem>
-						})}
-					</div>
-				</div>
-				<div style={{marginLeft:250,transition:"all 0.5s"}}>
-					{this.props.children}
-				</div>
-				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>{
-					if(user.target=="saler")
-						this.setState({list:list2})
-					if(user.target=="buyer")
-						this.setState({list:list})
-					if(user.target=="admin")
-						this.setState({list:list3})
-				}} />
-			</div>
-		)
-	}
-}
-
-export default class extends Component{
-	render(){
-		return(
 			<div>
-				<BodyStyle />
-				<WithNav>{this.props.children}</WithNav>
-  			</div>
+				<Head />
+				<div style={{position:"relative"}}>
+					<div ref="nav" style={{width:250,overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
+						<div style={{width:250}}>
+							{this.state.list.map((it,i)=>{
+								return <NavItem active={this.state.choosed==i} onClick={()=>this.setState({choosed:i})} to={it.link} icon={it.icon}>{it.text}</NavItem>
+							})}
+						</div>
+					</div>
+					<div style={{marginLeft:250,transition:"all 0.5s"}}>
+						{this.props.children}
+					</div>
+					<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>{
+						if(user.target=="saler")
+							this.setState({list:list2})
+						if(user.target=="buyer")
+							this.setState({list:list})
+						if(user.target=="admin")
+							this.setState({list:list3})
+					}} />
+				</div>
+			</div>
 		)
 	}
 }

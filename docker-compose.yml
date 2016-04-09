@@ -1,24 +1,27 @@
 node:
-  image: daocloud.io/qq08420/fuzhuang:master-e40517b
+  image: daocloud.io/qq08420/fuzhuang:master-10f02ff
   restart: always
   links:
-  - mongo
+  - mongo:mongo
   ports:
   - '80'
   environment:
   - VIRTUAL_HOST=www.*,a.*
+  volumes:
+  - /home/upload:/home/upload
 mongo:
   image: library/mongo:3.2.4
   restart: always
   ports:
   - '27017'
+  volumes:
+  - /data/db:/data/db
 proxy:
-  image: daocloud.io/qq08420/nginx-proxy:master-init
+  image: daocloud.io/qq08420/nginx-proxy:master-bea4f85
   privileged: true
   restart: always
   ports:
   - 443:443
   - 80:80
   volumes:
-  - /root/cache.conf:/etc/nginx/conf.d/cache.conf
   - /var/run/docker.sock:/tmp/docker.sock

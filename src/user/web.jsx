@@ -11,7 +11,7 @@ export default class extends Component{
 	render(){
 		var {imgs1,imgs2}=this.state
 		return(
-			<Box>
+			<Box title="网站管理">
 				<FormGroup horizontal label="主页主轮播图片">
 					<FormImageButton data={imgs1} ref="imgs1"  onCheck={imgs=>this.setState({imgs1:imgs})}  />
 				</FormGroup>

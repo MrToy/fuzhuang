@@ -14,6 +14,7 @@ import Modal from '../lib/Modal'
 import {FormImageButton} from '../lib/ImageFileModal'
 import Image from '../lib/Image'
 import dateFormat from 'dateformat'
+import {Link} from 'react-router'
 
 class Config extends Component{
 	static propTypes ={
@@ -57,7 +58,12 @@ class Goods extends Component{
 				<Table border keys={["商品名","价格","商品简介","主图","创建时间","操作"]} data={this.state.data.map(it=>{
 					var {_id,name,price,info,imgs,onSale,createTime}=it
 					return [
-						name,price,
+						(
+							<Link to={"/item.html?id="+_id}>
+								<Button color="link">{name}</Button>
+							</Link>
+						),
+						price,
 						info.length>10?info.slice(0,10)+"...":info,
 						<Image style={{width:100,height:100}} src={(imgs[0]||{}).path}/>,
 						it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),

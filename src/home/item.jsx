@@ -3,6 +3,7 @@ import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,menuData} from './m
 import Radium from 'radium'
 import Ajax from '../lib/Ajax'
 import Image from '../lib/Image'
+import {Link} from 'react-router'
 
 class ItemInfo extends Component{
 	render(){
@@ -42,7 +43,9 @@ class ItemInfo extends Component{
 						<span style={{color:"#888"}}>颜色</span>
 					</div>
 					<div style={{textAlign:"center"}}>
-						<div style={{margin:20,cursor:"pointer",background:colors.primary,color:"#fff",padding:"5px 20px",display:"inline-block",fontSize:20}}>立即购买</div>
+						<Link to={"/deal.html?id="+data._id}>
+							<div style={{margin:20,cursor:"pointer",background:colors.primary,color:"#fff",padding:"5px 20px",display:"inline-block",fontSize:20}}>立即购买</div>
+						</Link>
 						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",fontSize:20}}>收藏</div>
 						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",fontSize:20}}>加入购物车</div>
 					</div>
