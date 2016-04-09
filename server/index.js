@@ -49,7 +49,13 @@ if(process.env.NODE_ENV=="debug"){
 	app.use(convert(require("koa-webpack-hot-middleware")(compiler)))
 }
 app.use(convert(logger()))
-app.use(convert(mongo({host:process.env['MONGO_PORT_27017_TCP_ADDR']||'localhost',port:27017,db:"main"})))
+app.use(convert(mongo({
+	host:process.env['MONGO_PORT_27017_TCP_ADDR']||process.env['MONGO_HOST']||'localhost',
+	port:process.env['MONGO_PORT']||27017,
+	db:"toy_zzdyyx",
+	user:process.env['MONGO_USER']||"root",
+	pass:process.env['MONGO_PWD']||""
+})))
 app.use(convert(cache("public",{maxAge:30*60*60})))
 app.use(convert(rewrite('/*.html','/index.html')))
 app.use(convert(serve("public")))
