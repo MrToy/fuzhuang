@@ -6,12 +6,13 @@ export default class extends Component{
 	static propTypes ={
 		data:React.PropTypes.array,
 		keys:React.PropTypes.array,
-		compact:React.PropTypes.bool
+		compact:React.PropTypes.bool,
+		center:React.PropTypes.bool
 	}
 	render(){
 		var styles=[
 			{
-				textAlign:"left",
+				textAlign:this.props.center?"center":"left",
 				borderSpacing:0,
 				padding:this.props.compact?2:7
 			},
@@ -19,7 +20,7 @@ export default class extends Component{
 		]
 		var {data,keys}=this.props
 		return(
-			<table style={{width:"100%",overflow:"hidden",borderCollapse:"collapse"}}>
+			<table style={[{width:"100%",overflow:"hidden",borderCollapse:"collapse"},this.props.style]}>
 				<thead>
 					<tr>
 						{(keys||[]).map(it=>{

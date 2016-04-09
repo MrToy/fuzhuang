@@ -6,13 +6,18 @@ var router=new Router()
 
 router.post('/',async ctx=>{
 	var {_id}=await getUser(ctx)
-	try{
-		var {goodsId}=await parse.json(ctx)
-		var goods=await ctx.mongo.collection("goods").findOne({_id:ObjectID(goodsId)})
-		await ctx.mongo.collection("deals").insert({shop:goods.shop,goods:goods._id,buyer:_id,createTime:new Date()})
-	}catch(err){
-		ctx.throw("下单失败",403)
-	}
+	var {amount,goods,addr}=await parse.json(ctx)
+	if(typeof amount!='number')
+		throw "数量有误"
+	var goods=await ctx.mongo.collection("goods").findOne({_id:ObjectID(goods)})
+	if(!goods)
+		throw "商品不存在"
+	if(!goods.onSale)
+		throw "该商品未上架"
+	var addr=await ctx.mongo.collection("addrs").findOne({_id:ObjectID(addr)})
+	if(!addr)
+		throw "地址不存在"
+	await ctx.mongo.collection("deals").insert({amount,goods,addr,buyer:_id,status:"待付款",createTime:new Date()})
 	ctx.body={success:true}
 })
 router.get('/',async ctx=>{
@@ -20,20 +25,12 @@ router.get('/',async ctx=>{
 	var {limit,skip,sort,shop}=ctx.query
 	var config={buyer:_id}
 	if(shop&&shop!=""){
-		try{
-			var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
-			config={shop:shop._id}
-		}catch(err){
-			ctx.throw(err)
-		}
+		var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
+		config={shop:shop._id}
 	}
-	try{
-		var total=await ctx.mongo.collection("deals").find(config).count()
-		var data=await ctx.mongo.collection("deals").find(config).sort({createTime:-1}).limit(parseInt(limit)||20).skip(parseInt(skip)||0).toArray()
-		ctx.body={total,data}
-	}catch(err){
-		ctx.throw("获取失败",403)
-	}
+	var total=await ctx.mongo.collection("deals").find(config).count()
+	var data=await ctx.mongo.collection("deals").find(config).sort({createTime:-1}).limit(parseInt(limit)||20).skip(parseInt(skip)||0).toArray()
+	ctx.body={total,data}
 })
 router.get('/:id',async ctx=>{
 	try{

@@ -64,7 +64,7 @@ export default class extends Component{
 		var list=[
 			{text:"用户中心",link:"/user.html",icon:User},
 			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			//{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
@@ -82,7 +82,7 @@ export default class extends Component{
 			{text:"用户中心",link:"/user.html",icon:User},
 			{text:"网站管理",link:"/user.html/web.html",icon:Home},
 			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			//{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},

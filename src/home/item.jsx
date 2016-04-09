@@ -3,9 +3,11 @@ import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,menuData} from './m
 import Radium from 'radium'
 import Ajax from '../lib/Ajax'
 import Image from '../lib/Image'
+import Input from '../lib/Input'
 import {Link} from 'react-router'
 
 class ItemInfo extends Component{
+	state={amount:1}
 	render(){
 		var data=this.props.data||{imgs:[]}
 		return(
@@ -31,9 +33,6 @@ class ItemInfo extends Component{
 						</p>
 					</div>
 					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
-						<span style={{color:"#888"}}>服务</span>
-					</div>
-					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
 						<span style={{color:"#888"}}>货号</span>
 					</div>
 					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
@@ -42,8 +41,12 @@ class ItemInfo extends Component{
 					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
 						<span style={{color:"#888"}}>颜色</span>
 					</div>
+					<div style={{borderBottom:"1px dotted "+colors.line,padding:"15px 0"}}>
+						<span style={{color:"#888",marginRight:50}}>数量</span>
+						<Input inline type="number" value={this.state.amount} onChange={e=>this.setState({amount:e.target.value})} />
+					</div>
 					<div style={{textAlign:"center"}}>
-						<Link to={"/deal.html?id="+data._id}>
+						<Link to={"/deal.html?id="+data._id+"&amount="+this.state.amount}>
 							<div style={{margin:20,cursor:"pointer",background:colors.primary,color:"#fff",padding:"5px 20px",display:"inline-block",fontSize:20}}>立即购买</div>
 						</Link>
 						<div style={{margin:20,cursor:"pointer",border:"1px solid "+colors.primary,color:colors.primary,padding:"5px 20px",display:"inline-block",fontSize:20}}>收藏</div>
