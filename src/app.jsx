@@ -14,6 +14,7 @@ class RouterList extends Component{
 					<Route path="login.html" component={require('react-router-proxy!./home/login')} />
 					<Route path="register.html" component={require('react-router-proxy!./home/register')} />
 					<Route path="deal.html" component={require('react-router-proxy!./home/deal')} />
+					<Route path="cashier.html" component={require('react-router-proxy!./home/cashier')} />
 				</Route>
 				<Route path="/user.html"  component={require('react-router-proxy!./user')} >
 					<IndexRoute component={require('react-router-proxy!./user/info')} />

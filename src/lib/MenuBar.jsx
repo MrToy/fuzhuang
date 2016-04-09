@@ -1,6 +1,11 @@
 import React,{Component} from "react"
 import {sizes,colors} from './values'
 export default class extends Component{
+	static propTypes ={
+		onChange:React.PropTypes.func,
+		color:React.PropTypes.string,
+		size:React.PropTypes.string
+	}
 	render(){
 		var {data,current,onChange}=this.props
 		var size=this.props.size?sizes[this.props.size]:sizes["xl"]

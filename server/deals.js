@@ -17,8 +17,8 @@ router.post('/',async ctx=>{
 	var addr=await ctx.mongo.collection("addrs").findOne({_id:ObjectID(addr)})
 	if(!addr)
 		throw "地址不存在"
-	await ctx.mongo.collection("deals").insert({amount,goods,addr,buyer:_id,status:"待付款",createTime:new Date()})
-	ctx.body={success:true}
+	var res=await ctx.mongo.collection("deals").insert({amount,goods,addr,buyer:_id,status:"待付款",createTime:new Date()})
+	ctx.body={success:true,id:res.ops[0]['_id']}
 })
 router.get('/',async ctx=>{
 	var {_id}=await getUser(ctx)

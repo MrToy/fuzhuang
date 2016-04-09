@@ -4,6 +4,8 @@ import Ajax from '../lib/Ajax'
 import store from 'store'
 import Table from '../lib/Table'
 import Button from '../lib/Button'
+import {browserHistory} from 'react-router'
+import Tipbar from '../lib/Tipbar'
 
 class Addr extends Component{
 	render(){
@@ -32,11 +34,11 @@ export default class extends Component{
 				<TitleBar text>订单提交</TitleBar>
 				<div style={{height:700,width:1000,margin:"0 auto",paddingTop:50}}>
 					<div>
-						<h4>选择收货地址</h4>
+						<Tipbar title="选择收货地址" />
 						{this.state.addrs.map(it=><Addr active={it._id==this.state.addr._id} onClick={()=>this.setState({addr:it})} {...it} />)}
 					</div>
 					<div style={{marginTop:100}}>
-						<h4 style={{lineHeight:3}}>确定订单信息</h4>
+						<Tipbar title="确定订单信息" />
 						<Table border keys={["商品名","单价","数量","小计"]} data={[[this.state.goods.name,this.state.goods.price,amount,this.state.goods.price*amount]]}/>
 					</div>
 					<div style={{textAlign:"right",marginTop:50}}>
@@ -54,9 +56,12 @@ export default class extends Component{
 						this.setState({addrs:it,addr})
 					}} />
 				<Ajax auto url={"/goods/"+id} onSuccess={it=>this.setState({goods:it})} />
-				<Ajax ref="post" method="post" alert
+				<Ajax ref="post" method="post"
 					data={JSON.stringify({amount,goods:id,addr:this.state.addr._id})}
-					url={"/deals?token="+store.get("token")} />
+					url={"/deals?token="+store.get("token")}
+					onSuccess={it=>{
+						browserHistory.push("/cashier.html?id="+it.id)
+					}} />
 				<Footer />
 			</div>
 		)
