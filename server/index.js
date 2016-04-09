@@ -50,11 +50,9 @@ if(process.env.NODE_ENV=="debug"){
 }
 app.use(convert(logger()))
 app.use(convert(mongo({
-	host:process.env['MONGO_PORT_27017_TCP_ADDR']||process.env['MONGO_ADDR']||'localhost',
-	port:process.env['MONGO_PORT']||27017,
-	db:process.env['MONGO_DB']||"main",
-	user:process.env['MONGO_USER']||null,
-	pass:process.env['MONGO_PASS']||null
+	host:process.env['MONGO_PORT_27017_TCP_ADDR']||'localhost',
+	port:27017,
+	db:"main"
 })))
 app.use(convert(cache("public",{maxAge:30*60*60})))
 app.use(convert(rewrite('/*.html','/index.html')))
