@@ -17,7 +17,7 @@ class LoginPanel extends Component{
 	render(){
 		var {account,pass}=this.state
 		return (
-			<div onKeyDown={event=>{if(event.keyCode==13)this.post()}} style={[{padding:50,border:"1px solid "+colors.line,float:"right"},this.props.style]}>
+			<div onKeyDown={event=>{if(event.keyCode==13)this.refs.post.request()}} style={[{padding:50,border:"1px solid "+colors.line,float:"right"},this.props.style]}>
 				<Input icon={Smile} size="xl"
 					color={account.length==0?"default":(account.length!=11?"danger":"success")} 
 					onChange={e=>this.setState({account:e.target.value})} />

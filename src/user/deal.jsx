@@ -7,6 +7,7 @@ import Ajax from '../lib/Ajax'
 import store from 'store'
 import Button from '../lib/Button'
 import Image from '../lib/Image'
+import {Link} from 'react-router'
 
 export default class extends Component{
 	state={type:"所有订单",data:[]}
@@ -26,7 +27,11 @@ export default class extends Component{
 						goods.price,amount,goods.price*amount,status,
 						(
 							<div>
-								{status=="待付款"&&<Button>立即付款</Button>}
+								{status=="待付款"&&(
+									<Link to={"/cashier.html?id="+it._id}>
+										<Button>立即付款</Button>
+									</Link>
+								)}
 							</div>
 						)
 					]

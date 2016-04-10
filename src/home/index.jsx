@@ -8,6 +8,7 @@ import Carouse from '../lib/Carouse'
 import Image from '../lib/Image'
 import Ajax from '../lib/Ajax'
 import GoodsList from './GoodsList'
+import Tipbar from '../lib/Tipbar'
 
 @Radium
 class LinkButton extends Component{
@@ -19,6 +20,7 @@ class LinkButton extends Component{
 		)
 	}
 }
+
 
 
 class UserPanel extends Component{
@@ -61,7 +63,7 @@ class UserPanel extends Component{
 						</div>
 					)
 				}
-				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>this.setState({user:user})} />
+				<Ajax auto={store.get("token")!=null} url={"/users/info?token="+store.get("token")} onSuccess={user=>this.setState({user:user})} />
 			</div>
 		)
 	}
@@ -84,21 +86,13 @@ class NoticePanel extends Component{
 	}
 }
 
-class TipBar extends Component{
-	render(){
-		return (
-			<div style={{borderBottom:"2px solid "+colors.primary,marginBottom:20}}>
-				<strong style={{display:"inline-block",padding:"0 20px",height:23,background:colors.primary,lineHeight:"23px",fontSize:14,color:"#fff",textAlign:"center"}}>{this.props.title||"#"}</strong>
-			</div>
-		)
-	}
-}
+
 @Radium
 export class ItemList extends Component{
 	render(){
 		return(
 			<div style={[{width:1200,margin:"0 auto"},this.props.style]}>
-				{this.props.title?<TipBar title={this.props.title} />:null}
+				<Tipbar color="red" title={this.props.title} />
 				<div style={{width:1220}}>{this.props.children}</div>
 				<div style={{clear:"both"}}></div>
 			</div>

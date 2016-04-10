@@ -1,5 +1,6 @@
 import React,{Component} from "react"
 import Modal from 'react-modal'
+import Radium from 'radium'
 
 export default class extends Component{
 	render(){
@@ -16,7 +17,8 @@ export default class extends Component{
 				top:"50%",
 				left:"50%",
 				transform:"translate(-50%,-50%)",
-				transition:"all 0.2s"
+				transition:"all 0.2s",
+				...this.props.style
 			}}} />
 		)
 	}

@@ -4,7 +4,7 @@ export default class extends Component{
 	state={choosed:0}
 	render(){
 		return(
-			<div>
+			<div {...this.props}>
 				<ul style={{marginBottom:30,listStyle:"none",fontSize:20,borderBottom:"1px solid #EEE"}}>
 					{React.Children.map(this.props.children,(it,i)=>{
 						var lineColor=this.state.choosed==i?"#000":"rgba(0,0,0,0)"
