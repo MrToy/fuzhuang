@@ -43,12 +43,13 @@ router.post('/',async ctx=>{
 
 router.get('/',async ctx=>{
 	var user=await getUser(ctx)
-	try{
-		ctx.body=await ctx.mongo.collection("files").find({owner:user["_id"]}).toArray()
-	}catch(err){
-		ctx.throw("获取失败")
-	}
+	ctx.body=await ctx.mongo.collection("files").find({owner:user["_id"]}).toArray()
 })
+
+router.get('/image/:name',async ctx=>{
+	var name=ctx.params.name
+})
+
 router.delete('/:id',async ctx=>{
 	var user=await getUser(ctx)
 	try{

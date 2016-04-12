@@ -1,22 +1,21 @@
 import React,{Component} from 'react'
-import {colors,BodyStyle,Head,Footer,TitleBar} from './main'
 import Radium from 'radium'
 import {Link,browserHistory} from 'react-router'
-import {LinkButton} from './index'
-import swal from 'sweetalert'
-import 'sweetalert/dist/sweetalert.css'
-
-import Ajax from '../lib/Ajax'
-import Input,{FormGroup} from '../lib/Input'
-import Button from '../lib/Button'
 import store from 'store'
 
+import Ajax from '../lib/Ajax'
+import FormGroup from '../lib/FormGroup'
+import Button from '../lib/Button'
+import Input from '../lib/Input'
+
+import Header from './lib/Header'
+import TitleBar from './lib/TitleBar'
+import Footer from './lib/Footer'
+
 class SwitchTap extends Component{
-	constructor(props){
-		super(props)
-		this.state={target:0}
-	}
+	state={target:0}
 	render(){
+		var colors={primary:'#C81624'}
 		return (
 			<div>
 				<div onClick={()=>this.setState({target:0})} style={{display:"inline-block",width:"50%",borderBottom:"2px solid "+(!this.state.target?colors.primary:"#AAA"),textAlign:"center",color:!this.state.target?colors.primary:"#AAA",fontSize:20,lineHeight:"50px",cursor:"pointer"}}>我是买家</div>
@@ -62,18 +61,26 @@ class RegForm extends Component{
 		var {target}=this.props
 		return(
 			<div onKeyDown={e=>{e.keyCode==13&&this.refs.post.request()}}>
-				<Input label="手机号" horizontal
-					color={account.length==0?"default":(account.length!=11?"danger":"success")} 
-					onChange={e=>this.setState({account:e.target.value})} />
-				<Input label="密码" type="password" horizontal
-					color={pass.length==0?"default":(pass.length>=6&&pass.length<=30?"success":"danger")} 
-					onChange={e=>this.setState({pass:e.target.value})}  />
-				<Input label="确认密码" type="password" horizontal
-					color={repass.length==0?"default":(pass==repass?"success":"danger")}
-					onChange={e=>this.setState({repass:e.target.value})}  />
-				<Input label="短信验证码" horizontal
-					color={captcha.length==0?"default":(captcha.length==4?"success":"danger")}
-					onChange={e=>this.setState({captcha:e.target.value})}  />
+				<FormGroup label="手机号" horizontal>
+					<Input full
+						color={account.length==0?"default":(account.length!=11?"danger":"success")} 
+						onChange={e=>this.setState({account:e.target.value})} />
+				</FormGroup>
+				<FormGroup label="密码" horizontal>
+					<Input type="password" full
+						color={pass.length==0?"default":(pass.length>=6&&pass.length<=30?"success":"danger")} 
+						onChange={e=>this.setState({pass:e.target.value})}  />
+				</FormGroup>
+				<FormGroup label="确认密码" horizontal>
+					<Input type="password" full
+						color={repass.length==0?"default":(pass==repass?"success":"danger")}
+						onChange={e=>this.setState({repass:e.target.value})}  />
+				</FormGroup>
+				<FormGroup label="短信验证码" horizontal>
+					<Input full
+						color={account.length==0?"default":(account.length!=11?"danger":"success")} 
+						onChange={e=>this.setState({account:e.target.value})} />
+				</FormGroup>
 				<FormGroup horizontal>
 					<Button onClick={()=>this.refs.post.request()}>注册</Button>
 				</FormGroup>
@@ -90,11 +97,10 @@ export default class extends Component{
 	render(){
 		return(
 			<div>
-				<BodyStyle />
-				<Head />
-				<TitleBar text>注册</TitleBar>
+				<Header />
+				<TitleBar text="注册" />
 				<div style={{position:"relative",height:600,width:1200,margin:"0 auto"}}>
-					<div style={{margin:100,height:550,padding:"50px 100px",border:"1px solid "+colors.line}}>
+					<div style={{margin:100,height:550,padding:"50px 100px",border:"1px solid #ccc"}}>
 						<SwitchTap>
 							<RegForm target="buyer" />
 							<RegForm target="saler" />

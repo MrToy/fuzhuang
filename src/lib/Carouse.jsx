@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import {VelocityComponent} from 'velocity-react'
 import Radium from 'radium'
-import {CircleLeft,CircleRight} from './icons'
+import {CircleLeft,CircleRight} from './IconMoon'
 
 @Radium
 export default class extends Component{
@@ -41,6 +41,7 @@ export default class extends Component{
 		var width=(this.props.style||{}).width||600
 		var height=(this.props.style||{}).height||300
 		var total=this.props.total||1
+		var isHover=Radium.getState(this.state,'box',':hover')
 		return (
 			<div ref="box"  style={{":hover":{},width,height,marginBottom:20,position:"relative",overflow:"hidden"}}>
 				<VelocityComponent animation={{marginLeft:-width/total*this.state.index}} duration={1000}>
@@ -50,8 +51,16 @@ export default class extends Component{
 						})}
 					</div>
 				</VelocityComponent>
-				{this.props.button&&<CircleLeft onClick={this.pre.bind(this)} style={{background:"rgba(0,0,0,0.1)",fill:"#fff",":hover":{fill:"#888"},display:Radium.getState(this.state,'box',':hover')?"block":"none",cursor:"pointer",padding:10,position:"absolute",top:0,bottom:0,margin:"auto",width:70,height:70}} />}	
-				{this.props.button&&<CircleRight onClick={this.next.bind(this)} style={{background:"rgba(0,0,0,0.1)",fill:"#fff",":hover":{fill:"#888"},display:Radium.getState(this.state,'box',':hover')?"block":"none",cursor:"pointer",padding:10,position:"absolute",right:0,top:0,bottom:0,margin:"auto",width:70,height:70}} />}
+				{this.props.button&&(
+					<div key="left" onClick={this.pre.bind(this)} style={{color:"#ccc",":hover":{color:"#888"},fontSize:35,display:isHover?"block":"none",cursor:"pointer",padding:10,position:"absolute",top:0,bottom:0,margin:"auto",width:70,height:70}} >
+						<CircleLeft/>
+					</div>
+				)}	
+				{this.props.button&&(
+					<div key="right" onClick={this.next.bind(this)} style={{color:"#ccc",":hover":{color:"#888"},fontSize:35,display:isHover?"block":"none",cursor:"pointer",padding:10,position:"absolute",right:0,top:0,bottom:0,margin:"auto",width:70,height:70}}>
+						<CircleRight  />
+					</div>
+				)}
 				{this.props.list&&(
 					<ul style={{listStyle:"none",position:"absolute",bottom:20,right:20}}>
 						{React.Children.map(this.props.children.slice(0,this.props.children.length-total+1),(child,i)=>{

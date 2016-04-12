@@ -3,7 +3,7 @@ import Radium from 'radium'
 import FileManager,{MenuButton} from '../lib/FileManager'
 import Modal from './Modal'
 import AjaxFileManager from '../lib/AjaxFileManager'
-import {FormGroup} from './Input'
+import FormGroup from './FormGroup'
 import Button from './Button'
 
 @Radium

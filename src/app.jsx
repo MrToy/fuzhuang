@@ -1,3 +1,4 @@
+import 'core-js/shim'
 import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Router,Route,IndexRoute,Link,browserHistory} from 'react-router'
@@ -18,6 +19,7 @@ class RouterList extends Component{
 				</Route>
 				<Route path="/user.html"  component={require('react-router-proxy!./user')} >
 					<IndexRoute component={require('react-router-proxy!./user/info')} />
+					<Route path="info.html" component={require('react-router-proxy!./user/info')} />
 					<Route path="chart.html" component={require('react-router-proxy!./user/chart')} />
 					<Route path="deal.html" component={require('react-router-proxy!./user/deal')} />
 					<Route path="serve.html" component={require('react-router-proxy!./user/serve')} />

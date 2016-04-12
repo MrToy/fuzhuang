@@ -1,9 +1,9 @@
 import React,{Component} from "react"
 import {Link} from 'react-router'
-import AvgGrid from '../lib/AvgGrid'
-import Card from '../lib/Card'
-import Image from '../lib/Image'
-import Ajax from '../lib/Ajax'
+import AvgGrid from '../../lib/AvgGrid'
+import Card from '../../lib/Card'
+import Image from '../../lib/Image'
+import Ajax from '../../lib/Ajax'
 
 export default class extends Component{
 	state={data:[]}

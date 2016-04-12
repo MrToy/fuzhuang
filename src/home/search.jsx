@@ -5,7 +5,7 @@ import Paging from '../lib/Paging'
 import Ajax from '../lib/Ajax'
 import ButtonGroup from '../lib/ButtonGroup'
 import Button from '../lib/Button'
-import GoodsList from './GoodsList'
+import GoodsList from './lib/GoodsList'
 
 @Radium
 class MenuList extends Component{

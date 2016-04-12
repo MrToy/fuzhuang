@@ -1,5 +1,5 @@
 import React,{Component} from "react"
-import {sizes,colors} from './values'
+import {sizes,getColor} from './values'
 export default class extends Component{
 	static propTypes ={
 		onChange:React.PropTypes.func,
@@ -9,7 +9,7 @@ export default class extends Component{
 	render(){
 		var {data,current,onChange}=this.props
 		var size=this.props.size?sizes[this.props.size]:sizes["xl"]
-		var color=this.props.color?colors[this.props.color]:colors["default"]
+		var color=getColor(this.props.color||"default")
 		return(
 			<ul style={{marginBottom:30,listStyle:"none",fontSize:size,borderBottom:"1px solid #EEE"}}>
 				{(this.props.data||[]).map(it=>{

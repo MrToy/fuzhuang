@@ -1,6 +1,6 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import {getAdapt} from './utils'
+import {getAdapt} from './values'
 
 @Radium
 export default class extends Component{
@@ -13,7 +13,7 @@ export default class extends Component{
 	render(){
 		var ctx=this
 		return(
-			<div {...this.props} style={[this.props.style]}>
+			<div {...this.props}>
 				{
 					React.Children.map(this.props.children,function(child,i){
 						return <div style={[

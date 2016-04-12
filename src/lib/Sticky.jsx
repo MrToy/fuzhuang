@@ -10,7 +10,8 @@ export default class extends Component{
 		preY:0
 	}
 	componentDidMount(){
-		this.setState({preY:this.refs.box.offsetTop})
+		this.preY=this.refs.box.offsetTop
+		this.width=this.refs.box.offsetWidth
 		this.onScroll=this.onScroll.bind(this)
 		window.addEventListener('scroll', this.onScroll)
 	}
@@ -18,14 +19,14 @@ export default class extends Component{
 		window.removeEventListener('scroll', this.onScroll)
 	}
 	onScroll(e){
-		if(e.pageY>=this.state.preY)
+		if(e.pageY>=this.preY)
 			this.setState({isTop:true})
 		else
 			this.setState({isTop:false})
 	}
 	render(){
 		return(
-			<div ref="box" {...this.props} style={this.state.isTop?{position:"fixed",top:this.props.top||0,width:"100%"}:{position: '',top:''}}></div>
+			<div ref="box" {...this.props} style={this.state.isTop?{position:"fixed",top:this.props.top||0,width:this.width||"100%",zIndex:3}:{position: '',top:''}}></div>
 		)
 	}
 }

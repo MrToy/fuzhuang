@@ -4,7 +4,8 @@ import Button from '../lib/Button'
 import store from 'store'
 import Ajax from '../lib/Ajax'
 import Card from '../lib/Card'
-import Input,{FormGroup} from '../lib/Input'
+import Input from '../lib/Input'
+import FormGroup from '../lib/FormGroup'
 import {Home} from '../lib/icons'
 import Col from '../lib/Col'
 import ButtonGroup from '../lib/ButtonGroup'
@@ -24,8 +25,12 @@ class Config extends Component{
 	render(){
 		return (
 			<div {...this.props}>
-				<Input value={this.state.name} onChange={e=>this.setState({name:e.target.value})} horizontal label="店铺名" />
-				<Input value={this.state.info} onChange={e=>this.setState({info:e.target.value})} horizontal label="店铺介绍" type="textarea" />
+				<FormGroup horizontal label="店铺名" >
+					<Input value={this.state.name} onChange={e=>this.setState({name:e.target.value})}/>
+				</FormGroup>
+				<FormGroup horizontal label="店铺介绍" >
+					<Input value={this.state.info} onChange={e=>this.setState({info:e.target.value})} horizontal  type="textarea" />
+				</FormGroup>
 				<FormGroup horizontal>
 					<Button collapse onClick={()=>this.refs.ajax.request()}>保存</Button>
 				</FormGroup>
@@ -43,9 +48,15 @@ class Goods extends Component{
 			<div>
 				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,_id:null})}>添加</Button>
 				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})}>
-					<Input value={name} onChange={e=>this.setState({name:e.target.value})} label="商品名" />
-					<Input value={price} onChange={e=>this.setState({price:e.target.value})} type="number" label="价格" />
-					<Input value={info} onChange={e=>this.setState({info:e.target.value})} label="商品介绍" type="textarea" />
+					<FormGroup label="商品名" >
+						<Input full value={name} onChange={e=>this.setState({name:e.target.value})} />
+					</FormGroup>
+					<FormGroup label="价格">
+						<Input full value={price} onChange={e=>this.setState({price:e.target.value})} type="number"  />
+					</FormGroup>
+					<FormGroup label="商品介绍">
+						<Input full value={info} onChange={e=>this.setState({info:e.target.value})} type="textarea" />
+					</FormGroup>
 					<FormImageButton data={imgs} onCheck={imgs=>this.setState({imgs})} />
 					<Col sm={4} offset={8}>
 						<Button onClick={()=>{
@@ -64,7 +75,7 @@ class Goods extends Component{
 							</Link>
 						),
 						price,
-						info.length>10?info.slice(0,10)+"...":info,
+						(info||"").length>10?info.slice(0,10)+"...":info,
 						<Image style={{width:100,height:100}} src={(imgs[0]||{}).path}/>,
 						it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),
 						(
@@ -103,8 +114,12 @@ class Apply extends Component{
 	render(){
 		return this.state.active?(
 			<Card title="店铺申请" size="xl" >
-				<Input onChange={e=>this.setState({name:e.target.value})} label="店铺名" />
-				<Input onChange={e=>this.setState({info:e.target.value})} label="简介" type="textarea" />
+				<FormGroup label="店铺名">
+					<Input onChange={e=>this.setState({name:e.target.value})}  />
+				</FormGroup>
+				<FormGroup  label="简介">
+					<Input onChange={e=>this.setState({info:e.target.value})} type="textarea" />
+				</FormGroup>
 				<Button onClick={()=>this.refs.ajax.request()}>提交申请</Button>
 				<Ajax ref="ajax" url={"/shops?token="+store.get("token")} method="post" data={JSON.stringify({name:this.state.name,info:this.state.info})} alert></Ajax>
 			</Card>

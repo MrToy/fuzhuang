@@ -1,6 +1,6 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import {getAdapt} from './utils'
+import {getAdapt} from './values'
 
 @Radium
 export default class extends Component{
@@ -20,12 +20,12 @@ export default class extends Component{
 					padding:"5px 1.5rem"
 				},
 				...getAdapt.bind(this)(key=>({width:key/12*100+"%"})),
-				this.props.center?{
+				this.props.center&&{
 					margin:"0 auto",display:"block"
-				}:null,
-				this.props.offset?{
+				},
+				this.props.offset&&{
 					marginLeft:this.props.offset/12*100+"%"
-				}:null,
+				},
 				this.props.style
 			]} ></div>
 		)

@@ -1,6 +1,6 @@
 import React,{Component} from "react"
 import {Box} from './'
-import {FormGroup} from '../lib/Input'
+import FormGroup from '../lib/FormGroup'
 import {FormImageButton} from '../lib/ImageFileModal'
 import Button from '../lib/Button'
 import Ajax from '../lib/Ajax'

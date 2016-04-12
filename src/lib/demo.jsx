@@ -1,69 +1,148 @@
 import React,{Component} from "react"
-import AvgGrid from './AvgGrid'
-import Col from './Col'
 import Button from './Button'
 import ButtonGroup from './ButtonGroup'
-import Input,{FormGroup} from './Input'
-import Table from './Table'
-import Image from './Image'
-import Sticky from './Sticky'
-import {FilesEmpty} from './icons'
-import {FormImageButton,ImageLine} from './ImageFileModal'
+import Input from './Input'
+import {Home} from './IconMoon'
+import Col from './Col'
+import Tipbar from './Tipbar'
+import AvgGrid from './AvgGrid'
+import Card from './Card'
+import FormGroup from './FormGroup'
 import Carouse from './Carouse'
+import Image from './Image'
 import Paging from './Paging'
-import Ajax from './Ajax'
-import store from 'store'
+import Sticky from './Sticky'
+import NavBar from './NavBar'
+import {Link} from 'react-router'
 
 export default class extends Component{
 	render(){
 		return(
 			<div>
-				<div style={{border:"1px solid #000"}}>
-					<Col sm={2} md={3} offset={1} style={{border:"1px solid #000"}}>233</Col>
-					<Col sm={2} md={3} offset={4} style={{border:"1px solid #000"}}>2333</Col>
-				</div>
-				<AvgGrid title="2" sm={4}>
-					<div style={{background:"yellow"}}>233</div>
-					<div style={{background:"yellow"}}>233</div>
-					<div style={{background:"yellow"}}>233</div>
-					<div style={{background:"yellow"}}>233</div>
-					<div style={{background:"yellow"}}>233</div>
-				</AvgGrid>
-				<Sticky>
-					<Button>确定</Button>
-				</Sticky>
-				<ButtonGroup>
-					<Button>2333</Button>
-					<Button icon={FilesEmpty}>文件</Button>
-					<Button active>2333</Button>
-				</ButtonGroup>
-				<Input size="xl" label="用户名" horizontal placeholder="输入用户名" />
-				<Input type="password" horizontal  label="密码" placeholder="密码" />
-				<FormImageButton />
-				<FormGroup>
-					<Button>确定</Button>
-				</FormGroup>
-				<Input type="textarea" label="简介" placeholder="简介" />
-				<Input color="success" icon={FilesEmpty} />
+				<Tipbar title="Button" color="random" />
 				<div>
-					<Col sm={4}><Input /></Col>
-					<Col sm={4}><Input /></Col>
-					<Col sm={3}><Button>登录</Button></Col>
+					<Button>测试</Button>
+					<Button disable>测试</Button>
+					<Button><Home />测试</Button>
+					<Button size="xl">测试</Button>
+					<Button color="success">测试</Button>
+					<Button color="warning">测试</Button>
+					<Button color="danger">测试</Button>
 				</div>
-				<div style={{width:"20%"}}>
-					<Image src={require("../home/404.jpg")} circle />
+				<br />
+				<Button full>测试</Button>
+				<br /><br /><br />
+				<Tipbar title="ButtonGroup" color="random" />
+				<ButtonGroup>
+					<Button>测试</Button>
+					<Button>测试</Button>
+					<Button>测试</Button>
+				</ButtonGroup>
+				<br /><br /><br />
+				<Tipbar title="Input" color="random" />
+				<div>
+					<Input placeholder="测试" />
+					<Input placeholder="测试" disable />
+					<Input placeholder="测试" size="xl" />
+					<Input placeholder="测试"  type="textarea" />
 				</div>
-				<Table border keys={["a","b","c"]} data={[{a:1,b:2,c:"fvwntvrewbf87ybe8wrv7"},{a:2,b:3,c:5}]} />
-				<Carouse style={{height:200,width:800}} total={3} button list>
-					<Image src={require("../home/404.jpg")} />
-					<Image src={require("../home/404.jpg")} />
-					<Image src={require("../home/404.jpg")} />
-					<Image src={require("../home/404.jpg")} />
-					<Image src={require("../home/404.jpg")} />
-					<Image src={require("../home/404.jpg")} />
+				<br />
+				<div>
+					<Input placeholder="测试"  addRight={<Home />} color="random" />
+					<Input placeholder="测试"  addLeft={233} />
+				</div>
+				<br />
+				<div>
+					<Input placeholder="测试"  color="success" />
+					<Input placeholder="测试"  color="warning" />
+					<Input placeholder="测试"  color="danger" />
+				</div>
+				<br />
+				<Input full placeholder="测试"  />
+				<br /><br /><br />
+				<Tipbar title="Colume" color="random" />
+				<div>
+					<Col sm={2}>测试2</Col>
+					<Col sm={10}>测试7</Col>
+					<Col center sm={3}>测试3 center</Col>
+					<Col collapse sm={3}>测试collapse</Col>
+				</div>
+				<br /><br /><br />
+				<Sticky>
+					<Tipbar title="Sticky" color="random" />
+				</Sticky>
+				<br /><br /><br />
+				<Tipbar title="AvgGrid" color="random" />
+				<AvgGrid sm={3}>
+					<div>测试3</div>
+					<div>测试3</div>
+					<div>测试3</div>
+					<div>测试3</div>
+					<div>测试3</div>
+					<div>测试3</div>
+				</AvgGrid>
+				<AvgGrid sm={4} collapse>
+					<div>测试 4 collapse</div>
+					<div>测试 4 collapse</div>
+					<div>测试 4 collapse</div>
+					<div>测试 4 collapse</div>
+					<div>测试 4 collapse</div>
+					<div>测试 4 collapse</div>
+				</AvgGrid>
+				<br /><br /><br />
+				<Tipbar title="Card" color="random" />
+				<Card title="测试">测试</Card>
+				<Card title="测试" color="random">测试</Card>
+				<Card full>测试full</Card>
+				<br /><br /><br />
+				<Tipbar title="FormGroup" color="random" />
+				<FormGroup label="测试">
+					<Button>测试</Button>
+				</FormGroup>
+				<FormGroup label="测试">
+					<Input placeholder="测试" />
+				</FormGroup>
+				<FormGroup label="测试" horizontal>
+					<Input placeholder="测试" full />
+				</FormGroup>
+				<FormGroup label="测试" horizontal>
+					<Input placeholder="测试" full type="textarea" />
+				</FormGroup>
+				<FormGroup horizontal>
+					<Button>测试</Button>
+				</FormGroup>
+				<br /><br /><br />
+				<Tipbar title="Carouse" color="random" />
+				<Carouse button list>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
 				</Carouse>
-				<Paging  total={100} />
-				<Ajax url={"/users/info?token="+store.get("token")} onSuccess={data=>console.log(data)} />
+				<Carouse button list total={3} style={{height:150}}>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
+				</Carouse>
+				<br /><br /><br />
+				<Tipbar title="Image" color="random" />
+				<Image src="" />
+				<Image circle src="" />
+				<div style={{width:100,height:100}}>
+					<Image full src="" />
+				</div>
+				<br /><br /><br />
+				<Tipbar title="Paging" color="random" />
+				<Paging total={100} />
+				<br /><br /><br />
+				<Tipbar title="NavBar" color="random" />
+				<NavBar>
+					<Link to="#">测试</Link>
+					<Link to="#">测试</Link>
+					<Link to="#">测试</Link>
+				</NavBar>
 			</div>
 		)
 	}

@@ -3,7 +3,8 @@ import ReactDOM from "react-dom"
 import {MenuPanel,Box} from './'
 import {Link} from 'react-router'
 import store from 'store'
-import Input,{FormGroup} from '../lib/Input'
+import Input from '../lib/Input'
+import FormGroup from '../lib/FormGroup'
 import Button from '../lib/Button'
 import Ajax from '../lib/Ajax'
 import Modal from '../lib/Modal'
@@ -11,20 +12,26 @@ import {FormImageButton} from '../lib/ImageFileModal'
 import Col from '../lib/Col'
 import Table from '../lib/Table'
 import Paging from '../lib/Paging'
+//import Demo from '../lib/demo'
 
 class UserInfo extends Component{
 	state={}
 	render(){
 		return(
 			<div {...this.props}>
-				<Input value={this.state.nickname} onChange={e=>this.setState({nickname:e.target.value})} horizontal label="昵称"/>
-				<Input value={this.state.account} horizontal disable label="账号"/>
+				<FormGroup horizontal label="昵称">
+					<Input value={this.state.nickname} onChange={e=>this.setState({nickname:e.target.value})}/>
+				</FormGroup>
+				<FormGroup horizontal label="账号">
+					<Input value={this.state.account} disable />
+				</FormGroup>
 				<FormGroup horizontal label="密码">
 					<Button collapse onClick={()=>alert("暂不支持的功能")}>重置密码</Button>
 				</FormGroup>
 				<FormGroup horizontal>
-					<Button collapse onClick={()=>this.refs.ajax.request()}>保存</Button>
+					<Button onClick={()=>this.refs.ajax.request()}>保存</Button>
 				</FormGroup>
+
 				<Ajax ref="ajax" url={"/users?token="+store.get("token")} data={JSON.stringify({nickname:this.state.nickname})}
 					method="put" alert />
 				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>this.setState(user)} />
@@ -53,11 +60,21 @@ class AddressTable extends Component{
 			<div>
 				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,_id:""})}>添加</Button>
 				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})}>
-					<Input value={name} onChange={e=>this.setState({name:e.target.value})} label="收货人" />
-					<Input value={addr} onChange={e=>this.setState({addr:e.target.value})} label="所在地区" />
-					<Input value={fullAddr} onChange={e=>this.setState({fullAddr:e.target.value})} label="详细地址" type="textarea" />
-					<Input value={postcode} onChange={e=>this.setState({postcode:e.target.value})} label="邮编" type="number" />
-					<Input value={tel} onChange={e=>this.setState({tel:e.target.value})} label="手机号" type="number" />
+					<FormGroup label="收货人">
+						<Input full value={name} onChange={e=>this.setState({name:e.target.value})} />
+					</FormGroup>
+					<FormGroup label="所在地区" >
+						<Input full value={addr} onChange={e=>this.setState({addr:e.target.value})} />
+					</FormGroup>
+					<FormGroup label="详细地址">
+						<Input full value={fullAddr} onChange={e=>this.setState({fullAddr:e.target.value})} type="textarea" />
+					</FormGroup>
+					<FormGroup label="邮编">
+						<Input full value={postcode} onChange={e=>this.setState({postcode:e.target.value})} type="number" />
+					</FormGroup>
+					<FormGroup label="手机号" >
+						<Input full value={tel} onChange={e=>this.setState({tel:e.target.value})} type="number" />
+					</FormGroup>
 					<Col sm={4} offset={8}>
 						<Button onClick={()=>{
 							_id==""?this.refs.post.request():this.refs.put.request()
