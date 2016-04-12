@@ -14,7 +14,7 @@ export default class extends Component{
 					<Link to={{pathname:"/item.html",query:{id:it._id}}}>
 						<Card color="default" boxStyle={{width:"100%",height:"auto",lineHeight:2}} >
 							<div style={{height:190,position:"relative"}}>
-								<Image src={(it.imgs[0]||{}).path} style={{maxWidth:"100%",height:"auto",width:"auto",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
+								<Image src={"/files/image"+(it.imgs[0]||{}).path+"?w=80&h=80"} style={{maxWidth:"100%",height:"auto",width:"auto",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
 							</div>
 							<p style={{fontSize:"1.2em",color:"#C81624"}}>￥{it.price}</p>
 							<p style={{color:"#000"}}>{it.name}</p>

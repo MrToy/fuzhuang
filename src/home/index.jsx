@@ -135,14 +135,14 @@ export default class extends Component{
 				<TitleBar />
 				<MenuBar active />
 				<InfoBar />
+				<ItemList title="每日新款">
+					<GoodsList url="/goods?limit=5&sort=createTime,-" />
+				</ItemList>
 				<ItemList title="潮流单品">
-					<GoodsList url="/goods?limit=5" />
+					<GoodsList url="/goods?limit=5&sort=info,+" />
 				</ItemList>
 				<ItemList title="当季促销">
 					<GoodsList url="/goods?limit=5&sort=price,+" />
-				</ItemList>
-				<ItemList title="每日新款">
-					<GoodsList url="/goods?limit=5&sort=createTime,-" />
 				</ItemList>
 				<Footer />
 			</div>
