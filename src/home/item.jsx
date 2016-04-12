@@ -15,7 +15,7 @@ class ItemInfo extends Component{
 				<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
 					<Image border style={{width:400,height:400}} src={data.imgs[0]?data.imgs[0].path:require('./014-image.png')} />
 					<div>
-						{data.imgs.slice(1).map((it,i)=>(
+						{data.imgs.slice(1,5).map((it,i)=>(
 							<Image border style={{width:78,height:78,margin:10}} src={it.path||require('./014-image.png')} />
 						))}
 					</div>
