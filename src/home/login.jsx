@@ -19,14 +19,14 @@ class LoginPanel extends Component{
 	render(){
 		var {account,pass}=this.state
 		return (
-			<div onKeyDown={event=>{if(event.keyCode==13)this.refs.post.request()}} style={[{padding:50,border:"1px solid #ccc",float:"right"},this.props.style]}>
+			<div onKeyDown={event=>{if(event.keyCode==13)this.refs.post.request()}} style={[{padding:40,border:"1px solid #ccc",float:"right"},this.props.style]}>
 				<FormGroup>
-					<Input full addLeft={account.length!=11&&account.length!=0?<Sad/>:<Smile />} size="xl" style={{width:270}}
+					<Input addLeft={account.length!=11&&account.length!=0?<Sad/>:<Smile />} size="lg" full
 						color={account.length==0?"default":(account.length!=11?"danger":"success")} 
 						onChange={e=>this.setState({account:e.target.value})} />
 				</FormGroup>
 				<FormGroup>
-					<Input full addLeft={<Lock />} size="xl" type="password"  style={{width:270}}
+					<Input addLeft={<Lock />} type="password" size="lg" full
 						color={pass.length==0?"default":(pass.length>=6&&pass.length<=30?"success":"danger")} 
 						onChange={e=>this.setState({pass:e.target.value})}  />
 				</FormGroup>

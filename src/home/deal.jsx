@@ -1,11 +1,14 @@
 import React,{Component} from 'react'
-import {Head,Footer,TitleBar} from './main'
 import Ajax from '../lib/Ajax'
 import store from 'store'
 import Table from '../lib/Table'
 import Button from '../lib/Button'
 import {browserHistory} from 'react-router'
 import Tipbar from '../lib/Tipbar'
+
+import Header from './lib/Header'
+import TitleBar from './lib/TitleBar'
+import Footer from './lib/Footer'
 
 class Addr extends Component{
 	render(){
@@ -30,8 +33,8 @@ export default class extends Component{
 		var amount=parseInt(this.props.location.query.amount)||1
 		return(
 			<div>
-				<Head />
-				<TitleBar text>订单提交</TitleBar>
+				<Header />
+				<TitleBar text="订单提交" />
 				<div style={{height:700,width:1000,margin:"0 auto",paddingTop:50}}>
 					<div>
 						<Tipbar title="选择收货地址" />
@@ -56,7 +59,7 @@ export default class extends Component{
 						this.setState({addrs:it,addr})
 					}} />
 				<Ajax auto url={"/goods/"+id} onSuccess={it=>this.setState({goods:it})} />
-				<Ajax ref="post" method="post"
+				<Ajax ref="post" method="post" errorAlert
 					data={JSON.stringify({amount,goods:id,addr:this.state.addr._id})}
 					url={"/deals?token="+store.get("token")}
 					onSuccess={it=>{

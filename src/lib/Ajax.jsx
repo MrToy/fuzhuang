@@ -10,7 +10,8 @@ export default class extends Component{
 		]),
 		auto:React.PropTypes.bool,
 		onSuccess:React.PropTypes.func,
-		alert:React.PropTypes.bool
+		alert:React.PropTypes.bool,
+		errorAlert:React.PropTypes.bool
 	}
 	constructor(props){
 		super(props)
@@ -26,7 +27,7 @@ export default class extends Component{
 			this.props.onSuccess&&this.props.onSuccess(j)
 			this.props.alert&&swal("成功",j.info||"","success")
 		}catch(err){
-			this.props.alert&&swal("错误",err,"error")
+			(this.props.alert||this.props.errorAlert)&&swal("错误",err,"error")
 		}
 	}
 	render(){

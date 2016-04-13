@@ -54,8 +54,9 @@ app.use(convert(mongo({
 	port:27017,
 	db:"main"
 })))
-app.use(convert(cache("public",{maxAge:30*60*60})))
 app.use(convert(rewrite('/*.html','/index.html')))
+app.use(convert(cache("public")))
+app.use(convert(cache("upload")))
 app.use(convert(serve("public")))
 app.use(convert(serve("upload")))
 app.use(convert(favicon('./src/favicon.ico')))

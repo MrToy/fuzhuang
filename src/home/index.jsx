@@ -59,12 +59,12 @@ class UserPanel extends Component{
 		return (
 			<Card full color="red" style={{textAlign:"center",marginBottom:"1em"}}>
 				<p style={{fontSize:20}}>Hi， {this.state.user?(this.state.user.nickname||this.state.user.account):(this.state.tt+"好")}</p>
-				<p style={{color:"#AAA",fontSize:15,margin:20}}>欢迎来到第壹印象</p>
+				<p style={{color:"#AAA",fontSize:15,margin:"16px 0 30px 0"}}>欢迎来到第壹印象</p>
 				{
 					this.state.user?(
 						<div>
 							<Link to="/user.html">
-								<Button color="red">用户中心</Button>
+								<Button  color="red">用户中心</Button>
 							</Link>
 							<Button style={{marginRight:0}} color="default" onClick={()=>this.logout()}>注销</Button>
 						</div>
@@ -91,7 +91,7 @@ class ItemList extends Component{
 		return(
 			<div style={{width:1200,margin:"0 auto"}}>
 				<Tipbar color="red" title={this.props.title} />
-				<div style={{width:1220}}>{this.props.children}</div>
+				<div style={{width:1200}}>{this.props.children}</div>
 				<div style={{clear:"both"}}></div>
 			</div>
 		)
@@ -115,9 +115,9 @@ class InfoBar extends Component {
 						<NoticePanel />
 				</div>
 				<div style={{width:240,padding:"20px 0 0 20px"}}>
-					<Carouse style={{height:160,width:1000}} button total={5} speed={2000}>
+					<Carouse style={{height:200,width:1000}} button total={5}>
 						{(this.state.imgs2||[]).map(it=>{
-							return <Image full src={it.path} />
+							return <Image full src={"/files/image"+it.path+"?w=190&h=190"} style={{padding:10}} />
 						})}
 					</Carouse>
 				</div>

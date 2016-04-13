@@ -12,12 +12,12 @@ export default class extends Component{
 			<AvgGrid sm={5}>
 				{(this.props.data||this.state.data).map(it=>(
 					<Link to={{pathname:"/item.html",query:{id:it._id}}}>
-						<Card color="default" boxStyle={{width:"100%",height:"auto",lineHeight:2}} >
+						<Card color="default" full>
 							<div style={{height:190,position:"relative"}}>
-								<Image src={"/files/image"+(it.imgs[0]||{}).path+"?w=200&h=200"} style={{maxWidth:"100%",height:"auto",width:"auto",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
+								<Image src={"/files/image"+(it.imgs[0]||{}).path+"?w=190&h=190"} style={{maxWidth:"100%",height:"auto",width:"auto",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
 							</div>
-							<p style={{fontSize:"1.2em",color:"#C81624"}}>￥{it.price}</p>
-							<p style={{color:"#000"}}>{it.name}</p>
+							<p style={{fontSize:"1.5em",lineHeight:2,color:"#C81624"}}>￥{it.price}</p>
+							<p style={{color:"#000",lineHeight:2}}>{it.name}</p>
 						</Card>
 					</Link>				
 				))}

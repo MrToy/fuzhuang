@@ -24,7 +24,7 @@ export default class extends Component{
 			<button onClick={!this.props.disable&&this.props.onClick} style={[
 				{
 					textAlign:"left",
-					padding:"0.5em 1em",
+					padding:"0.4em 1em",
 					display:this.props.block?"block":"inline-block",
 					fontSize:size,
 					...color,

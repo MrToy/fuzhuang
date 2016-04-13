@@ -1,11 +1,16 @@
 import React,{Component} from 'react'
-import {colors,BodyStyle,Head,TitleBar,Search,Footer,MenuBar,ItemList,menuData,testItems} from './main'
+import {colors} from './main'
 import Radium from 'radium'
 import Paging from '../lib/Paging'
 import Ajax from '../lib/Ajax'
 import ButtonGroup from '../lib/ButtonGroup'
 import Button from '../lib/Button'
+
 import GoodsList from './lib/GoodsList'
+import Header from './lib/Header'
+import TitleBar from './lib/TitleBar'
+import Footer from './lib/Footer'
+import MenuBar from './lib/MenuBar'
 
 @Radium
 class MenuList extends Component{
@@ -58,21 +63,6 @@ class Menu extends Component{
 	}
 }
 
-@Radium
-export class MenuButton extends Component{
-	render(){
-		return (
-			<div {...this.props} style={
-				[{height:40,lineHeight:"40px",transition:"all 0.2s",display:"inline-block",padding:"0 20px",borderRight:"1px solid "+colors.line,borderTop:"1px solid "+colors.line,borderBottom:"1px solid "+colors.line},
-				this.props.active?{cursor:"auto",background:colors.primary,color:"#fff",":hover":{color:"#fff"}}:{cursor:"pointer",":hover":{color:colors.primary}},
-				this.props.full?{borderLeft:"1px solid "+colors.line}:{},
-				this.props.disable?{color:"#CCC",cursor:"not-allowed",":hover":{color:"#CCC"}}:{},
-				this.props.style
-			]}>{this.props.children}</div>
-		)
-	}
-}
-
 
 export default class extends Component{
 	state={sort:"",menu:{},index:1,direct:0,pages:0,data:[],word:null}
@@ -88,15 +78,11 @@ export default class extends Component{
 		this.setState({sort},()=>this.refs.get.request())
 	}
 	render(){
-		if(this.refs.search)this.refs.search.set(this.props.location.query.word)
 		return (
 			<div>
-				<BodyStyle />
-				<Head />
-				<TitleBar>
-					<Search refs="search" placeholder={this.props.location.query.word} onSearch={word=>this.setState({word},()=>this.refs.get.request())} />
-				</TitleBar>
-				<MenuBar data={menuData} />
+				<Header />
+				<TitleBar onSearch={word=>this.setState({word},()=>this.refs.get.request())} />
+				<MenuBar />
 				<div style={{width:1200,margin:"0 auto",marginBottom:20}}>
 					<Menu onChange={it=>this.setState({menu:it})} />
 					<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>

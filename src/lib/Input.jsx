@@ -1,6 +1,7 @@
 import React,{Component} from "react"
 import Radium from 'radium'
 import {getColor,sizes} from './values'
+import Color from 'color'
 
 @Radium
 export default class extends Component{
@@ -11,6 +12,7 @@ export default class extends Component{
 		full:React.PropTypes.bool,
 		addLeft:React.PropTypes.any,
 		addRight:React.PropTypes.any,
+		labelCollapse:React.PropTypes.bool,
 		onChange:React.PropTypes.func
 	}
 	render(){
@@ -23,9 +25,12 @@ export default class extends Component{
 					borderStyle:"solid",
 					borderColor:color.backgroundColor,
 					verticalAlign:"top",
+					...color,
 					":focus":{
-						borderColor:color.backgroundColor,
-						boxShadow:"0px 0px 5px "+color.backgroundColor
+						color:(color.color=="#444"?getColor("primary"):color).color,
+						backgroundColor:(color.color=="#444"?getColor("primary"):color).backgroundColor,
+						borderColor:(color.color=="#444"?getColor("primary"):color).backgroundColor,
+						boxShadow:"0px 0px 5px "+Color((color.color=="#444"?getColor("primary"):color).backgroundColor).lighten(0.8).hexString()
 					},
 					transition:"all 0.2s ease",
 				},
@@ -34,15 +39,17 @@ export default class extends Component{
 					cursor:"not-allowed"
 				},
 				this.props.full?{
-					width:"100%"
+					width:"100%",
+					display:"table"
 				}:{
 					marginRight:"1em",
 					display:"inline-block"
-				}
+				},
+				this.props.boxStyle
 			],
 			input:[
 				{
-					padding:"0.5em",
+					padding:"0.6em",
 					fontSize:size,
 					border:"none"	
 				},
@@ -51,7 +58,16 @@ export default class extends Component{
 				},
 				this.props.style
 			],
-			label:{...color,fontSize:size,padding:"0.5em",transition:"all 0.2s ease"}
+			label:[
+				{
+					fontSize:size,
+					padding:this.props.labelCollapse?"0":"0.5em",
+					transition:"all 0.2s ease"
+				},
+				this.props.full&&{
+					display:"table-cell"
+				}
+			]
 		}
 		return (
 			<div style={styles.box}>
