@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Head,Footer,TitleBar} from './main'
+
 import Ajax from '../lib/Ajax'
 import store from 'store'
 import Table from '../lib/Table'
@@ -8,6 +8,10 @@ import TipBar from '../lib/Tipbar'
 import MenuPanel from '../lib/MenuPanel'
 import {Link} from 'react-router'
 import Modal from '../lib/Modal'
+
+import Header from './lib/Header'
+import TitleBar from './lib/TitleBar'
+import Footer from './lib/Footer'
 
 class PayWay extends Component{
 	render(){
@@ -28,7 +32,7 @@ export default class extends Component{
 		var {goods={},addr={}}=this.state.deal
 		return(
 			<div>
-				<Head />
+				<Header />
 				<TitleBar text>收银台</TitleBar>
 				<div style={{height:700,width:1000,margin:"0 auto",paddingTop:50}}>
 					<TipBar title="订单信息" />

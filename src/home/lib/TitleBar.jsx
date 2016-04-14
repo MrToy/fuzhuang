@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Link,browserHistory} from 'react-router'
 import Input from '../../lib/Input'
 import Button from '../../lib/Button'
-import {Search} from '../../lib/IconMoon'
+import Search from '../../lib/IconMoon/Search'
 
 export default class extends Component {
 	state={value:""}

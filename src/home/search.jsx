@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-import {colors} from './main'
 import Radium from 'radium'
 import Paging from '../lib/Paging'
 import Ajax from '../lib/Ajax'
@@ -24,11 +23,11 @@ class MenuList extends Component{
 	}
 	render(){
 		return(
-			<div style={{borderBottom:"1px solid "+colors.line,padding:"0 20px",transition:"all 0.3s",lineHeight:"50px",height:!this.props.more||this.state.open?(this.props.height||"auto"):50,overflow:"hidden"}}>
+			<div style={{borderBottom:"1px solid #ccc",padding:"0 20px",transition:"all 0.3s",lineHeight:"50px",height:!this.props.more||this.state.open?(this.props.height||"auto"):50,overflow:"hidden"}}>
 				<span style={{marginRight:20}}>{this.props.title}</span>
 				<div style={{display:"inline-block",width:900,verticalAlign:"top",lineHeight:"50px",overflow:"hidden"}}>
 					{this.props.list.map((it,i)=>{
-						return <div onClick={()=>this.set(it)} href="#" key={i} style={[{cursor:"pointer",color:"#555",padding:"0 10px",display:"inline-block",":hover":{color:colors.primary}},this.state.selected==it?{color:colors.primary}:{}]}>{it}</div>
+						return <div onClick={()=>this.set(it)} href="#" key={i} style={[{cursor:"pointer",color:"#555",padding:"0 10px",display:"inline-block",":hover":{color:'#C81624'}},this.state.selected==it?{color:'#C81624'}:{}]}>{it}</div>
 					})}
 				</div>
 				<div  style={{cursor:"pointer",float:"right",display:this.props.more?"block":"none"}} onClick={()=>this.setState({open:!this.state.open})}>
@@ -51,7 +50,7 @@ class Menu extends Component{
 	}
 	render(){
 		return(
-			<div style={{margin:"20px 0",border:"1px solid "+colors.line,color:"#999"}}>
+			<div style={{margin:"20px 0",border:"1px solid #ccc",color:"#999"}}>
 				<MenuList title="分类：" onChange={it=>this.set({type:it})} list={["全部","女装","男装","鞋","内衣","母婴用品","配件箱包","运动户外","美妆饰品"]} />
 				<MenuList title="市场：" onChange={it=>this.set({market:it})} more height={150} list={["全部","国大","大西豪","女人街","国投","富丽","新金马","大时代","宝华","鞋城","圣迦","佰润","西街","新潮都","非凡","柏美","老金马","十三行","欣欣网批","南城","新旺角","周边","万佳","益民","新百佳","西苑鞋汇","景叶","润景","机筑巷","万艺鞋汇"]} />
 				<MenuList title="颜色：" onChange={it=>this.set({color:it})} list={["全部","黑色","白色","灰色","红色","蓝色","粉红色","花色","绿色","军绿色","藏青色","卡其色","杏色","黄色","藕色"]} />

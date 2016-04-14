@@ -30,7 +30,7 @@ export default class extends Component{
 						color:(color.color=="#444"?getColor("primary"):color).color,
 						backgroundColor:(color.color=="#444"?getColor("primary"):color).backgroundColor,
 						borderColor:(color.color=="#444"?getColor("primary"):color).backgroundColor,
-						boxShadow:"0px 0px 5px "+Color((color.color=="#444"?getColor("primary"):color).backgroundColor).lighten(0.8).hexString()
+						boxShadow:"0px 0px 5px "+Color((color.color=="#444"?getColor("primary"):color).backgroundColor).lighten(0.7).hexString()
 					},
 					transition:"all 0.2s ease",
 				},

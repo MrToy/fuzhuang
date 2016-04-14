@@ -15,28 +15,22 @@ export default class extends Component{
 		var size=sizes[this.props.size||"default"]
 		return (
 			<div {...this.props} style={[
-				{border:"1px solid "+color.backgroundColor},
+				{border:"1px solid "+color.backgroundColor,color:color.backgroundColor},
 				!this.props.full&&{
 					width:size*15,
 					height:size*20,
 					display:"inline-block",
 					margin:"0 1em 1em 0"
 				},
+				!this.props.title&&{padding:"1em"},
 				this.props.style
 			]}>
-				{this.props.title&&(
-					<div style={{
-						...color,height:"2em",
-						lineHeight:2,
-						fontSize:size*1.5,
-						textAlign:"center"
-					}}>
-						{this.props.title}
+				{this.props.title?(
+					<div>
+						<div style={{height:"2em",lineHeight:2,fontSize:size*1.5,textAlign:"center",...color}}>{this.props.title}</div>
+						<div style={{padding:"1em"}}>{this.props.children}</div>
 					</div>
-				)}
-				<div style={{padding:"1em",color:color.backgroundColor}}>
-					{this.props.children}
-				</div>
+				):this.props.children}
 			</div>
 		)
 	}

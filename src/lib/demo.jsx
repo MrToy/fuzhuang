@@ -1,8 +1,9 @@
 import React,{Component} from "react"
+import {Link} from 'react-router'
 import Button from './Button'
 import ButtonGroup from './ButtonGroup'
 import Input from './Input'
-import {Home} from './IconMoon'
+import Home from './IconMoon/Home'
 import Col from './Col'
 import Tipbar from './Tipbar'
 import AvgGrid from './AvgGrid'
@@ -13,7 +14,9 @@ import Image from './Image'
 import Paging from './Paging'
 import Sticky from './Sticky'
 import NavBar from './NavBar'
-import {Link} from 'react-router'
+import FileButton from './FileButton'
+import Tree from './Tree'
+
 
 export default class extends Component{
 	render(){
@@ -31,6 +34,9 @@ export default class extends Component{
 				</div>
 				<br />
 				<Button full>测试</Button>
+				<br /><br /><br />
+				<Tipbar title="FileButton" color="random" />
+					<FileButton multiple>测试</FileButton>
 				<br /><br /><br />
 				<Tipbar title="ButtonGroup" color="random" />
 				<ButtonGroup>
@@ -139,10 +145,13 @@ export default class extends Component{
 				<br /><br /><br />
 				<Tipbar title="NavBar" color="random" />
 				<NavBar>
-					<Link to="#">测试</Link>
-					<Link to="#">测试</Link>
-					<Link to="#">测试</Link>
+					<Link to="#" style={{color:"inherit"}}>测试</Link>
+					<Link to="#" style={{color:"inherit"}}>测试</Link>
+					<Link to="#" style={{color:"inherit"}}>测试</Link>
 				</NavBar>
+				<br /><br /><br />
+				<Tipbar title="Tree" color="random" />
+				<Tree />
 			</div>
 		)
 	}

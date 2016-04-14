@@ -19,7 +19,7 @@ export default class extends Component{
 						)
 					})}
 				</ul>
-				<p>Copyright © 2016-2020 www.zzwlpf.com 渝 ICP 备 00000000 号</p>
+				<p>Copyright © 2016-2020   www.zzwlpf.com   渝ICP备16002503号-1 </p>
 			</div>
 		)
 	}

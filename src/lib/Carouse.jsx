@@ -1,7 +1,8 @@
 import React,{Component} from "react"
 import {VelocityComponent} from 'velocity-react'
 import Radium from 'radium'
-import {CircleLeft,CircleRight} from './IconMoon'
+import CircleLeft from './IconMoon/CircleLeft'
+import CircleRight from './IconMoon/CircleRight'
 
 @Radium
 export default class extends Component{

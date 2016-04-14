@@ -7,7 +7,7 @@ export default class extends Component{
 	render(){
 		return(
 			<Box title="文件管理">
-				<AjaxFileManager style={{height:500}} />
+				<AjaxFileManager style={{height:500,minWidth:800,maxWidth:1100}} />
 			</Box>
 		)
 	}	

@@ -1,6 +1,6 @@
 FROM node
 WORKDIR /home
-COPY . .
+ADD . .
 RUN npm install --production
 CMD npm start
 EXPOSE 80

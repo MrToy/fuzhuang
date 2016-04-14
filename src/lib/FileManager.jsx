@@ -1,6 +1,17 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import {FilesEmpty,Folder,FolderOpen,FilePicture,Plus,Minus,CheckMark,CheckMark2} from '../lib/icons'
+import FilesEmpty from './IconMoon/FilesEmpty'
+import Folder from './IconMoon/Folder'
+import FolderOpen from './IconMoon/FolderOpen'
+import FilePicture from './IconMoon/FilePicture'
+import Plus from './IconMoon/Plus'
+import Minus from './IconMoon/Minus'
+import Checkmark  from './IconMoon/Checkmark'
+import Checkmark2 from './IconMoon/Checkmark2'
+import Card from './Card'
+import Col from './Col'
+import Button from './Button'
+import FileButton from './FileButton'
 
 function getIcon(type){
 	var icon=FilesEmpty
@@ -38,7 +49,7 @@ class Tree extends Component{
 			<div style={{marginLeft:20}}>
 				<div style={lineStyle} onClick={()=>this.select(place)} >
 					{data.type=="folder"?<FolderIcon onClick={()=>this.setState({isOpen:!this.state.isOpen})} style={{cursor:"pointer",position:"absolute",left:-20,padding:5,width:20,height:20}} />:null}
-					<Icon style={{width:15,height:15,marginRight:5}} />
+					<span style={{fontSize:15}} ><Icon /></span>
 					<span>{data.text}</span>
 				</div>
 				{
@@ -78,7 +89,7 @@ class FileInfo extends Component{
 		var it=this.props.data
 		var Icon=getIcon(it.type)
 		var checked=this.props.checked
-		var CheckIcon=checked?CheckMark:CheckMark2
+		var CheckIcon=checked?Checkmark:Checkmark2
 		var isHover=Radium.getState(this.state,'box',':hover')
 		return(
 			<div ref="box" style={{":hover":{},position:"relative",display:"inline-block",verticalAlign:"top",margin:20,padding:10,border:"2px solid "+(checked||isHover?"#AAA":"rgba(0,0,0,0)")}}>
@@ -118,24 +129,6 @@ class FileGrid extends Component{
 	}
 }
 
-@Radium
-export class MenuButton extends Component{
-	render(){
-		return <div title={this.props.disable?"请选择一个文件":null} onClick={this.props.disable?null:this.props.onClick} style={[{cursor:this.props.disable?"not-allowed":"pointer",padding:"0 20px",lineHeight:"30px",background:this.props.disable?"#888":"#000",color:"#fff",textAlign:"center"},this.props.style]}>{this.props.children}</div>
-	}
-}
-
-@Radium
-class MenuFileButton extends Component{
-	render(){
-		return (
-			<MenuButton disable={this.props.disable} style={[{overflow:"hidden",position:"relative"},this.props.style]}>
-				{this.props.disable?null:<input multiple onChange={e=>this.props.onFile(e.target.files)} style={{cursor:"pointer",position:"absolute",top:0,left:0,border:"none",background:"none",opacity:0}} type="file"></input>}
-				<span>{this.props.children}</span>
-			</MenuButton>
-		)
-	}
-}
 
 @Radium
 export default class extends Component{
@@ -187,27 +180,29 @@ export default class extends Component{
 	}
 	render(){
 		return (
-			<div style={[{padding:20,position:"relative",border:"1px solid #CCC"},this.props.style]}>
-				<div style={{position:"absolute",top:20,bottom:20,width:180,overflow:"auto",borderRight:"1px solid #CCC"}}>
-					<h4 style={{textAlign:"center",padding:10,margin:"0 20px 10px 10px",borderBottom:"1px solid #CCC"}} >文件目录</h4>
+			<Card full {...this.props}>
+				<Col sm={4}>
+					<h4 style={{textAlign:"center",padding:10,margin:"0 20px 10px 10px",borderBottom:"1px solid"}} >文件目录</h4>
 					<Tree isOpen data={this.props.data} selected={this.state.sel} onSelect={it=>this.select(it)} />
-				</div>
-				<div style={{marginLeft:200,height:"100%"}}>
-					<div style={{overflow:"auto",whiteSpace:"nowrap",padding:10,borderBottom:"1px solid #CCC"}}>
+				</Col>
+				<Col sm={8} style={{borderLeft:"1px solid",height:"100%"}}>
+					<div style={{overflow:"auto",whiteSpace:"nowrap",padding:10,borderBottom:"1px solid"}}>
 						<FileNav data={this.props.data} part={this.state.sel} selected={this.state.sel} noArrow onSelect={it=>this.select(it)} />
 					</div>
-					<div style={{whiteSpace:"nowrap",padding:10,borderBottom:"1px solid #CCC"}}>
-						<MenuButton disable={!this.state.checked.length} onClick={this.onDel.bind(this)} style={{marginRight:20,float:"right"}}>删除</MenuButton>
-						<MenuButton disable={this.getIndex().type!="folder"} onClick={this.props.onAdd} style={{marginRight:20,float:"right"}}>新建文件夹</MenuButton>
-						<MenuButton disable={this.state.checked.length!=1} onClick={this.props.onRename} style={{marginRight:20,float:"right"}}>重命名</MenuButton>						
-						<MenuFileButton disable={this.getIndex().type!="folder"} onFile={this.props.onUpload} style={{marginRight:20,float:"right"}}>上传文件</MenuFileButton>
+					<div style={{whiteSpace:"nowrap",padding:10,borderBottom:"1px solid"}}>
+						<div style={{float:"right"}}>
+							<Button disable={!this.state.checked.length} onClick={this.onDel.bind(this)} >删除</Button>
+							<Button disable={this.getIndex().type!="folder"} onClick={this.props.onAdd} >新建文件夹</Button>
+							<Button disable={this.state.checked.length!=1} onClick={this.props.onRename} >重命名</Button>						
+							<FileButton disable={this.getIndex().type!="folder"} onFile={this.props.onUpload} >上传文件</FileButton>
+						</div>
 						<div style={{clear:"both"}}></div>
 					</div>
 					<div style={{overflow:"auto",height:"calc(100% - 90px)"}}>
 						<FileGrid checked={this.state.checked} data={this.props.data} selected={this.state.sel} onSelect={this.select.bind(this)} onCheck={this.onCheck.bind(this)} />
 					</div>
-				</div>
-			</div>
+				</Col>
+			</Card>
 		)
 	}
 }

@@ -1,11 +1,22 @@
 import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
-import {colors,Footer,Head,TitleBar} from '../home/main'
-import {Cart,Stack,User,PushPin,UserTie,Airplane,Home,Drawer,FilesEmpty} from '../lib/icons'
+import Cart from '../lib/IconMoon/Cart'
+import Stack from '../lib/IconMoon/Stack'
+import User from '../lib/IconMoon/User'
+import Pushpin from '../lib/IconMoon/Pushpin'
+import UserTie from '../lib/IconMoon/UserTie'
+import Airplane from '../lib/IconMoon/Airplane'
+import Home from '../lib/IconMoon/Home'
+import Drawer from '../lib/IconMoon/Drawer'
+import FilesEmpty from '../lib/IconMoon/FilesEmpty'
 import Radium from 'radium'
 import store from 'store'
 import Ajax from '../lib/Ajax'
+
+import Header from '../home/lib/Header'
+import TitleBar from '../home/lib/TitleBar'
+import Footer from '../home/lib/Footer'
 
 export class Box extends Component{
 	render(){
@@ -28,7 +39,7 @@ export class  MenuPanel extends Component{
 	render(){
 		return(
 			<div>
-				<ul style={{marginBottom:30,listStyle:"none",fontSize:20,borderBottom:"1px solid "+colors.line}}>
+				<ul style={{marginBottom:30,listStyle:"none",fontSize:20,borderBottom:"1px solid #ccc"}}>
 					{React.Children.map(this.props.children,(it,i)=>{
 						var lineColor=this.state.choosed==i?"#000":"rgba(0,0,0,0)"
 						var fontColor=this.state.choosed==i?"#000":"#AAA"
@@ -92,7 +103,7 @@ export default class extends Component{
 		]
 		return (
 			<div>
-				<Head />
+				<Header />
 				<div style={{position:"relative"}}>
 					<div ref="nav" style={{width:250,overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
 						<div style={{width:250}}>
