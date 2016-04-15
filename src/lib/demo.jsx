@@ -15,8 +15,8 @@ import Paging from './Paging'
 import Sticky from './Sticky'
 import NavBar from './NavBar'
 import FileButton from './FileButton'
-import Tree from './Tree'
-
+import {Tree,InlineTree} from './Tree'
+import FileManager from './FileManager'
 
 export default class extends Component{
 	render(){
@@ -151,7 +151,28 @@ export default class extends Component{
 				</NavBar>
 				<br /><br /><br />
 				<Tipbar title="Tree" color="random" />
-				<Tree />
+				<Col sm={5}>
+					<Tree data={[
+						{key:null,name:"root",type:"folder",parent:"root"},
+						{key:"1",name:"test1",parent:null,type:"folder"},
+						{key:"2",name:"test2",parent:"1",type:"image/jpeg"},
+					]} />
+				</Col>
+				<Col sm={7}>
+					<InlineTree data={[
+						{key:null,name:"root",type:"folder",parent:"root"},
+						{key:"1",name:"test1",parent:null,type:"folder"},
+						{key:"2",name:"test2",parent:"1",type:"image/jpeg"},
+					]} selected="1" />
+				</Col>
+				<Tipbar title="FileManager" color="random" />
+				<FileManager style={{height:400}} color="random" data={[
+					{key:"1",name:"test1",parent:null,type:"folder"},
+					{key:"2",name:"test2",parent:"1",type:"folder"},
+					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg"},
+					{key:"5",name:"test5.jpg",parent:"1",type:"image/jpeg"},
+					{key:"4",name:"test4",parent:null,type:"folder"}
+				]} />
 			</div>
 		)
 	}

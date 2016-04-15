@@ -13,7 +13,7 @@ export default class extends Component {
 	render(){
 		return (
 			<div style={{borderBottom:this.props.text?"2px solid #C81624":"none"}}  onKeyDown={e=>{e.keyCode==13&&this.onSearch()}}>
-				<div style={{width:1200,margin:"10px auto"}}>
+				<div style={{width:1200,margin:"0 auto",padding:10}}>
 					<Link to="/">
 						<img style={{verticalAlign:"middle",width:100,height:100,margin:"0 30px"}} src={require("./logo.png")} />
 					</Link>

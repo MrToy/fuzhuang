@@ -1,4 +1,6 @@
 import Color from 'color'
+
+
 var sizes={
 	xl:20,
 	lg:18,
@@ -53,6 +55,10 @@ export function getColor(color){
 		},
 		red:{
 			backgroundColor:"#C81624",
+			color:"#fff"
+		},
+		black:{
+			backgroundColor:"#333",
 			color:"#fff"
 		}
 	}

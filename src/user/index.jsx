@@ -1,6 +1,8 @@
 import React,{Component} from "react"
 import ReactDOM from "react-dom"
 import {Link} from 'react-router'
+import {VelocityTransitionGroup} from 'velocity-react'
+
 import Cart from '../lib/IconMoon/Cart'
 import Stack from '../lib/IconMoon/Stack'
 import User from '../lib/IconMoon/User'
@@ -112,7 +114,7 @@ export default class extends Component{
 							})}
 						</div>
 					</div>
-					<div style={{marginLeft:250,transition:"all 0.5s"}}>
+					<div style={{marginLeft:250}}>
 						{this.props.children}
 					</div>
 					<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>{
