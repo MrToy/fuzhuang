@@ -1,26 +1,36 @@
 import React,{Component} from "react"
+import Radium from 'radium'
 import {Link} from 'react-router'
 import AvgGrid from '../../lib/AvgGrid'
 import Card from '../../lib/Card'
 import Image from '../../lib/Image'
 import Ajax from '../../lib/Ajax'
 
+@Radium
+class Goods extends Component{
+	render(){
+		var {_id,imgs,price,name}=this.props
+		return (
+			<Link to={{pathname:"/item.html",query:{id:_id}}}>
+				<div style={{border:"1px solid #EDEDED",":hover":{boxShadow:"0px 0px 15px #DDD"}}}>
+					<img src={"/files/image"+(imgs&&imgs[0]?imgs[0]:{}).path+"?w=222&h=222"} style={{width:222,height:222}}/>
+					<div style={{padding:"5px 10px"}}>
+						<p style={{color:"#C81624",marginBottom:4,fontSize:"1.3em"}}>￥{price}</p>
+						<p style={{lineHeight:"20px",color:"#666",height:"40px",overflow:"hidden"}}>{name}</p>
+					</div>
+				</div>
+			</Link>	
+		)
+	}
+}
+
+
 export default class extends Component{
 	state={data:[]}
 	render(){
 		return (
 			<AvgGrid sm={5}>
-				{(this.props.data||this.state.data).map(it=>(
-					<Link to={{pathname:"/item.html",query:{id:it._id}}}>
-						<Card color="default" full>
-							<div style={{height:190,position:"relative"}}>
-								<Image src={"/files/image"+(it.imgs[0]||{}).path+"?w=190&h=190"} style={{maxWidth:"100%",height:"auto",width:"auto",maxHeight:"100%",position:"absolute",top:0,bottom:0,left:0,right:0,margin:"auto"}}/>
-							</div>
-							<p style={{fontSize:"1.5em",lineHeight:2,color:"#C81624"}}>￥{it.price}</p>
-							<p style={{color:"#000",lineHeight:2}}>{it.name}</p>
-						</Card>
-					</Link>				
-				))}
+				{(this.props.data||this.state.data).map(it=><Goods {...it} />)}
 				{this.props.url&&(
 					<Ajax auto ref="get" url={this.props.url} onSuccess={it=>this.setState({data:it.data})} />
 				)}

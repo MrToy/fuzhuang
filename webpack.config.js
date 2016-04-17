@@ -21,7 +21,6 @@ var config = {
 				}
 			},
 			{ test: /\.css$/,  loader: "style!css" },
-			{ test: /\.less$/,  loader: "style!css!less" },
 			{ test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)([\?]?.*)$/, loader: 'url-loader?limit=8192' }
 		]
 	},

@@ -25,13 +25,14 @@ export default class extends Component{
 							</div>
 						),
 						goods.price,amount,goods.price*amount,status,
-						(
+						status=="待付款"&&(
 							<div>
-								{status=="待付款"&&(
-									<Link to={"/cashier.html?id="+it._id}>
-										<Button>立即付款</Button>
-									</Link>
-								)}
+								<Link to={"/cashier.html?id="+it._id}>
+									<Button>立即付款</Button>
+								</Link>
+								<Link to={"/cashier.html?id="+it._id}>
+									<Button color="default">取消订单</Button>
+								</Link>
 							</div>
 						)
 					]
@@ -39,6 +40,9 @@ export default class extends Component{
 				<Ajax ref="get" auto
 					url={"/deals?token="+store.get("token")}
 					onSuccess={it=>this.setState({data:it.data})} />
+				<Ajax ref="cancle" method="put"
+					url={"/deals?token="+store.get("token")}
+					onSuccess={()=>this.refs.get.request()} />
 			</Box>
 		)
 	}

@@ -58,7 +58,7 @@ export function getColor(color){
 			color:"#fff"
 		},
 		black:{
-			backgroundColor:"#333",
+			backgroundColor:"#000",
 			color:"#fff"
 		}
 	}

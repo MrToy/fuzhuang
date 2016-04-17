@@ -14,7 +14,7 @@ import Header from './lib/Header'
 import TitleBar from './lib/TitleBar'
 import Footer from './lib/Footer'
 import MenuBar from './lib/MenuBar'
-
+import Flag from '../lib/IconMoon/Flag'
 
 class NoticePanel extends Component{
 	render(){
@@ -90,7 +90,13 @@ class ItemList extends Component{
 	render(){
 		return(
 			<div style={{width:1200,margin:"0 auto"}}>
-				<Tipbar color="red" title={this.props.title} />
+				<div style={{borderBottom:"2px solid #C81624",marginBottom:20}}>			
+					<strong style={{display:"inline-block",padding:"0 10px",height:23,color:"#C81624",lineHeight:"1.5em",textAlign:"center"}}>
+						<Flag />
+						<span style={{marginLeft:10}}>{this.props.title||"#"}</span>
+					</strong>
+					<Link to="/search.html" style={{float:"right",marginRight:10}}>more</Link>
+				</div>
 				<div style={{width:1200}}>{this.props.children}</div>
 				<div style={{clear:"both"}}></div>
 			</div>
@@ -136,13 +142,13 @@ export default class extends Component{
 				<MenuBar active />
 				<InfoBar />
 				<ItemList title="每日新款">
-					<GoodsList url="/goods?limit=5&sort=createTime,-" />
+					<GoodsList url="/goods?limit=5&sort=createTime,-&onSale=true" />
 				</ItemList>
 				<ItemList title="潮流单品">
-					<GoodsList url="/goods?limit=5&sort=info,+" />
+					<GoodsList url="/goods?limit=5&sort=info,+&onSale=true" />
 				</ItemList>
 				<ItemList title="当季促销">
-					<GoodsList url="/goods?limit=5&sort=price,+" />
+					<GoodsList url="/goods?limit=5&sort=price,+&onSale=true" />
 				</ItemList>
 				<Footer />
 			</div>

@@ -76,7 +76,7 @@ class ImageInfo extends Component{
 					<div style={{overflow:"hidden",textAlign:"center"}}>
 						{data.imgs.map(it=>(
 							<div style={{padding:50}}>
-								<Image style={{width:"auto",height:"auto"}} src={it.path} />
+								<Image style={{width:"auto",height:"auto",maxWidth:"100%"}} src={it.path} />
 							</div>
 						))}
 					</div>

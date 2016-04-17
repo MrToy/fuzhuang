@@ -12,7 +12,7 @@ import ButtonGroup from '../lib/ButtonGroup'
 import Table from '../lib/Table'
 import Paging from '../lib/Paging'
 import Modal from '../lib/Modal'
-import {FormImageButton} from '../lib/ImageFileModal'
+import FileModalButton from '../lib/FileModalButton'
 import Image from '../lib/Image'
 import dateFormat from 'dateformat'
 import {Link} from 'react-router'
@@ -57,7 +57,7 @@ class Goods extends Component{
 					<FormGroup label="商品介绍">
 						<Input full value={info} onChange={e=>this.setState({info:e.target.value})} type="textarea" />
 					</FormGroup>
-					<FormImageButton data={imgs} onCheck={imgs=>this.setState({imgs})} />
+					<FileModalButton checked={imgs} onCheck={imgs=>this.setState({imgs})} >展示缩略图</FileModalButton>
 					<Col sm={4} offset={8}>
 						<Button onClick={()=>{
 							_id?this.refs.put.request():this.refs.post.request()
@@ -66,7 +66,7 @@ class Goods extends Component{
 						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
 					</Col>
 				</Modal>
-				<Table border keys={["商品名","价格","商品简介","主图","创建时间","操作"]} data={this.state.data.map(it=>{
+				<Table border center keys={["商品名","价格","商品简介","主图","创建时间","操作"]} data={this.state.data.map(it=>{
 					var {_id,name,price,info,imgs,onSale,createTime}=it
 					return [
 						(

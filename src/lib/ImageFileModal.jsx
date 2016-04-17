@@ -65,11 +65,11 @@ export class FormImageButton extends Component{
 	}
 	render(){
 		return (
-			<FormGroup>
+			<div>
 				<Button collapse onClick={()=>this.setState({isOpen:true})}>选择图片</Button>
 				<ImageFileModal onConfirm={this.onConfirm.bind(this)} onCancel={()=>this.setState({isOpen:false})} isOpen={this.state.isOpen} />
 				<ImageLine data={this.props.data} style={{margin:"5px 0 0 0"}} />
-			</FormGroup>
+			</div>
 		)
 	}
 }

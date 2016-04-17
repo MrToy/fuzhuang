@@ -10,13 +10,10 @@ import Image from './IconMoon/Image'
 
 export function getIcon(type,sec){
 	var Icon=FileEmpty
-	switch(type){
-		case "folder":
-			Icon=sec?FolderOpen:Folder
-			break
-		case "image/jpeg":
-			Icon=Image
-	}
+	if(type=="folder")
+		Icon=sec?FolderOpen:Folder
+	if(type.match(/image/))
+		Icon=Image
 	return Icon
 }
 
@@ -42,7 +39,7 @@ class TreeNode extends Component{
 				<span style={[
 					{cursor:"pointer",padding:"2px 5px",lineHeight:1.5,userSelect:"none",whiteSpace:"nowrap"},
 					this.props.active?{background:"#FFE6B0",border:"1px solid #FFB951"}:{border:"1px solid transparent"}
-				]} onClick={this.props.onClick}>
+				]} draggable onDragStart={e=>e.dataTransfer.setData("Text",this.props.id)} onClick={this.props.onClick}>
 					<Icon />
 					{this.props.name}
 				</span>
@@ -65,17 +62,14 @@ export class InlineTree extends Component{
 		var res=[]
 		for(let it=data.find(b=>b.key==selected);it;it=data.find(b=>b.key==it.parent)){
 			res.unshift(
-				<TreeNode active={selected==it.key} {...it}
+				<TreeNode active={selected==it.key} {...it} id={it.key}
 					style={{display:"inline",margin:"0 20px"}}
-					onClick={this.props.onSelect&&(()=>{
-						this.props.onSelect(it.key)
-						if(this.props.onDir)it.type=="folder"?this.props.onDir(it.key):this.props.onDir(it.parent)
-					})} />
+					onClick={this.props.onSelect&&(()=>this.props.onSelect(it.key))} />
 			)
 			res.unshift(">")
 		}
 		res.shift()
-		return <div>{res}</div>
+		return <span>{res}</span>
 	}
 }
 
@@ -90,11 +84,10 @@ export class Tree extends Component{
 		var res=[]
 		var selected=this.props.onSelect?this.props.selected:this.state.selected
 		return data.filter(it=>it.parent==parent).map(it=>(
-			<TreeNode active={selected==it.key} {...it} style={{marginLeft:20}}
+			<TreeNode active={selected==it.key} {...it} style={{marginLeft:20}} id={it.key}
 				onClick={()=>{
 					this.setState({selected:it.key})
 					this.props.onSelect&&this.props.onSelect(it.key)
-					if(this.props.onDir)it.type=="folder"?this.props.onDir(it.key):this.props.onDir(it.parent)
 				}} >
 				{it.type=="folder"&&this.recur(data,it.key)}
 			</TreeNode>

@@ -16,12 +16,13 @@ import Sticky from './Sticky'
 import NavBar from './NavBar'
 import FileButton from './FileButton'
 import {Tree,InlineTree} from './Tree'
-import FileManager from './FileManager'
+import FileManager,{FileBar} from './FileManager'
+import FileModalButton from './FileModalButton'
 
 export default class extends Component{
 	render(){
 		return(
-			<div>
+			<div style={{padding:20}}>
 				<Tipbar title="Button" color="random" />
 				<div>
 					<Button>测试</Button>
@@ -165,14 +166,26 @@ export default class extends Component{
 						{key:"2",name:"test2",parent:"1",type:"image/jpeg"},
 					]} selected="1" />
 				</Col>
+				<br /><br /><br />
 				<Tipbar title="FileManager" color="random" />
-				<FileManager style={{height:400}} color="random" data={[
+				<FileManager style={{height:400}} color="black" data={[
 					{key:"1",name:"test1",parent:null,type:"folder"},
 					{key:"2",name:"test2",parent:"1",type:"folder"},
-					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg"},
+					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg",url:require("../home/logo.png")},
 					{key:"5",name:"test5.jpg",parent:"1",type:"image/jpeg"},
 					{key:"4",name:"test4",parent:null,type:"folder"}
 				]} />
+				<br /><br /><br />
+				<Tipbar title="FileBar" color="random" />
+				<FileBar data={[
+					{key:"1",name:"test1",parent:null,type:"folder"},
+					{key:"2",name:"test2",parent:"1",type:"folder"},
+					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg",url:require("../home/logo.png")},
+					{key:"5",name:"test5.jpg",parent:"1",type:"image/jpeg"}
+				]} />
+				<br /><br /><br />
+				<Tipbar title="FileModalButton" color="random" />
+				<FileModalButton>选择图片</FileModalButton>
 			</div>
 		)
 	}

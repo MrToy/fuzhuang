@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import {Box} from './'
 import FormGroup from '../lib/FormGroup'
-import {FormImageButton} from '../lib/ImageFileModal'
+import FileModalButton from '../lib/FileModalButton'
 import Button from '../lib/Button'
 import Ajax from '../lib/Ajax'
 import store from 'store'
@@ -13,10 +13,10 @@ export default class extends Component{
 		return(
 			<Box title="网站管理">
 				<FormGroup horizontal label="主页主轮播图片">
-					<FormImageButton data={imgs1} ref="imgs1"  onCheck={imgs=>this.setState({imgs1:imgs})}  />
+					<FileModalButton checked={imgs1} ref="imgs1"  onCheck={imgs=>this.setState({imgs1:imgs})} >图片选择</FileModalButton>
 				</FormGroup>
 				<FormGroup horizontal label="主页次轮播图片">
-					<FormImageButton data={imgs2} ref="imgs2"  onCheck={imgs=>this.setState({imgs2:imgs})} />
+					<FileModalButton checked={imgs2} ref="imgs2"  onCheck={imgs=>this.setState({imgs2:imgs})} >图片选择</FileModalButton>
 				</FormGroup>
 				<FormGroup horizontal>
 					<Button collapse onClick={()=>this.refs.post.request()}>保存</Button>

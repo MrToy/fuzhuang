@@ -12,7 +12,6 @@ import {FormImageButton} from '../lib/ImageFileModal'
 import Col from '../lib/Col'
 import Table from '../lib/Table'
 import Paging from '../lib/Paging'
-import Demo from '../lib/demo'
 
 class UserInfo extends Component{
 	state={}
@@ -31,7 +30,6 @@ class UserInfo extends Component{
 				<FormGroup horizontal>
 					<Button onClick={()=>this.refs.ajax.request()}>保存</Button>
 				</FormGroup>
-				{this.state.target=="admin"&&<Demo />}
 				<Ajax ref="ajax" url={"/users?token="+store.get("token")} data={JSON.stringify({nickname:this.state.nickname})}
 					method="put" alert />
 				<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>this.setState(user)} />

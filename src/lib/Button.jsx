@@ -17,9 +17,8 @@ export default class extends Component{
 	render(){
 		var color=getColor(this.props.color||"primary")
 		var size=sizes[this.props.size||"default"]
-		var activeColor=Color(color.backgroundColor).darken(0.3).rgbString()
-		var focusColor=Color(color.backgroundColor).darken(0.2).rgbString()
-		var disableColor=Color(color.backgroundColor).lighten(0.8).rgbString()
+		var activeColor=Color(color.backgroundColor).darken(0.3).hexString()
+		var focusColor=Color(color.backgroundColor).darken(0.2).hexString()
 		return(
 			<button onClick={!this.props.disable&&this.props.onClick} style={[
 				{
@@ -42,8 +41,7 @@ export default class extends Component{
 				},
 				this.props.disable?{
 					cursor: "not-allowed",
-					backgroundColor:disableColor,
-					borderColor:disableColor
+					opacity:0.4
 				}:{	
 					":focus":{
 						outline:"thin dotted "+color.color,

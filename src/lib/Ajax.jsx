@@ -25,7 +25,7 @@ export default class extends Component{
 				throw j.error
 			}
 			this.props.onSuccess&&this.props.onSuccess(j)
-			this.props.alert&&swal("成功",j.info||"","success")
+			this.props.alert&&swal({title:"成功",text:j.info||"",type:"success",timer:1000})
 		}catch(err){
 			(this.props.alert||this.props.errorAlert)&&swal("错误",err,"error")
 		}
