@@ -18,6 +18,7 @@ export default class extends Component{
 				left:"50%",
 				transform:"translate(-50%,-50%)",
 				transition:"all 0.2s",
+				maxHeight:800,
 				...this.props.style
 			}}} />
 		)

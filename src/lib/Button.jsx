@@ -17,8 +17,8 @@ export default class extends Component{
 	render(){
 		var color=getColor(this.props.color||"primary")
 		var size=sizes[this.props.size||"default"]
-		var activeColor=Color(color.backgroundColor).darken(0.3).hexString()
-		var focusColor=Color(color.backgroundColor).darken(0.2).hexString()
+		var activeColor=color.backgroundColor=="transparent"?"transparent":Color(color.backgroundColor).darken(0.3).hexString()
+		var focusColor=color.backgroundColor=="transparent"?"transparent":Color(color.backgroundColor).darken(0.2).hexString()
 		return(
 			<button onClick={!this.props.disable&&this.props.onClick} style={[
 				{

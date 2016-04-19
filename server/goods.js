@@ -15,12 +15,8 @@ router.post('/',async ctx=>{
 })
 
 router.get('/:id',async ctx=>{
-	try{
-		var id=ObjectID(ctx.params.id)
-		ctx.body=await ctx.mongo.collection("goods").findOne({_id:id})
-	}catch(err){
-		ctx.throw("获取失败",403)
-	}
+	var id=ObjectID(ctx.params.id)
+	ctx.body=await ctx.mongo.collection("goods").findOne({_id:id})
 })
 router.get('/',async ctx=>{
 	var {shop,limit,skip,onSale,word,sort}=ctx.query

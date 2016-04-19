@@ -105,13 +105,12 @@ class ItemList extends Component{
 }
 
 class InfoBar extends Component {
-	state={imgs1:[],imgs2:[]}
 	render(){
 		return (
 			<div style={{width:1200,margin:"0 auto 20px auto",paddingLeft:180}}>
 				<div style={{display:"inline-block",verticalAlign:"top",width:780,height:370,padding:"20px 0 0 20px"}}>
 					<Carouse style={{height:350,width:760}} button list>
-						{(this.state.imgs1||[]).map(it=>{
+						{this.props.s1.map(it=>{
 							return <Image full src={it.path} />
 						})}
 					</Carouse>
@@ -122,25 +121,30 @@ class InfoBar extends Component {
 				</div>
 				<div style={{width:240,padding:"20px 0 0 20px"}}>
 					<Carouse style={{height:200,width:1000}} button total={5}>
-						{(this.state.imgs2||[]).map(it=>{
-							return <Image full src={"/files/image"+it.path+"?w=190&h=190"} style={{padding:10}} />
+						{this.props.s2.map(it=>{
+							return (
+								<Link to={{pathname:"/item.html",query:{id:it._id}}}>
+									<Image full src={"/files/image"+it.imgs[0].path+"?w=190&h=190"} style={{padding:10}} />
+								</Link>
+							)
 						})}
 					</Carouse>
 				</div>
-				<Ajax ref="config" auto url={"/configs/index"} onSuccess={it=>this.setState({imgs1:it.imgs1,imgs2:it.imgs2})} />
+				
 			</div>
 		)
 	}
 }
 
 export default class extends Component{
+	state={s1:[],s2:[],s3:[],s4:[],s5:[]}
 	render(){
 		return (
 			<div>
 				<Header />
 				<TitleBar />
 				<MenuBar active />
-				<InfoBar />
+				<InfoBar s1={this.state.s1} s2={this.state.s2} />
 				<ItemList title="每日新款">
 					<GoodsList url="/goods?limit=5&sort=createTime,-&onSale=true" />
 				</ItemList>
@@ -151,6 +155,7 @@ export default class extends Component{
 					<GoodsList url="/goods?limit=5&sort=price,+&onSale=true" />
 				</ItemList>
 				<Footer />
+				<Ajax ref="config" auto url={"/configs/index"} onSuccess={it=>this.setState({...it})} />
 			</div>
 		)
 	}	

@@ -18,6 +18,7 @@ import FileButton from './FileButton'
 import {Tree,InlineTree} from './Tree'
 import FileManager,{FileBar} from './FileManager'
 import FileModalButton from './FileModalButton'
+import GoodsModalButton from './GoodsModalButton'
 
 export default class extends Component{
 	render(){
@@ -186,6 +187,9 @@ export default class extends Component{
 				<br /><br /><br />
 				<Tipbar title="FileModalButton" color="random" />
 				<FileModalButton>选择图片</FileModalButton>
+				<br /><br /><br />
+				<Tipbar title="GoodsModalButton" color="random" />
+				<GoodsModalButton>选择商品</GoodsModalButton>
 			</div>
 		)
 	}
