@@ -16,6 +16,7 @@ import FileModalButton from '../lib/FileModalButton'
 import Image from '../lib/Image'
 import dateFormat from 'dateformat'
 import {Link} from 'react-router'
+import Menus from './Menus'
 
 class Config extends Component{
 	static propTypes ={
@@ -41,12 +42,12 @@ class Config extends Component{
 }
 
 class Goods extends Component{
-	state={addModal:false,_id:null,name:null,info:null,price:null,imgs:[],data:[],pages:0,index:1,onSale:false,put:true}
+	state={addModal:false,selected:null,name:null,info:null,price:null,imgs:[],data:[],pages:0,index:1,onSale:false,cate:null}
 	render(){
-		var {_id,name,info,price,imgs,onSale}=this.state
+		var {name,info,price,imgs,onSale,cate}=this.state
 		return (
 			<div>
-				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,_id:null})}>添加</Button>
+				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,selected:null})}>添加</Button>
 				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})}>
 					<FormGroup label="商品名" >
 						<Input full value={name} onChange={e=>this.setState({name:e.target.value})} />
@@ -57,18 +58,21 @@ class Goods extends Component{
 					<FormGroup label="商品介绍">
 						<Input full value={info} onChange={e=>this.setState({info:e.target.value})} type="textarea" />
 					</FormGroup>
+					<FormGroup label="分类">
+						<Menus noAction selected={cate} onChange={selected=>this.setState({cate:selected})} />
+					</FormGroup>
 					<FileModalButton checked={imgs} onCheck={imgs=>this.setState({imgs})} >展示缩略图</FileModalButton>
 					<Col sm={4} offset={8}>
 						<Button onClick={()=>{
-							_id?this.refs.put.request():this.refs.post.request()
+							this.state.selected?this.refs.put.request():this.refs.post.request()
 							this.setState({addModal:false})
 						}}>确定</Button>
 						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
 					</Col>
 				</Modal>
-				<Table border center keys={["商品名","价格","商品简介","主图","创建时间","操作"]}
+				<Table border center keys={["商品名","价格","商品简介","主图","分类","创建时间","操作"]}
 					data={this.state.data.map(it=>{
-						var {_id,name,price,info,imgs,onSale,createTime}=it
+						var {_id,name,price,info,imgs,onSale,cate,createTime}=it
 						return [
 							(
 								<Link to={"/item.html?id="+_id}>
@@ -78,14 +82,15 @@ class Goods extends Component{
 							price,
 							(info||"").length>10?info.slice(0,10)+"...":info,
 							<Image style={{width:100,height:100}} src={(imgs[0]||{}).path}/>,
+							cate,
 							it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),
 							(
 								<div>
-									<Button color={onSale?"default":"primary"} onClick={()=>this.setState({_id,name,price,info,imgs,onSale:!onSale,put:false},()=>this.refs.put.request())}>
+									<Button color={onSale?"default":"primary"} onClick={()=>this.setState({selected:_id,name,price,info,imgs,cate,onSale:!onSale,put:false},()=>this.refs.put.request())}>
 										{onSale?"下架":"上架"}
 									</Button>
-									<Button onClick={()=>this.setState({_id,name,info,price,imgs,onSale,addModal:true,put:true})}>修改</Button>	
-									<Button color="danger" onClick={()=>this.setState({_id},()=>this.refs.del.request())} >删除</Button>	
+									<Button onClick={()=>this.setState({selected:_id,name,info,price,imgs,onSale,cate,addModal:true})}>修改</Button>	
+									<Button color="danger" onClick={()=>this.setState({selected:_id},()=>this.refs.del.request())} >删除</Button>	
 								</div>
 							)
 						]
@@ -94,14 +99,14 @@ class Goods extends Component{
 				<Paging  style={{marginTop:20}} total={this.state.pages} onPaging={i=>this.setState({index:i},()=>this.refs.get.request())} />
 				<Ajax ref="post" method="post" alert
 					url={"/goods?token="+store.get("token")}
-					data={JSON.stringify({name,info,price,imgs})}
+					data={JSON.stringify({name,info,price,imgs,cate})}
 					onSuccess={()=>this.setState({addModal:false},()=>this.refs.get.request())} />
 				<Ajax ref="del" method="delete"  alert
-					url={"/goods/"+_id+"?token="+store.get("token")}
+					url={"/goods/"+this.state.selected+"?token="+store.get("token")}
 					onSuccess={()=>this.refs.get.request()} />
-				<Ajax ref="put" method="put" alert={this.state.put}
-					url={"/goods/"+_id+"?token="+store.get("token")}
-					data={JSON.stringify({name,info,price,imgs,onSale})}
+				<Ajax ref="put" method="put"
+					url={"/goods/"+this.state.selected+"?token="+store.get("token")}
+					data={JSON.stringify({name,info,price,imgs,onSale,cate})}
 					onSuccess={()=>this.refs.get.request()} />
 				<Ajax auto ref="get" 
 					url={"/goods?sort=createTime,-&shop="+this.props.data._id+"&limit=5&skip="+(this.state.index-1)*5} 

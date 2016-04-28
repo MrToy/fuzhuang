@@ -9,8 +9,8 @@ router.post('/:name',async ctx=>{
 	var {target}=await getUser(ctx)
 	if(target!="admin")
 		throw "无权限"
-	var {s1,s2,s3,s4,s5}=await parse.json(ctx)
+	var data=await parse.json(ctx)
 	await ctx.mongo.collection("configs").ensureIndex({name:1},{unique: true})
-	ctx.body=await ctx.mongo.collection("configs").update({name:ctx.params.name},{"$set":{s1,s2,s3,s4,s5}},{upsert:true})
+	ctx.body=await ctx.mongo.collection("configs").update({name:ctx.params.name},{"$set":{data}},{upsert:true})
 })
 export default router

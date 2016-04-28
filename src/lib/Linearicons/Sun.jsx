@@ -2,7 +2,7 @@ import React,{Component} from "react"
 export default class extends Component{
 	render(){
 		return (
-			<svg style={{fill:"currentColor",height:"1em",width:"1em",margin:"0px 0.2em 0.2em 0.2em",verticalAlign:"middle"}} viewBox="0 0 20 20">
+			<svg style={{fill:"currentColor",height:"1em",width:"1em",margin:"-0.1em 0.1em 0.1em 0.1em",verticalAlign:"middle"}} viewBox="0 0 20 20">
 				<path d="M9.5 14.993c-2.477 0-4.493-2.015-4.493-4.493s2.015-4.493 4.493-4.493 4.493 2.015 4.493 4.493-2.015 4.493-4.493 4.493zM9.5 7.007c-1.926 0-3.493 1.567-3.493 3.493s1.567 3.493 3.493 3.493 3.493-1.567 3.493-3.493-1.567-3.493-3.493-3.493z"></path>
 				<path d="M9.5 5c-0.276 0-0.5-0.224-0.5-0.5v-3c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v3c0 0.276-0.224 0.5-0.5 0.5z"></path>
 				<path d="M9.5 20c-0.276 0-0.5-0.224-0.5-0.5v-3c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v3c0 0.276-0.224 0.5-0.5 0.5z"></path>

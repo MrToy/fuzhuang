@@ -31,7 +31,8 @@ var config = {
 		new HtmlWebpackPlugin({title:"郑州第壹印象",template:"./src/template.ejs"}),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.UglifyJsPlugin({compress:{warnings: false,unused:true}}),
-		new webpack.ProvidePlugin({fetch:'imports?this=>global!exports?global.fetch!whatwg-fetch'})
+		new webpack.ProvidePlugin({fetch:'imports?this=>global!exports?global.fetch!whatwg-fetch'}),
+		new webpack.DefinePlugin({"process.env": {NODE_ENV: JSON.stringify("production")}})
 	]
 }
 if(process.env.NODE_ENV=='debug'){

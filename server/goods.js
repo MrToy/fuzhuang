@@ -6,11 +6,11 @@ var router=new Router()
 
 router.post('/',async ctx=>{
 	var {_id}=await getUser(ctx)
-	var {name,info,imgs,price}=await parse.json(ctx)
+	var {name,info,imgs,price,cate}=await parse.json(ctx)
 	var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
 	if(!shop)
 		throw "还未创建店铺"
-	await ctx.mongo.collection("goods").insert({shop:shop._id,name,info,imgs,price,onSale:false,createTime:new Date()})
+	await ctx.mongo.collection("goods").insert({shop:shop._id,name,info,imgs,price,cate,onSale:false,createTime:new Date()})
 	ctx.body={success:true}
 })
 
@@ -39,21 +39,17 @@ router.get('/',async ctx=>{
 })
 router.delete('/:id',async ctx=>{
 	var {_id}=await getUser(ctx)
-	try{
-		var id=ObjectID(ctx.params.id)
-		var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
-		await ctx.mongo.collection("goods").remove({"_id":id,shop:shop._id})
-	}catch(err){
-		ctx.throw("删除失败")
-	}
+	var id=ObjectID(ctx.params.id)
+	var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
+	await ctx.mongo.collection("goods").remove({"_id":id,shop:shop._id})
 	ctx.body={success:true}
 })
 router.put('/:id',async ctx=>{
 	var {_id}=await getUser(ctx)
-	var {name,info,imgs,price,onSale}=await parse.json(ctx)
+	var {name,info,imgs,price,onSale,cate}=await parse.json(ctx)
 	var id=ObjectID(ctx.params.id)
 	var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
-	await ctx.mongo.collection("goods").updateOne({"_id":id,shop:shop._id},{"$set":{name,info,imgs,price,onSale}})
+	await ctx.mongo.collection("goods").updateOne({"_id":id,shop:shop._id},{"$set":{name,info,imgs,price,onSale,cate}})
 	ctx.body={success:true}
 })
 export default router

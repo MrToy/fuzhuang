@@ -20,7 +20,7 @@ export default class extends Component{
 		var activeColor=color.backgroundColor=="transparent"?"transparent":Color(color.backgroundColor).darken(0.3).hexString()
 		var focusColor=color.backgroundColor=="transparent"?"transparent":Color(color.backgroundColor).darken(0.2).hexString()
 		return(
-			<button onClick={!this.props.disable&&this.props.onClick} style={[
+			<button onClick={!this.props.disable&&this.props.onClick} onMouseDown={!this.props.disable&&this.props.onMouseDown} style={[
 				{
 					textAlign:"left",
 					padding:"0.4em 1em",
@@ -35,7 +35,7 @@ export default class extends Component{
 					transition:"background-color 0.3s ease-out 0s,border-color 0.3s ease-out 0s"
 				},
 				this.props.active&&{
-					boxShadow:"0px 3px 5px rgba(0, 0, 0, 0.15) inset",
+					boxShadow:"0px 0px 5px rgba(0, 0, 0, 0.15) inset",
 					backgroundColor:activeColor,
 					borderColor:activeColor
 				},
@@ -53,7 +53,7 @@ export default class extends Component{
 						backgroundColor:focusColor
 					},
 					":active":{
-						boxShadow:"0px 3px 5px rgba(0, 0, 0, 0.15) inset",
+						boxShadow:"0px 0px 5px rgba(0, 0, 0, 0.15) inset",
 						backgroundColor:activeColor
 					}
 				},

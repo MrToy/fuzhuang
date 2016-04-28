@@ -19,6 +19,9 @@ import {Tree,InlineTree} from './Tree'
 import FileManager,{FileBar} from './FileManager'
 import FileModalButton from './FileModalButton'
 import GoodsModalButton from './GoodsModalButton'
+import Editor from './Editor'
+import List from './List'
+import Popover from './Popover'
 
 export default class extends Component{
 	render(){
@@ -188,8 +191,36 @@ export default class extends Component{
 				<Tipbar title="FileModalButton" color="random" />
 				<FileModalButton>选择图片</FileModalButton>
 				<br /><br /><br />
+				<Tipbar title="Popover" color="random" />
+				<Popover direction="right" content={"233"}>
+					<Button>测试</Button>
+				</Popover>
+				<Popover content={"233"}>
+					<Button>测试</Button>
+				</Popover>
+				<Popover direction="top" content={"233"}>
+					<Button>测试</Button>
+				</Popover>
+				<Popover direction="left" content={"233"}>
+					<Button>测试</Button>
+				</Popover>
+				<br /><br /><br />
 				<Tipbar title="GoodsModalButton" color="random" />
 				<GoodsModalButton>选择商品</GoodsModalButton>
+				<br /><br /><br />
+				<Tipbar title="Editor" color="random" />
+				<Editor />
+				<br /><br /><br />
+				<Tipbar title="List" color="random" />
+				<Card>
+					<List data={["233","123","测试","23","1","a","v","ver","32s","azz","zasd","1231x","zxasd","2131s sdcd","sda dwqd","r3edwsa"]} />
+				</Card>
+				<Card>
+					<List data={["233","123","测试","23","1","a","v","ver","32s","azz","zasd","1231x","zxasd","2131s sdcd","sda dwqd","r3edwsa"]} />
+				</Card>
+				<Card>
+				<List data={["233","123","测试","23","1","a","v","ver","32s","azz","zasd","1231x","zxasd","2131s sdcd","sda dwqd","r3edwsa"]} />
+				</Card>
 			</div>
 		)
 	}

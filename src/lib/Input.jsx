@@ -49,7 +49,7 @@ export default class extends Component{
 			],
 			input:[
 				{
-					padding:"0.6em",
+					padding:"0.5em",
 					fontSize:size,
 					border:"none"	
 				},
@@ -61,7 +61,7 @@ export default class extends Component{
 			label:[
 				{
 					fontSize:size,
-					padding:this.props.labelCollapse?"0":"0.5em",
+					padding:this.props.labelCollapse?"0":"0.4em 0.5em",
 					transition:"all 0.2s ease"
 				},
 				this.props.full&&{

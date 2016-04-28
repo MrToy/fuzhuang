@@ -105,12 +105,13 @@ class ItemList extends Component{
 }
 
 class InfoBar extends Component {
+	state={data:[],data2:[]}
 	render(){
 		return (
 			<div style={{width:1200,margin:"0 auto 20px auto",paddingLeft:180}}>
 				<div style={{display:"inline-block",verticalAlign:"top",width:780,height:370,padding:"20px 0 0 20px"}}>
 					<Carouse style={{height:350,width:760}} button list>
-						{this.props.s1.map(it=>{
+						{this.state.data.map(it=>{
 							return <Image full src={it.path} />
 						})}
 					</Carouse>
@@ -121,7 +122,7 @@ class InfoBar extends Component {
 				</div>
 				<div style={{width:240,padding:"20px 0 0 20px"}}>
 					<Carouse style={{height:200,width:1000}} button total={5}>
-						{this.props.s2.map(it=>{
+						{this.state.data2.map(it=>{
 							return (
 								<Link to={{pathname:"/item.html",query:{id:it._id}}}>
 									<Image full src={"/files/image"+it.imgs[0].path+"?w=190&h=190"} style={{padding:10}} />
@@ -130,32 +131,31 @@ class InfoBar extends Component {
 						})}
 					</Carouse>
 				</div>
-				
+				<Ajax auto url={"/configs/主页主轮播图片"} onSuccess={it=>this.setState({data:it.data})} />
+				<Ajax auto url={"/configs/主页次轮播商品"} onSuccess={it=>this.setState({data2:it.data})} />
 			</div>
 		)
 	}
 }
 
 export default class extends Component{
-	state={s1:[],s2:[],s3:[],s4:[],s5:[]}
 	render(){
 		return (
 			<div>
 				<Header />
 				<TitleBar />
 				<MenuBar active />
-				<InfoBar s1={this.state.s1} s2={this.state.s2} />
+				<InfoBar />
 				<ItemList title="每日新款">
-					<GoodsList url="/goods?limit=5&sort=createTime,-&onSale=true" />
+					<GoodsList url="/configs/每日新款" />
 				</ItemList>
 				<ItemList title="潮流单品">
-					<GoodsList url="/goods?limit=5&sort=info,+&onSale=true" />
+					<GoodsList url="/configs/潮流单品" />
 				</ItemList>
 				<ItemList title="当季促销">
-					<GoodsList url="/goods?limit=5&sort=price,+&onSale=true" />
+					<GoodsList url="/configs/当季促销" />
 				</ItemList>
 				<Footer />
-				<Ajax ref="config" auto url={"/configs/index"} onSuccess={it=>this.setState({...it})} />
 			</div>
 		)
 	}	

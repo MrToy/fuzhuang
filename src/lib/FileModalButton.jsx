@@ -43,7 +43,7 @@ export default class extends Component{
 		var checked=this.props.onCheck?this.props.checked:this.state.checked
 		return (
 			<span>
-				<Button onClick={()=>this.setState({isOpen:true})}>{this.props.children}</Button>
+				<Button style={this.props.style} onClick={()=>this.setState({isOpen:true})}>{this.props.children}</Button>
 				<FileModal checked={checked} onCheck={checked=>{
 					this.setState({checked})
 					this.props.onCheck&&this.props.onCheck(checked)
