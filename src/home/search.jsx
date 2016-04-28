@@ -82,7 +82,7 @@ export default class extends Component{
 				<Header />
 				<TitleBar onSearch={word=>this.setState({word},()=>this.refs.get.request())} />
 				<MenuBar />
-				<div style={{width:1200,margin:"0 auto",marginBottom:20}}>
+				<div style={{width:1200,margin:"0 auto",marginBottom:20,minHeight:620}}>
 					<Menu onChange={it=>this.setState({menu:it})} />
 					<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>
 						<Button color="red">综合</Button>

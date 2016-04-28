@@ -18,6 +18,18 @@ router.get('/:id',async ctx=>{
 	var id=ObjectID(ctx.params.id)
 	ctx.body=await ctx.mongo.collection("goods").findOne({_id:id})
 })
+
+async function getCateReg(ctx,word){
+	var cates=((await ctx.mongo.collection("configs").findOne({name:"菜单"}))||{}).data||[]
+	var res=[]
+	function recur(word){
+		res.push(word)
+		cates.filter(it=>it.parent==word).forEach(it=>recur(it.text))
+	}
+	recur(word)
+	return "["+res.toString()+"]"
+}
+
 router.get('/',async ctx=>{
 	var {shop,limit,skip,onSale,word,sort}=ctx.query
 	var config={}
@@ -25,8 +37,11 @@ router.get('/',async ctx=>{
 		config.shop=ObjectID(shop)
 	if(onSale)
 		config.onSale=true
-	if(word)
-		config["$or"]=[{name:{$regex:word,$options:'i'}},{info:{$regex:word,$options:'i'}}]
+	if(word){
+		var reg=await getCateReg(ctx,word)
+		console.log(reg)
+		config["$or"]=[{name:{$regex:reg,$options:'i'}},{cate:{$regex:reg,$options:'i'}},{info:{$regex:reg,$options:'i'}}]
+	}
 	var sortConfig={}
 	if(sort){
 		var [k,v]=sort.split(",")
