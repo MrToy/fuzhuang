@@ -1,27 +1,26 @@
 import React,{Component} from "react"
 import {Link} from 'react-router'
-import Button from './Button'
-import ButtonGroup from './ButtonGroup'
-import Input from './Input'
-import Home from './IconMoon/Home'
-import Col from './Col'
-import Tipbar from './Tipbar'
-import AvgGrid from './AvgGrid'
-import Card from './Card'
-import FormGroup from './FormGroup'
-import Carouse from './Carouse'
-import Image from './Image'
-import Paging from './Paging'
-import Sticky from './Sticky'
-import NavBar from './NavBar'
-import FileButton from './FileButton'
-import {Tree,InlineTree} from './Tree'
-import FileManager,{FileBar} from './FileManager'
-import FileModalButton from './FileModalButton'
-import GoodsModalButton from './GoodsModalButton'
-import Editor from './Editor'
-import List from './List'
-import Popover from './Popover'
+import Button from '../lib/Button'
+import ButtonGroup from '../lib/ButtonGroup'
+import Input from '../lib/Input'
+import Home from '../lib/IconMoon/Home'
+import Col from '../lib/Col'
+import Tipbar from '../lib/Tipbar'
+import AvgGrid from '../lib/AvgGrid'
+import Card from '../lib/Card'
+import FormGroup from '../lib/FormGroup'
+import Carouse from '../lib/Carouse'
+import Paging from '../lib/Paging'
+import Sticky from '../lib/Sticky'
+import NavBar from '../lib/NavBar'
+import FileButton from '../lib/FileButton'
+import {Tree,InlineTree} from '../lib/Tree'
+import FileManager,{FileBar} from '../lib/FileManager'
+import FileModalButton from '../components/FileModalButton'
+import GoodsModalButton from '../components/GoodsModalButton'
+import Editor from '../components/Editor'
+import List from '../lib/List'
+import Popover from '../lib/Popover'
 
 export default class extends Component{
 	render(){
@@ -138,13 +137,6 @@ export default class extends Component{
 					<div style={{border:"1px solid #000",height:"100%"}}>测试</div>
 				</Carouse>
 				<br /><br /><br />
-				<Tipbar title="Image" color="random" />
-				<Image src="" />
-				<Image circle src="" />
-				<div style={{width:100,height:100}}>
-					<Image full src="" />
-				</div>
-				<br /><br /><br />
 				<Tipbar title="Paging" color="random" />
 				<Paging total={100} />
 				<br /><br /><br />
@@ -175,7 +167,7 @@ export default class extends Component{
 				<FileManager style={{height:400}} color="black" data={[
 					{key:"1",name:"test1",parent:null,type:"folder"},
 					{key:"2",name:"test2",parent:"1",type:"folder"},
-					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg",url:require("../home/logo.png")},
+					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg"},
 					{key:"5",name:"test5.jpg",parent:"1",type:"image/jpeg"},
 					{key:"4",name:"test4",parent:null,type:"folder"}
 				]} />
@@ -184,7 +176,7 @@ export default class extends Component{
 				<FileBar data={[
 					{key:"1",name:"test1",parent:null,type:"folder"},
 					{key:"2",name:"test2",parent:"1",type:"folder"},
-					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg",url:require("../home/logo.png")},
+					{key:"3",name:"test3.jpg",parent:"4",type:"image/jpeg"},
 					{key:"5",name:"test5.jpg",parent:"1",type:"image/jpeg"}
 				]} />
 				<br /><br /><br />

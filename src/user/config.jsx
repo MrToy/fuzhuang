@@ -1,11 +1,15 @@
 import React,{Component} from "react"
-import List from '../lib/List'
+import {Box} from './'
+import FormGroup from '../lib/FormGroup'
+import FileModalButton from '../components/FileModalButton'
+import GoodsModalButton from '../components/GoodsModalButton'
+import Button from '../lib/Button'
 import Ajax from '../lib/Ajax'
+import store from 'store'
+import List from '../lib/List'
 import Popover from '../lib/Popover'
 import Input from '../lib/Input'
-import Button from '../lib/Button'
 import Card from '../lib/Card'
-import store from 'store'
 
 
 class MenuList extends Component{
@@ -31,11 +35,12 @@ class MenuList extends Component{
 	}
 }
 
-export default class extends Component{
+class Menus extends Component{
 	static propTypes ={
 		noAction:React.PropTypes.bool,
 		onChange:React.PropTypes.func,
-		selected:React.PropTypes.string
+		selected:React.PropTypes.string,
+		title:React.PropTypes.string
 	}
 	state={data:[],selected:null}
 	render(){
@@ -75,9 +80,42 @@ export default class extends Component{
 		return (
 			<div>
 				{list.map(config=><MenuList {...config} />)}
-				<Ajax auto url={"/configs/菜单"} onSuccess={it=>this.setState({data:it.data})} />
-				<Ajax ref="post" url={"/configs/菜单?token="+store.get("token")} method="post" data={JSON.stringify(this.state.data)} />
+				<Ajax auto url={"/configs/"+this.props.title} onSuccess={data=>this.setState({data})} />
+				<Ajax ref="post" url={"/configs/"+this.props.title+"?token="+store.get("token")} method="post" data={JSON.stringify(this.state.data)} />
 			</div>
+		)
+	}
+}
+
+
+class ConfigItem extends Component{
+	state={data:[]}
+	render(){
+		var {ItemButton,label}=this.props
+		return (
+			<FormGroup horizontal label={label}>
+				<ItemButton checked={this.state.data}  onCheck={data=>this.setState({data},()=>this.refs.post.request())} >选择</ItemButton>
+				<Ajax auto url={"/configs/"+label} onSuccess={data=>this.setState({data})} />
+				<Ajax ref="post" url={"/configs/"+label+"?token="+store.get("token")} method="post" data={JSON.stringify(this.state.data)} />
+			</FormGroup>
+		)
+	}
+}
+
+
+export default class extends Component{
+	render(){
+		return(
+			<Box title="网站管理">
+				<ConfigItem ItemButton={FileModalButton} label="主页主轮播图片" />
+				<ConfigItem ItemButton={GoodsModalButton} label="主页次轮播商品" />
+				<FormGroup horizontal label="主菜单">
+					<Menus title="菜单" />
+				</FormGroup>
+				<FormGroup horizontal label="首页横向菜单">
+					<Menus title="横向菜单" />
+				</FormGroup>
+			</Box>
 		)
 	}
 }

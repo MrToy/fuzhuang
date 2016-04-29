@@ -16,9 +16,9 @@ import Radium from 'radium'
 import store from 'store'
 import Ajax from '../lib/Ajax'
 
-import Header from '../home/lib/Header'
-import TitleBar from '../home/lib/TitleBar'
-import Footer from '../home/lib/Footer'
+import Header from '../components/Header'
+import TitleBar from '../components/TitleBar'
+import Footer from '../components/Footer'
 
 export class Box extends Component{
 	render(){
@@ -93,7 +93,7 @@ export default class extends Component{
 		]
 		var list3=[
 			{text:"用户中心",link:"/user.html",icon:User},
-			{text:"网站管理",link:"/user.html/web.html",icon:Home},
+			{text:"网站管理",link:"/user.html/config.html",icon:Home},
 			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
 			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},

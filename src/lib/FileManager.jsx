@@ -8,7 +8,6 @@ import {Tree,InlineTree,getIcon} from './Tree'
 import Button from './Button'
 import FileButton from './FileButton'
 import Modal from './Modal'
-import Image from './Image'
 import Cross from './IconMoon/Cross'
 
 @Radium
@@ -79,7 +78,7 @@ class FileViewer extends Component{
 				<span onClick={this.props.onRequestClose} style={{cursor:"pointer",float:"right"}}><Cross /></span>
 				<span style={{clear:"both"}}></span>
 				{it.type=="image/jpeg"?(
-					<Image style={{height:500,display:"block",margin:"0 auto"}} src={it.path} />
+					<img style={{height:500,display:"block",margin:"0 auto"}} src={it.path} />
 				):(
 					<p>当前文件不支持预览</p>
 				)}

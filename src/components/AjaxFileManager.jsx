@@ -2,8 +2,8 @@ import React,{Component} from "react"
 import store from 'store'
 import swal from 'sweetalert'
 import 'sweetalert/dist/sweetalert.css'
-import FileManager from './FileManager'
-import Ajax from './Ajax'
+import FileManager from '../lib/FileManager'
+import Ajax from '../lib/Ajax'
 
 
 export default class extends Component{

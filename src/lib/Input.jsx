@@ -2,6 +2,7 @@ import React,{Component} from "react"
 import Radium from 'radium'
 import {getColor,sizes} from './values'
 import Color from 'color'
+import Button from './Button'
 
 @Radium
 export default class extends Component{
@@ -69,14 +70,22 @@ export default class extends Component{
 				}
 			]
 		}
+		var MyInput=<input disabled={this.props.disable}  {...this.props} style={styles.input} />
+		if(this.props.type=="textarea"){
+			MyInput=<textarea disabled={this.props.disable} {...this.props} style={styles.input} />
+		}
+		if(this.props.type=="file"){
+			MyInput=(
+				<Button {...this.props} onClick={()=>this.refs.file.click()}>
+					{this.props.children}
+					<input ref="file" type="file" multiple={this.props.multiple} onChange={e=>this.props.onFile&&this.props.onFile(e.target.files)} style={{display:"none"}}></input>
+				</Button>
+			)
+		}
 		return (
 			<div style={styles.box}>
 				{this.props.addLeft&&<label style={styles.label}>{this.props.addLeft}</label>}
-				{this.props.type=="textarea"?(
-					<textarea disabled={this.props.disable} {...this.props} style={styles.input} />
-				):(
-					<input disabled={this.props.disable}  {...this.props} style={styles.input} />
-				)}
+				{MyInput}
 				{this.props.addRight&&<label style={styles.label}>{this.props.addRight}</label>}
 			</div>
 		)

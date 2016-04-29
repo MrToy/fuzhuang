@@ -1,33 +1,28 @@
 import React,{Component} from 'react'
 import Radium from 'radium'
+import {Link} from 'react-router'
+
 import Paging from '../lib/Paging'
 import Ajax from '../lib/Ajax'
 import ButtonGroup from '../lib/ButtonGroup'
 import Button from '../lib/Button'
 
-import GoodsList from './lib/GoodsList'
-import Header from './lib/Header'
-import TitleBar from './lib/TitleBar'
-import Footer from './lib/Footer'
-import MenuBar from './lib/MenuBar'
+import GoodsList from '../components/GoodsList'
+import Header from '../components/Header'
+import TitleBar from '../components/TitleBar'
+import Footer from '../components/Footer'
+import MenuBar from '../components/MenuBar'
 
 @Radium
 class MenuList extends Component{
-	constructor(props){
-		super(props)
-		this.state={open:false,selected:"全部"}
-	}
-	set(it){
-		this.setState({selected:it})
-		if(this.props.onChange)this.props.onChange(it)
-	}
+	state={open:false,selected:"全部"}
 	render(){
 		return(
 			<div style={{borderBottom:"1px solid #ccc",padding:"0 20px",transition:"all 0.3s",lineHeight:"50px",height:!this.props.more||this.state.open?(this.props.height||"auto"):50,overflow:"hidden"}}>
 				<span style={{marginRight:20}}>{this.props.title}</span>
 				<div style={{display:"inline-block",width:900,verticalAlign:"top",lineHeight:"50px",overflow:"hidden"}}>
 					{this.props.list.map((it,i)=>{
-						return <div onClick={()=>this.set(it)} href="#" key={i} style={[{cursor:"pointer",color:"#555",padding:"0 10px",display:"inline-block",":hover":{color:'#C81624'}},this.state.selected==it?{color:'#C81624'}:{}]}>{it}</div>
+						return <Link to={"search.html?word="+it} style={{cursor:"pointer",color:"#555",padding:"0 10px",display:"inline-block"}}>{it}</Link>
 					})}
 				</div>
 				<div  style={{cursor:"pointer",float:"right",display:this.props.more?"block":"none"}} onClick={()=>this.setState({open:!this.state.open})}>
@@ -40,23 +35,27 @@ class MenuList extends Component{
 	}
 }
 class Menu extends Component{
-	constructor(props){
-		super(props)
-		this.state={type:"",market:"",color:""}
-	}
+	state={data:[]}
 	set(it){
 		this.setState(it)
 		if(this.props.onChange)this.props.onChange(this.state)
 	}
 	render(){
+		var list=[]
+		var recur= (parent,selected)=>{
+			var item=this.state.data.find(it=>it.text==parent)||{}
+			list.unshift(this.state.data.filter(it=>it.parent==item.text).map(it=>it.text))
+			if(item.text){
+				recur(item.parent,item.text)
+			}
+		}
+		recur(this.props.word)
+		if(list.length&&list[list.length-1].length==0)
+			list.pop()
 		return(
 			<div style={{margin:"20px 0",border:"1px solid #ccc",color:"#999"}}>
-				<MenuList title="分类：" onChange={it=>this.set({type:it})} list={["全部","女装","男装","鞋","内衣","母婴用品","配件箱包","运动户外","美妆饰品"]} />
-				<MenuList title="市场：" onChange={it=>this.set({market:it})} more height={150} list={["全部","国大","大西豪","女人街","国投","富丽","新金马","大时代","宝华","鞋城","圣迦","佰润","西街","新潮都","非凡","柏美","老金马","十三行","欣欣网批","南城","新旺角","周边","万佳","益民","新百佳","西苑鞋汇","景叶","润景","机筑巷","万艺鞋汇"]} />
-				<MenuList title="颜色：" onChange={it=>this.set({color:it})} list={["全部","黑色","白色","灰色","红色","蓝色","粉红色","花色","绿色","军绿色","藏青色","卡其色","杏色","黄色","藕色"]} />
-				<div  style={{padding:"0 20px"}}>
-					<span style={{marginRight:20,lineHeight:"50px"}}>服务：</span>
-				</div>
+				{list.map(it=><MenuList list={it} />)}
+				<Ajax auto url={"/configs/菜单"} onSuccess={data=>this.setState({data})} />
 			</div>
 		)
 	}
@@ -65,6 +64,9 @@ class Menu extends Component{
 
 export default class extends Component{
 	state={sort:"",menu:{},index:1,direct:0,pages:0,data:[],word:null}
+	componentWillReceiveProps(nextProps){
+		this.setState({word:nextProps.location.query.word},()=>this.refs.get.request())	
+	}
 	onSort(i){
 		var sort=""
 		switch(i){
@@ -80,10 +82,10 @@ export default class extends Component{
 		return (
 			<div>
 				<Header />
-				<TitleBar onSearch={word=>this.setState({word},()=>this.refs.get.request())} />
+				<TitleBar />
 				<MenuBar />
 				<div style={{width:1200,margin:"0 auto",marginBottom:20,minHeight:620}}>
-					<Menu onChange={it=>this.setState({menu:it})} />
+					<Menu word={(this.state.word||this.props.location.query.word)} />
 					<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>
 						<Button color="red">综合</Button>
 						<Button color="red">价格</Button>

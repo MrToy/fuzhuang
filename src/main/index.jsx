@@ -3,17 +3,16 @@ import {Link} from 'react-router'
 import store from 'store'
 
 import Carouse from '../lib/Carouse'
-import Image from '../lib/Image'
 import Ajax from '../lib/Ajax'
 import Tipbar from '../lib/Tipbar'
 import Card from '../lib/Card'
 import Button from '../lib/Button'
 
-import GoodsList from './lib/GoodsList'
-import Header from './lib/Header'
-import TitleBar from './lib/TitleBar'
-import Footer from './lib/Footer'
-import MenuBar from './lib/MenuBar'
+import GoodsList from '../components/GoodsList'
+import Header from '../components/Header'
+import TitleBar from '../components/TitleBar'
+import Footer from '../components/Footer'
+import MenuBar from '../components/MenuBar'
 import Flag from '../lib/IconMoon/Flag'
 
 class NoticePanel extends Component{
@@ -112,7 +111,7 @@ class InfoBar extends Component {
 				<div style={{display:"inline-block",verticalAlign:"top",width:780,height:370,padding:"20px 0 0 20px"}}>
 					<Carouse style={{height:350,width:760}} button list>
 						{this.state.data.map(it=>{
-							return <Image full src={it.path} />
+							return <img src={it.path} style={{width:"100%",height:"100%"}} />
 						})}
 					</Carouse>
 				</div>
@@ -125,20 +124,21 @@ class InfoBar extends Component {
 						{this.state.data2.map(it=>{
 							return (
 								<Link to={{pathname:"/item.html",query:{id:it._id}}}>
-									<Image full src={"/files/image"+it.imgs[0].path+"?w=190&h=190"} style={{padding:10}} />
+									<img src={"/files/image"+it.imgs[0].path+"?w=190&h=190"} style={{padding:10,width:"100%",height:"100%"}} />
 								</Link>
 							)
 						})}
 					</Carouse>
 				</div>
-				<Ajax auto url={"/configs/主页主轮播图片"} onSuccess={it=>this.setState({data:it.data})} />
-				<Ajax auto url={"/configs/主页次轮播商品"} onSuccess={it=>this.setState({data2:it.data})} />
+				<Ajax auto url={"/configs/主页主轮播图片"} onSuccess={data=>this.setState({data})} />
+				<Ajax auto url={"/configs/主页次轮播商品"} onSuccess={data2=>this.setState({data2})} />
 			</div>
 		)
 	}
 }
 
 export default class extends Component{
+	state={data1:[],data2:[],data3:[]}
 	render(){
 		return (
 			<div>
@@ -147,15 +147,18 @@ export default class extends Component{
 				<MenuBar active />
 				<InfoBar />
 				<ItemList title="每日新款">
-					<GoodsList url="/configs/每日新款" />
+					<GoodsList data={this.state.data1} />
 				</ItemList>
 				<ItemList title="潮流单品">
-					<GoodsList url="/configs/潮流单品" />
+					<GoodsList data={this.state.data2} />
 				</ItemList>
 				<ItemList title="当季促销">
-					<GoodsList url="/configs/当季促销" />
+					<GoodsList data={this.state.data3} />
 				</ItemList>
 				<Footer />
+				<Ajax auto url={"/goods?limit=5&sort=createTime,-&onSale=true&word=每日新款"} onSuccess={data=>this.setState({data1:data.data})} />
+				<Ajax auto url={"/goods?limit=5&sort=createTime,-&onSale=true&word=潮流单品"} onSuccess={data=>this.setState({data2:data.data})} />
+				<Ajax auto url={"/goods?limit=5&sort=createTime,-&onSale=true&word=当季促销"} onSuccess={data=>this.setState({data3:data.data})} />
 			</div>
 		)
 	}	

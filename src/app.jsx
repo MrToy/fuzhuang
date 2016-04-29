@@ -10,14 +10,14 @@ class RouterList extends Component{
 		return (
 			<Router history={browserHistory}>
 				<Route path="/">
-					<IndexRoute component={require('react-router!./home')} />
-					<Route path="search.html" component={require('react-router!./home/search')} />
-					<Route path="item.html" component={require('react-router!./home/item')} />
-					<Route path="login.html" component={require('react-router!./home/login')} />
-					<Route path="register.html" component={require('react-router!./home/register')} />
-					<Route path="deal.html" component={require('react-router!./home/deal')} />
-					<Route path="cashier.html" component={require('react-router!./home/cashier')} />
-					<Route path="demo.html" component={require('react-router!./lib/demo')} />
+					<IndexRoute component={require('react-router!./main')} />
+					<Route path="search.html" component={require('react-router!./main/search')} />
+					<Route path="item.html" component={require('react-router!./main/item')} />
+					<Route path="login.html" component={require('react-router!./main/login')} />
+					<Route path="register.html" component={require('react-router!./main/register')} />
+					<Route path="deal.html" component={require('react-router!./main/deal')} />
+					<Route path="cashier.html" component={require('react-router!./main/cashier')} />
+					<Route path="demo.html" component={require('react-router!./main/demo')} />
 				</Route>
 				<Route path="/user.html"  component={require('react-router!./user')} >
 					<IndexRoute component={require('react-router!./user/info')} />
@@ -29,9 +29,9 @@ class RouterList extends Component{
 					<Route path="diliver.html" component={require('react-router!./user/diliver')} />
 					<Route path="shop.html" component={require('react-router!./user/shop')} />
 					<Route path="files.html" component={require('react-router!./user/files')} />
-					<Route path="web.html" component={require('react-router!./user/web')} />
+					<Route path="config.html" component={require('react-router!./user/config')} />
 				</Route>
-				<Route path="*" component={require('react-router!./home/404')} />
+				<Route path="*" component={require('react-router!./main/404')} />
 			</Router>
 		)
 	}

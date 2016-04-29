@@ -6,9 +6,9 @@ import Button from '../lib/Button'
 import {browserHistory} from 'react-router'
 import Tipbar from '../lib/Tipbar'
 
-import Header from './lib/Header'
-import TitleBar from './lib/TitleBar'
-import Footer from './lib/Footer'
+import Header from '../components/Header'
+import TitleBar from '../components/TitleBar'
+import Footer from '../components/Footer'
 
 class Addr extends Component{
 	render(){

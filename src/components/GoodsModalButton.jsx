@@ -1,18 +1,18 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import Ajax from './Ajax'
-import Table from './Table'
-import Paging from './Paging'
-import Modal from './Modal'
-import FormGroup from './FormGroup'
-import Input from './Input'
+import Ajax from '../lib/Ajax'
+import Table from '../lib/Table'
+import Paging from '../lib/Paging'
+import Modal from '../lib/Modal'
+import FormGroup from '../lib/FormGroup'
+import Input from '../lib/Input'
 import {Link} from 'react-router'
 import store from 'store'
-import Button from './Button'
+import Button from '../lib/Button'
 import dateFormat from 'dateformat'
 
-import ArrowDown from './IconMoon/ArrowDown'
-import Cross from './IconMoon/Cross'
+import ArrowDown from '../lib/IconMoon/ArrowDown'
+import Cross from '../lib/IconMoon/Cross'
 
 @Radium
 class Info extends 	Component{

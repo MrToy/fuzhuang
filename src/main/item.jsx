@@ -3,14 +3,13 @@ import Radium from 'radium'
 import {Link} from 'react-router'
 
 import Ajax from '../lib/Ajax'
-import Image from '../lib/Image'
 import Input from '../lib/Input'
 import Button from '../lib/Button'
 
-import Header from './lib/Header'
-import TitleBar from './lib/TitleBar'
-import Footer from './lib/Footer'
-import MenuBar from './lib/MenuBar'
+import Header from '../components/Header'
+import TitleBar from '../components/TitleBar'
+import Footer from '../components/Footer'
+import MenuBar from '../components/MenuBar'
 
 class ItemInfo extends Component{
 	state={amount:1}
@@ -19,10 +18,10 @@ class ItemInfo extends Component{
 		return(
 			<div style={{border:"1px solid #ccc",padding:20}}>
 				<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
-					<Image border style={{width:400,height:400,padding:20}} src={data.imgs[0]?("/files/image"+data.imgs[0].path+"?w=360&h=360"):require('./014-image.png')} />
+					<img style={{width:400,height:400,padding:20}} src={data.imgs[0]?("/files/image"+data.imgs[0].path+"?w=360&h=360"):require('./014-image.png')} />
 					<div>
 						{data.imgs.slice(1,5).map((it,i)=>(
-							<Image border style={{width:78,height:78,margin:10}} src={("/files/image"+it.path+"?w=80&h=80")||require('./014-image.png')} />
+							<img style={{width:78,height:78,margin:10}} src={("/files/image"+it.path+"?w=80&h=80")||require('./014-image.png')} />
 						))}
 					</div>
 				</div>
@@ -76,7 +75,7 @@ class ImageInfo extends Component{
 					<div style={{overflow:"hidden",textAlign:"center"}}>
 						{data.imgs.map(it=>(
 							<div style={{padding:50}}>
-								<Image style={{width:"auto",height:"auto",maxWidth:"100%"}} src={it.path} />
+								<img style={{width:"auto",height:"auto",maxWidth:"100%"}} src={it.path} />
 							</div>
 						))}
 					</div>

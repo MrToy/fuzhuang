@@ -39,8 +39,7 @@ router.get('/',async ctx=>{
 		config.onSale=true
 	if(word){
 		var reg=await getCateReg(ctx,word)
-		console.log(reg)
-		config["$or"]=[{name:{$regex:reg,$options:'i'}},{cate:{$regex:reg,$options:'i'}},{info:{$regex:reg,$options:'i'}}]
+		config.cate={$regex:reg,$options:'i'}
 	}
 	var sortConfig={}
 	if(sort){

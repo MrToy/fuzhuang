@@ -6,7 +6,6 @@ import Table from '../lib/Table'
 import Ajax from '../lib/Ajax'
 import store from 'store'
 import Button from '../lib/Button'
-import Image from '../lib/Image'
 import {Link} from 'react-router'
 
 export default class extends Component{
@@ -20,7 +19,7 @@ export default class extends Component{
 					return [_id,
 						(
 							<div>
-								<Image style={{width:50,height:50}} src={goods.imgs[0].path} />
+								<img style={{width:50,height:50}} src={goods.imgs[0].path} />
 								<p>{goods.name}</p>
 							</div>
 						),

@@ -12,11 +12,9 @@ import ButtonGroup from '../lib/ButtonGroup'
 import Table from '../lib/Table'
 import Paging from '../lib/Paging'
 import Modal from '../lib/Modal'
-import FileModalButton from '../lib/FileModalButton'
-import Image from '../lib/Image'
+import FileModalButton from '../components/FileModalButton'
 import dateFormat from 'dateformat'
 import {Link} from 'react-router'
-import Menus from './Menus'
 
 class Config extends Component{
 	static propTypes ={
@@ -52,14 +50,14 @@ class Goods extends Component{
 					<FormGroup label="商品名" >
 						<Input full value={name} onChange={e=>this.setState({name:e.target.value})} />
 					</FormGroup>
+					<FormGroup label="关键词">
+						<Input full value={cate} onChange={e=>this.setState({cate:e.target.value})} />
+					</FormGroup>
 					<FormGroup label="价格">
 						<Input full value={price} onChange={e=>this.setState({price:e.target.value})} type="number"  />
 					</FormGroup>
 					<FormGroup label="商品介绍">
 						<Input full value={info} onChange={e=>this.setState({info:e.target.value})} type="textarea" />
-					</FormGroup>
-					<FormGroup label="分类">
-						<Menus noAction selected={cate} onChange={selected=>this.setState({cate:selected})} />
 					</FormGroup>
 					<FileModalButton checked={imgs} onCheck={imgs=>this.setState({imgs})} >展示缩略图</FileModalButton>
 					<Col sm={4} offset={8}>
@@ -70,7 +68,7 @@ class Goods extends Component{
 						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
 					</Col>
 				</Modal>
-				<Table border center keys={["商品名","价格","商品简介","主图","分类","创建时间","操作"]}
+				<Table border center keys={["商品名","价格","商品简介","主图","关键词","创建时间","操作"]}
 					data={this.state.data.map(it=>{
 						var {_id,name,price,info,imgs,onSale,cate,createTime}=it
 						return [
@@ -81,7 +79,7 @@ class Goods extends Component{
 							),
 							price,
 							(info||"").length>10?info.slice(0,10)+"...":info,
-							<Image style={{width:100,height:100}} src={(imgs[0]||{}).path}/>,
+							<img style={{width:100,height:100}} src={(imgs[0]||{}).path}/>,
 							cate,
 							it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),
 							(

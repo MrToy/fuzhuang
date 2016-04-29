@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import {Box} from './'
 import Modal from 'react-modal'
-import AjaxFileManager from '../lib/AjaxFileManager'
+import AjaxFileManager from '../components/AjaxFileManager'
 
 export default class extends Component{
 	render(){

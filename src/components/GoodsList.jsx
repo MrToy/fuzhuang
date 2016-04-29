@@ -1,10 +1,9 @@
 import React,{Component} from "react"
 import Radium from 'radium'
 import {Link} from 'react-router'
-import AvgGrid from '../../lib/AvgGrid'
-import Card from '../../lib/Card'
-import Image from '../../lib/Image'
-import Ajax from '../../lib/Ajax'
+import AvgGrid from '../lib/AvgGrid'
+import Card from '../lib/Card'
+import Ajax from '../lib/Ajax'
 
 @Radium
 class Goods extends Component{
@@ -32,7 +31,7 @@ export default class extends Component{
 			<AvgGrid sm={5}>
 				{(this.props.data||this.state.data).map(it=><Goods {...it} />)}
 				{this.props.url&&(
-					<Ajax auto ref="get" url={this.props.url} onSuccess={it=>this.setState({data:it.data})} />
+					<Ajax auto ref="get" url={this.props.url} onSuccess={data=>this.setState({data})} />
 				)}
 			</AvgGrid>
 		)

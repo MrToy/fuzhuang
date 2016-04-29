@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {Link} from "react-router"
 import store from 'store'
-import Ajax from '../../lib/Ajax'
+import Ajax from '../lib/Ajax'
 
 export default class extends Component{
 	state={user:null}

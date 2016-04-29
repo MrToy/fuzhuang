@@ -1,11 +1,11 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-import {FileBar} from './FileManager'
-import Modal from './Modal'
+import {FileBar} from '../lib/FileManager'
+import Modal from '../lib/Modal'
 import AjaxFileManager from './AjaxFileManager'
-import Button from './Button'
-import ArrowDown from './IconMoon/ArrowDown'
-import Cross from './IconMoon/Cross';
+import Button from '../lib/Button'
+import ArrowDown from '../lib/IconMoon/ArrowDown'
+import Cross from '../lib/IconMoon/Cross';
 
 class FileModal extends Component{
 	state={selected:null,dump:null}

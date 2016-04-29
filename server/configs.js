@@ -2,8 +2,9 @@ import Router from 'koa-router'
 import {getUser} from './users'
 import parse from 'co-body'
 var router=new Router()
-router.get('/:name',async ctx=>{
-	ctx.body=await ctx.mongo.collection("configs").findOne({name:ctx.params.name})
+router.get('/:name',async (ctx,next)=>{
+	var res=await ctx.mongo.collection("configs").findOne({name:ctx.params.name})
+	res?ctx.body=res.data:next()
 })
 router.post('/:name',async ctx=>{
 	var {target}=await getUser(ctx)

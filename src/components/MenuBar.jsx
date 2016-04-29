@@ -1,9 +1,9 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 import Radium from 'radium'
-import {getColor} from '../../lib/values'
+import {getColor} from '../lib/values'
 import Color from 'color'
-import Ajax from '../../lib/Ajax'
+import Ajax from '../lib/Ajax'
 
 @Radium
 class MenuLeft extends Component{
@@ -29,13 +29,14 @@ class MenuLeft extends Component{
 						})
 					}
 				</div>
-				<Ajax auto url={"/configs/菜单"} onSuccess={it=>this.setState({cate:it.data.filter(it=>it.parent==null).map(it=>it.text)})} />
+				<Ajax auto url={"/configs/菜单"} onSuccess={data=>this.setState({cate:data.filter(it=>it.parent==null).map(it=>it.text)})} />
 			</div>
 		)
 	}
 }
 
 export default class extends Component{
+	state={data:[]}
 	render(){
 		var colors={
 			bg:Color().rgb(246,246,246).hexString(),
@@ -49,9 +50,7 @@ export default class extends Component{
 					<MenuLeft active={this.props.active} style={{marginRight:100,float:"left"}} />	
 					{[
 						{text:"首页",link:"/"},
-						{text:"批发市场",link:"#"},
-						{text:"每日新款",link:"#"},
-						{text:"款式搜索",link:"#"}
+						...this.state.data.filter(it=>it.parent==null).map(it=>({text:it.text,link:"search.html?word="+it.text}))
 					].map((it,i)=>{
 						return (
 							<div key={i} style={{height:35,float:"left",listStyle:"none",":hover":{background:colors.secondary}}} >
@@ -59,6 +58,7 @@ export default class extends Component{
 							</div>
 						)
 					})}
+					<Ajax auto url={"/configs/横向菜单"} onSuccess={data=>this.setState({data})} />
 				</div>
 			</div>
 		)

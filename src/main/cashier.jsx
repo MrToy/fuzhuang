@@ -9,9 +9,9 @@ import MenuPanel from '../lib/MenuPanel'
 import {Link} from 'react-router'
 import Modal from '../lib/Modal'
 
-import Header from './lib/Header'
-import TitleBar from './lib/TitleBar'
-import Footer from './lib/Footer'
+import Header from '../components/Header'
+import TitleBar from '../components/TitleBar'
+import Footer from '../components/Footer'
 
 class PayWay extends Component{
 	render(){
