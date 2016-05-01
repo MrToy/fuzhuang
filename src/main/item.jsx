@@ -5,14 +5,17 @@ import {Link} from 'react-router'
 import Ajax from '../lib/Ajax'
 import Input from '../lib/Input'
 import Button from '../lib/Button'
+import ButtonGroup from '../lib/ButtonGroup'
 
 import Header from '../components/Header'
 import TitleBar from '../components/TitleBar'
 import Footer from '../components/Footer'
 import MenuBar from '../components/MenuBar'
 
+
+
 class ItemInfo extends Component{
-	state={amount:1}
+	state={amount:1,size:null,color:null}
 	render(){
 		var data=this.props.data||{imgs:[]}
 		return(
@@ -32,29 +35,32 @@ class ItemInfo extends Component{
 							<span style={{marginRight:50}}>批发价</span>
 							<span style={{color:"#C81624",fontSize:30}}>¥{data.price}</span>
 						</p>
-						<p>
-							<span style={{marginRight:50}}>淘宝价</span>
-							<span>¥{data.price}</span>
-						</p>
 					</div>
 					<div style={{borderBottom:"1px dotted #ccc",padding:"15px 0"}}>
-						<span style={{color:"#888"}}>货号</span>
+						<span style={{color:"#888",marginRight:30}}>货号</span>
+						{data.itemCode}
 					</div>
 					<div style={{borderBottom:"1px dotted #ccc",padding:"15px 0"}}>
-						<span style={{color:"#888"}}>尺寸</span>
+						<span style={{color:"#888",marginRight:30}}>尺寸</span>
+						<ButtonGroup>
+							{(data.sizes||[]).map(it=><Button>{it}</Button>)}
+						</ButtonGroup>
 					</div>
 					<div style={{borderBottom:"1px dotted #ccc",padding:"15px 0"}}>
-						<span style={{color:"#888"}}>颜色</span>
+						<span style={{color:"#888",marginRight:30}}>颜色</span>
+						<ButtonGroup>
+							{(data.colors||[]).map(it=><Button>{it}</Button>)}
+						</ButtonGroup>
 					</div>
 					<div style={{borderBottom:"1px dotted #ccc",padding:"15px 0"}}>
-						<span style={{color:"#888",marginRight:50}}>数量</span>
+						<span style={{color:"#888",marginRight:30}}>数量</span>
 						<Input inline type="number" value={this.state.amount} onChange={e=>this.setState({amount:e.target.value})} />
 					</div>
 					<div style={{marginTop:20}}>
 						<Link to={"/deal.html?id="+data._id+"&amount="+this.state.amount} style={{marginLeft:70}}>
 							<Button color="red">立即购买</Button>
 						</Link>
-						<Button style={{marginLeft:150}} >搜藏</Button>
+						<Button style={{marginLeft:150}} >收藏</Button>
 						<Button >加入购物车</Button>
 					</div>
 				</div>

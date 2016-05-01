@@ -6,6 +6,7 @@ import fs from 'fs'
 import {ObjectID} from 'mongodb'
 import parse from 'co-body'
 import {execFileSync} from 'child_process'
+import url from "url"
 var router=new Router()
 
 async function parseFile(ctx){
@@ -43,8 +44,8 @@ router.get('/',async ctx=>{
 
 router.get('/image/:name',async (ctx,next)=>{
 	var name=ctx.params.name
-	var t=Path.extname(name).replace(".","")
-	if(t!="jpg"||t!="png")
+	var ext=Path.extname(url.parse(name).pathname).replace(".","")
+	if(ext!="jpg"&&ext!="png")
 		return ctx.redirect("/"+name)
 	var {w=0,h=0}=ctx.query
 	var filename=w+"x"+h+"_"+name
@@ -53,7 +54,7 @@ router.get('/image/:name',async (ctx,next)=>{
 	if(!fs.existsSync(filepath)){
 		if(fs.existsSync(imgpath)){
 			var img=fs.readFileSync(imgpath)
-			var stdout=execFileSync(Path.join(__dirname,"image/resize"),["-w="+w,"-h="+h,"-t="+t],{input:img,maxBuffer: 20*1024*1024})
+			var stdout=execFileSync(Path.join(__dirname,"image/resize"),["-w="+w,"-h="+h,"-t="+ext],{input:img,maxBuffer: 20*1024*1024})
 			fs.writeFileSync(filepath,stdout)
 		}else{
 			return next()

@@ -10,6 +10,7 @@ import List from '../lib/List'
 import Popover from '../lib/Popover'
 import Input from '../lib/Input'
 import Card from '../lib/Card'
+import Menus from '../components/Menus'
 
 
 class MenuList extends Component{
@@ -35,7 +36,7 @@ class MenuList extends Component{
 	}
 }
 
-class Menus extends Component{
+class MutilMenus extends Component{
 	static propTypes ={
 		noAction:React.PropTypes.bool,
 		onChange:React.PropTypes.func,
@@ -102,6 +103,19 @@ class ConfigItem extends Component{
 	}
 }
 
+class AjaxMenus extends Component{
+	state={data:[]}
+	render(){
+		var {label}=this.props
+		return (
+			<FormGroup horizontal label={label}>
+				<Menus data={this.state.data} onChange={data=>this.setState({data},()=>this.refs.post.request())} />
+				<Ajax auto url={"/configs/"+label} onSuccess={data=>this.setState({data})} />
+				<Ajax ref="post" url={"/configs/"+label+"?token="+store.get("token")} method="post" data={JSON.stringify(this.state.data)} />
+			</FormGroup>
+		)
+	}
+}
 
 export default class extends Component{
 	render(){
@@ -110,11 +124,10 @@ export default class extends Component{
 				<ConfigItem ItemButton={FileModalButton} label="主页主轮播图片" />
 				<ConfigItem ItemButton={GoodsModalButton} label="主页次轮播商品" />
 				<FormGroup horizontal label="主菜单">
-					<Menus title="菜单" />
+					<MutilMenus title="菜单" />
 				</FormGroup>
-				<FormGroup horizontal label="首页横向菜单">
-					<Menus title="横向菜单" />
-				</FormGroup>
+				<AjaxMenus label="首页横向菜单" />
+				<AjaxMenus label="首页纵向菜单" />
 			</Box>
 		)
 	}

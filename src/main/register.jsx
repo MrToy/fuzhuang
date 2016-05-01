@@ -78,8 +78,8 @@ class RegForm extends Component{
 				</FormGroup>
 				<FormGroup label="短信验证码" horizontal>
 					<Input full
-						color={account.length==0?"default":(account.length!=11?"danger":"success")} 
-						onChange={e=>this.setState({account:e.target.value})} />
+						color={captcha.length==0?"default":(captcha.length!=4?"danger":"success")} 
+						onChange={e=>this.setState({captcha:e.target.value})} />
 				</FormGroup>
 				<FormGroup horizontal>
 					<Button onClick={()=>this.refs.post.request()}>注册</Button>
