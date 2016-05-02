@@ -13,7 +13,7 @@ import GoodsList from '../components/GoodsList'
 class NoticePanel extends Component{
 	render(){
 		return (
-			<Card full style={{height:178}}>
+			<Card full style={{height:144}}>
 				<p style={{fontSize:20,textAlign:"center"}}>公告</p>
 			</Card>
 		)
@@ -46,7 +46,7 @@ class UserPanel extends Component{
 		return (
 			<Card full color="red" style={{textAlign:"center",marginBottom:"1em"}}>
 				<p style={{fontSize:20}}>Hi， {this.state.user?(this.state.user.nickname||this.state.user.account):(this.state.tt+"好")}</p>
-				<p style={{color:"#AAA",fontSize:15,margin:"16px 0 30px 0"}}>欢迎来到第壹印象</p>
+				<p style={{color:"#AAA",fontSize:15,margin:"10px 0 20px 0"}}>欢迎来到第壹印象</p>
 				{
 					this.state.user?(
 						<div>
@@ -82,7 +82,7 @@ class ItemList extends Component{
 						<Flag />
 						<span style={{marginLeft:10}}>{this.props.title||"#"}</span>
 					</strong>
-					<Link to="/search.html" style={{float:"right",marginRight:10}}>more</Link>
+					<Link to={"/search.html?word="+this.props.title} style={{float:"right",marginRight:10}}>more</Link>
 				</div>
 				<div style={{width:1200}}>{this.props.children}</div>
 				<div style={{clear:"both"}}></div>
@@ -95,23 +95,23 @@ class InfoBar extends Component {
 	state={data:[],data2:[]}
 	render(){
 		return (
-			<div style={{paddingLeft:200}}>
+			<div style={{paddingLeft:220}}>
 				<div style={{display:"inline-block",verticalAlign:"top"}}>
-					<Carouse style={{height:350,width:740}} button list>
+					<Carouse style={{height:300,width:740}} button list>
 						{this.state.data.map(it=>{
 							return <img src={it.path} style={{width:"100%",height:"100%"}} />
 						})}
 					</Carouse>
 				</div>
-				<div style={{display:"inline-block",width:240,marginLeft:20}}>
+				<div style={{display:"inline-block",width:220,marginLeft:20}}>
 					<UserPanel />
 					<NoticePanel />
 				</div>
-				<Carouse style={{height:200,width:1000}} button total={5}>
+				<Carouse style={{height:170,width:1000}} button total={5}>
 					{this.state.data2.map(it=>{
 						return (
 							<Link to={{pathname:"/item.html",query:{id:it._id}}}>
-								<img src={"/files/image"+it.imgs[0].path+"?w=190&h=190"} style={{paddingRight:10,width:"100%",height:"100%"}} />
+								<img src={"/files/image"+it.imgs[0].path+"?w=190&h=190"} style={{paddingRight:20,width:"100%",height:"100%"}} />
 							</Link>
 						)
 					})}

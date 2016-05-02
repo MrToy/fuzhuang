@@ -37,9 +37,7 @@ class MutilMenus extends Component{
 	state={selected:null}
 	render(){
 		var {label,data=[]}=this.props
-		data=data.map(it=>(
-			it.parent&&!data.find(itit=>itit.text==it.parent)?{text:it.text,parent:null}:it
-		))
+		data=data.filter(it=>!(it.parent&&!data.find(itit=>itit.text==it.parent)||it.text==it.parent))
 		var list=[]
 		var recur= selected=>{
 			selected=selected||{}
@@ -55,7 +53,10 @@ class MutilMenus extends Component{
 				{list.map(it=>(
 					<Menus data={it.data}
 						onSelect={text=>this.setState({selected:{text,parent:it.parent}})}
-						onChange={arr=>this.props.onChange([...data.filter(itit=>itit.parent!=it.parent),...arr.map(itit=>({text:itit,parent:it.parent}))])} />
+						onChange={arr=>{
+							this.setState({selected:data.find(itit=>itit.text==it.parent)})
+							this.props.onChange([...data.filter(itit=>itit.parent!=it.parent),...arr.map(itit=>({text:itit,parent:it.parent}))])
+						}} />
 				))}
 			</div>
 		)
