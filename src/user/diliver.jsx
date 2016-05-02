@@ -1,12 +1,12 @@
 import React,{Component} from "react"
-import {Box} from './'
+import UserBox from '../components/UserBox'
 
 export default class extends Component{
 	render(){
 		return(
-			<Box title="物流信息">
+			<UserBox title="物流信息">
 				344
-			</Box>
+			</UserBox>
 		)
 	}
 }

@@ -1,5 +1,7 @@
 import React,{Component} from "react"
-import {Box,MenuPanel} from './'
+import UserBox from '../components/UserBox'
+
+import MenuPanel from '../lib/MenuPanel'
 import Button from '../lib/Button'
 import store from 'store'
 import Ajax from '../lib/Ajax'
@@ -48,47 +50,50 @@ class Goods extends Component{
 			<div>
 				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,selected:{}})}>添加</Button>
 				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})}>
-					<FormGroup label="商品名" >
-						<Input full value={name} onChange={e=>this.setState({selected:{...this.state.selected,name:e.target.value}})} />
-					</FormGroup>
-					<FormGroup label="关键词">
-						<Input full value={cate} onChange={e=>this.setState({selected:{...this.state.selected,cate:e.target.value}})} />
-					</FormGroup>
-					<FormGroup label="价格">
-						<Input full value={price} onChange={e=>this.setState({selected:{...this.state.selected,price:e.target.value}})} type="number"  />
-					</FormGroup>
-					<FormGroup label="商品介绍">
-						<Input full value={info} onChange={e=>this.setState({selected:{...this.state.selected,info:e.target.value}})} type="textarea" />
-					</FormGroup>
-					<FormGroup label="货号">
-						<Input full value={itemCode} onChange={e=>this.setState({selected:{...this.state.selected,itemCode:e.target.value}})}  />
-					</FormGroup>
-					<FormGroup horizontal label="尺寸列表">
-						<Menus data={sizes} onChange={sizes=>this.setState({selected:{...this.state.selected,sizes}})}  />
-					</FormGroup>
-					<FormGroup horizontal label="颜色列表">
-						<Menus data={colors} onChange={colors=>this.setState({selected:{...this.state.selected,colors}})}  />
-					</FormGroup>
-					<FileModalButton checked={imgs} onCheck={imgs=>this.setState({selected:{...this.state.selected,imgs}})} >展示缩略图</FileModalButton>
-					<Col sm={4} offset={8}>
+					<div style={{maxHeight:600,overflow:"auto"}}>
+						<FormGroup label="商品名" >
+							<Input full value={name} onChange={e=>this.setState({selected:{...this.state.selected,name:e.target.value}})} />
+						</FormGroup>
+						<FormGroup label="关键词">
+							<Input full value={cate} onChange={e=>this.setState({selected:{...this.state.selected,cate:e.target.value}})} />
+						</FormGroup>
+						<FormGroup label="价格">
+							<Input full value={price} onChange={e=>this.setState({selected:{...this.state.selected,price:e.target.value}})} type="number"  />
+						</FormGroup>
+						<FormGroup label="商品介绍">
+							<Input full value={info} onChange={e=>this.setState({selected:{...this.state.selected,info:e.target.value}})} type="textarea" />
+						</FormGroup>
+						<FormGroup label="货号">
+							<Input full value={itemCode} onChange={e=>this.setState({selected:{...this.state.selected,itemCode:e.target.value}})}  />
+						</FormGroup>
+						<FileModalButton checked={imgs} onCheck={imgs=>this.setState({selected:{...this.state.selected,imgs}})} >展示缩略图</FileModalButton>
+						<FormGroup horizontal label="尺寸列表">
+							<Menus data={sizes} onChange={sizes=>this.setState({selected:{...this.state.selected,sizes}})}  />
+						</FormGroup>
+						<FormGroup horizontal label="颜色列表">
+							<Menus data={colors} onChange={colors=>this.setState({selected:{...this.state.selected,colors}})}  />
+						</FormGroup>	
+					</div>
+					<Col sm={4} offset={8} style={{marginTop:20}}>
 						<Button onClick={()=>{
-							this.state.selected?this.refs.put.request():this.refs.post.request()
+							this.state.selected._id?this.refs.put.request():this.refs.post.request()
 							this.setState({addModal:false})
 						}}>保存</Button>
 						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
 					</Col>
 				</Modal>
-				<Table border center keys={["商品名","价格","主图","关键词","创建时间","操作"]}
+				<Table border center keys={["商品名","货号","价格","主图","关键词","创建时间","操作"]}
 					data={this.state.data.map(it=>{
-						var {_id,name,price,info,imgs,onSale,cate,createTime}=it
+						var {_id,name,price,info,imgs,onSale,itemCode,cate,createTime}=it
 						return [
 							(
 								<Link to={"/item.html?id="+_id}>
 									<Button color="link">{name}</Button>
 								</Link>
 							),
+							itemCode,
 							price,
-							<img style={{width:100,height:100}} src={(imgs[0]||{}).path}/>,
+							<img style={{width:100,height:100}} src={((imgs||[])[0]||{}).path}/>,
 							cate,
 							it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),
 							(
@@ -150,7 +155,7 @@ export default class extends Component{
 	state={info:null}
 	render(){
 		return(
-			<Box title="店铺管理">
+			<UserBox title="店铺管理">
 				{this.state.info?(
 					<MenuPanel>
 						<Goods title="商品管理" data={this.state.info} />
@@ -160,7 +165,7 @@ export default class extends Component{
 					<Apply />
 				)}
 				<Ajax auto url={"/shops/info?token="+store.get("token")} onSuccess={info=>this.setState({info})} />
-			</Box>
+			</UserBox>
 		)
 	}
 }

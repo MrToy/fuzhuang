@@ -1,6 +1,6 @@
 import React,{Component} from "react"
 import ReactDOM from "react-dom"
-import {Box} from './'
+import UserBox from '../components/UserBox'
 import MenuBar from '../lib/MenuBar'
 import Table from '../lib/Table'
 import Ajax from '../lib/Ajax'
@@ -12,7 +12,7 @@ export default class extends Component{
 	state={type:"所有订单",data:[]}
 	render(){
 		return(
-			<Box title="我的订单">
+			<UserBox title="我的订单">
 				<MenuBar onChange={type=>this.setState({type})} current={this.state.type} data={["所有订单","待付款订单","等待发货订单","待收货的订单","已完成的订单","取消的订单"]} />
 				<Table center border keys={["订单号","商品信息","单价","数量","实付款","交易状态","操作"]} data={this.state.data.map(it=>{
 					var {_id,goods,amount,status}=it
@@ -42,7 +42,7 @@ export default class extends Component{
 				<Ajax ref="cancle" method="put"
 					url={"/deals?token="+store.get("token")}
 					onSuccess={()=>this.refs.get.request()} />
-			</Box>
+			</UserBox>
 		)
 	}
 }

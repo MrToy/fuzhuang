@@ -1,17 +1,12 @@
 import React,{Component} from 'react'
 import Radium from 'radium'
 import {Link} from 'react-router'
-
 import Paging from '../lib/Paging'
 import Ajax from '../lib/Ajax'
 import ButtonGroup from '../lib/ButtonGroup'
 import Button from '../lib/Button'
-
 import GoodsList from '../components/GoodsList'
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
-import MenuBar from '../components/MenuBar'
+
 
 @Radium
 class MenuList extends Component{
@@ -81,23 +76,17 @@ export default class extends Component{
 	render(){
 		return (
 			<div>
-				<Header />
-				<TitleBar />
-				<MenuBar />
-				<div style={{width:1200,margin:"0 auto",marginBottom:20,minHeight:620}}>
-					<Menu word={(this.state.word||this.props.location.query.word)} />
-					<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>
-						<Button color="red">综合</Button>
-						<Button color="red">价格</Button>
-						<Button color="red">上新时间</Button>
-						<Button color="red">销量</Button>
-					</ButtonGroup>
-					<Button color="red" onClick={()=>this.setState({direct:!this.state.direct},()=>this.refs.get.request())}>{this.state.direct?"↑升序":"↓降序"}</Button>
-					<GoodsList data={this.state.data} />
-					<Paging color="red" total={this.state.pages} style={{display:"inline-block"}} onPaging={i=>this.setState({index:i},()=>this.refs.get.request())} />
-					<Ajax auto ref="get" url={"/goods?limit=15&sort="+this.state.sort+","+(this.state.direct?"+":"-")+"&word="+(this.state.word||this.props.location.query.word)+"&onSale=true&skip="+(this.state.index-1)*15} onSuccess={it=>this.setState({data:it.data,pages:Math.ceil(it.total/15)})} />
-				</div>	
-				<Footer />
+				<Menu word={(this.state.word||this.props.location.query.word)} />
+				<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>
+					<Button color="red">综合</Button>
+					<Button color="red">价格</Button>
+					<Button color="red">上新时间</Button>
+					<Button color="red">销量</Button>
+				</ButtonGroup>
+				<Button color="red" onClick={()=>this.setState({direct:!this.state.direct},()=>this.refs.get.request())}>{this.state.direct?"↑升序":"↓降序"}</Button>
+				<GoodsList data={this.state.data} />
+				<Paging color="red" total={this.state.pages} style={{display:"inline-block"}} onPaging={i=>this.setState({index:i},()=>this.refs.get.request())} />
+				<Ajax auto ref="get" url={"/goods?limit=15&sort="+this.state.sort+","+(this.state.direct?"+":"-")+"&word="+(this.state.word||this.props.location.query.word)+"&onSale=true&skip="+(this.state.index-1)*15} onSuccess={it=>this.setState({data:it.data,pages:Math.ceil(it.total/15)})} />
 			</div>
 		)
 	}

@@ -1,8 +1,9 @@
-import React,{Component} from "react"
-import ReactDOM from "react-dom"
-import {Link} from 'react-router'
-import {VelocityTransitionGroup} from 'velocity-react'
+import React,{Component} from 'react'
+import Header from './Header'
+import Footer from './Footer'
+import TitleBar from './TitleBar'
 
+import {Link} from 'react-router'
 import Cart from '../lib/IconMoon/Cart'
 import Stack from '../lib/IconMoon/Stack'
 import User from '../lib/IconMoon/User'
@@ -16,43 +17,6 @@ import Radium from 'radium'
 import store from 'store'
 import Ajax from '../lib/Ajax'
 
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
-
-export class Box extends Component{
-	render(){
-		return (
-			<div>
-				<TitleBar text>{this.props.title}</TitleBar>
-				<div style={{padding:"50px 100px"}}>
-					<div style={{minHeight:600}}>
-							{this.props.children}
-					</div>
-				</div>
-				<Footer />
-			</div>
-		)
-	}
-}
-
-export class  MenuPanel extends Component{
-	state={choosed:0}
-	render(){
-		return(
-			<div>
-				<ul style={{marginBottom:30,listStyle:"none",fontSize:20,borderBottom:"1px solid #ccc"}}>
-					{React.Children.map(this.props.children,(it,i)=>{
-						var lineColor=this.state.choosed==i?"#000":"rgba(0,0,0,0)"
-						var fontColor=this.state.choosed==i?"#000":"#AAA"
-						return <li onClick={()=>this.setState({choosed:i})} style={{cursor:"pointer",display:"inline-block",padding:"10px 20px",borderBottom:"2px solid "+lineColor,color:fontColor}}>{it.props.title}</li>
-					})}
-				</ul>
-				{this.props.children instanceof Array?this.props.children[this.state.choosed]:this.props.children}
-			</div>
-		)
-	}
-}
 
 @Radium
 class NavItem extends Component{
@@ -75,32 +39,32 @@ export default class extends Component{
 	state={choosed:0,list:[]}
 	render(){
 		var list=[
-			{text:"用户中心",link:"/user.html",icon:User},
+			{text:"用户中心",link:"/user/info.html",icon:User},
 			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+			{text:"我的订单",link:"/user/deal.html",icon:Stack},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
-			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
+			//{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
 		var list2=[
-			{text:"用户中心",link:"/user.html",icon:User},
-			{text:"店铺管理",link:"/user.html/shop.html",icon:Home},
+			{text:"用户中心",link:"/user/info.html",icon:User},
+			{text:"店铺管理",link:"/user/shop.html",icon:Home},
 			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
 			//{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane},
 			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
 		var list3=[
-			{text:"用户中心",link:"/user.html",icon:User},
-			{text:"网站管理",link:"/user.html/config.html",icon:Home},
+			{text:"用户中心",link:"/user/info.html",icon:User},
+			{text:"网站管理",link:"/user/config.html",icon:Home},
 			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			{text:"我的订单",link:"/user.html/deal.html",icon:Stack},
+			{text:"我的订单",link:"/user/deal.html",icon:Stack},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
-			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty},
-			{text:"店铺管理",link:"/user.html/shop.html",icon:Home},
+			{text:"文件管理",link:"/user/files.html",icon:FilesEmpty},
+			{text:"店铺管理",link:"/user/shop.html",icon:Home},
 			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack}
 		]
 		return (
@@ -115,7 +79,9 @@ export default class extends Component{
 						</div>
 					</div>
 					<div style={{marginLeft:250}}>
-						{this.props.children}
+						<TitleBar title={this.props.title} />
+						<div style={{padding:"0 50px",minHeight:660}}>{this.props.children}</div>
+						<Footer />
 					</div>
 					<Ajax auto url={"/users/info?token="+store.get("token")} onSuccess={user=>{
 						if(user.target=="saler")

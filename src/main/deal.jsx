@@ -5,10 +5,8 @@ import Table from '../lib/Table'
 import Button from '../lib/Button'
 import {browserHistory} from 'react-router'
 import Tipbar from '../lib/Tipbar'
+import InfoBox from '../components/InfoBox'
 
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
 
 class Addr extends Component{
 	render(){
@@ -32,9 +30,7 @@ export default class extends Component{
 		var id=this.props.location.query.id
 		var amount=parseInt(this.props.location.query.amount)||1
 		return(
-			<div>
-				<Header />
-				<TitleBar text="订单提交" />
+			<InfoBox title="购物车">
 				<div style={{height:700,width:1000,margin:"0 auto",paddingTop:50}}>
 					<div>
 						<Tipbar title="选择收货地址" />
@@ -65,8 +61,7 @@ export default class extends Component{
 					onSuccess={it=>{
 						browserHistory.push("/cashier.html?id="+it.id)
 					}} />
-				<Footer />
-			</div>
+			</InfoBox>
 		)
 	}
 }

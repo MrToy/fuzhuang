@@ -1,16 +1,12 @@
 import React,{Component} from 'react'
 import Radium from 'radium'
 import {Link} from 'react-router'
+import SearchBox from '../components/SearchBox'
 
 import Ajax from '../lib/Ajax'
 import Input from '../lib/Input'
 import Button from '../lib/Button'
 import ButtonGroup from '../lib/ButtonGroup'
-
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
-import MenuBar from '../components/MenuBar'
 
 
 
@@ -96,17 +92,11 @@ export default class extends Component{
 	state={data:null}
 	render(){
 		return (
-			<div>
-				<Header />
-				<TitleBar />
-				<MenuBar />
-				<div style={{width:1200,margin:"20px auto"}}>
-					<ItemInfo data={this.state.data} />
-					<ImageInfo data={this.state.data} />
-				</div>	
-				<Footer />
+			<SearchBox title="商品信息">
+				<ItemInfo data={this.state.data} />
+				<ImageInfo data={this.state.data} />
 				<Ajax auto url={"/goods/"+this.props.location.query.id} onSuccess={it=>this.setState({data:it})} />
-			</div>
+			</SearchBox>
 		)
 	}
 }

@@ -1,12 +1,12 @@
 import React,{Component} from 'react'
-import {Link} from 'react-router'
 import Radium from 'radium'
+import {Link} from 'react-router'
 
 @Radium
 export default class extends Component{
 	render(){
 		return(
-			<div style={[{color:"#888",padding:30,background:"#F6F6F6",height:140,borderTop:"1px solid #ccc",textAlign:"center"},this.props.style]}>
+			<div style={[{color:"#888",padding:30,background:"#F6F6F6",marginTop:20,height:140,borderTop:"1px solid #ccc",textAlign:"center"},this.props.style]}>
 				<ul style={{listStyle:"none",marginBottom:20}}>
 					<Link to="/">
 						<li style={{display:"inline-block",fontSize:14,padding:10}}>首页</li>

@@ -2,22 +2,19 @@ import React,{Component} from 'react'
 import Radium from 'radium'
 import {Link,browserHistory} from 'react-router'
 import store from 'store'
+import InfoBox from '../components/InfoBox'
 
 import Ajax from '../lib/Ajax'
 import FormGroup from '../lib/FormGroup'
 import Button from '../lib/Button'
 import Input from '../lib/Input'
 
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
-
 class SwitchTap extends Component{
 	state={target:0}
 	render(){
 		var colors={primary:'#C81624'}
 		return (
-			<div>
+			<div style={{marginTop:100}}>
 				<div onClick={()=>this.setState({target:0})} style={{display:"inline-block",width:"50%",borderBottom:"2px solid "+(!this.state.target?colors.primary:"#AAA"),textAlign:"center",color:!this.state.target?colors.primary:"#AAA",fontSize:20,lineHeight:"50px",cursor:"pointer"}}>我是买家</div>
 				<div onClick={()=>this.setState({target:1})} style={{display:"inline-block",width:"50%",borderBottom:"2px solid "+(this.state.target?colors.primary:"#AAA"),textAlign:"center",color:this.state.target?colors.primary:"#AAA",fontSize:20,lineHeight:"50px",cursor:"pointer"}}>我是卖家</div>
 				<div style={{paddingTop:30}}>{this.state.target?this.props.children[1]:this.props.children[0]}</div>
@@ -96,19 +93,12 @@ class RegForm extends Component{
 export default class extends Component{
 	render(){
 		return(
-			<div>
-				<Header />
-				<TitleBar text="注册" />
-				<div style={{position:"relative",height:600,width:1200,margin:"0 auto"}}>
-					<div style={{margin:100,height:550,padding:"50px 100px",border:"1px solid #ccc"}}>
-						<SwitchTap>
-							<RegForm target="buyer" />
-							<RegForm target="saler" />
-						</SwitchTap>
-					</div>
-				</div>
-				<Footer />
-			</div>
+			<InfoBox title="注册">
+					<SwitchTap>
+						<RegForm target="buyer" />
+						<RegForm target="saler" />
+					</SwitchTap>
+			</InfoBox>
 		)
 	}
 }

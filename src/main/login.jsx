@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import Radium from 'radium'
 import {Link,browserHistory} from 'react-router'
 import store from 'store'
+import InfoBox from '../components/InfoBox'
 
 import Input from '../lib/Input'
 import Lock from '../lib/Linearicons/Lock'
@@ -10,10 +11,6 @@ import Sad from '../lib/Linearicons/Sad'
 import Button from '../lib/Button'
 import Ajax from '../lib/Ajax'
 import FormGroup from '../lib/FormGroup'
-
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
 
 @Radium
 class LoginPanel extends Component{
@@ -49,17 +46,14 @@ class LoginPanel extends Component{
 export default class extends Component{
 	render(){
 		return(
-			<div>
-				<Header />
-				<TitleBar text="欢迎登录" />
+			<InfoBox title="登录">
 				<div style={{height:700,width:1000,margin:"0 auto",padding:"150px 100px"}}>
 					<div style={{width:350,height:350,float:"left"}}>
 						<img src={require("./logo.png")} style={{width:"100%",height:"100%"}} />
 					</div>
 					<LoginPanel style={{width:440,height:350,float:"right"}} />
 				</div>
-				<Footer />
-			</div>
+			</InfoBox>
 		)
 	}
 }

@@ -60,10 +60,10 @@ router.delete('/:id',async ctx=>{
 })
 router.put('/:id',async ctx=>{
 	var {_id}=await getUser(ctx)
-	var {name,info,imgs,price,cate,itemCode,colors,sizes}=await parse.json(ctx)
+	var {name,info,imgs,price,cate,itemCode,colors,sizes,onSale}=await parse.json(ctx)
 	var id=ObjectID(ctx.params.id)
 	var shop=await ctx.mongo.collection("shops").findOne({owner:_id})
-	await ctx.mongo.collection("goods").updateOne({"_id":id,shop:shop._id},{"$set":{name,info,imgs,price,cate,itemCode,colors,sizes}})
+	await ctx.mongo.collection("goods").updateOne({"_id":id,shop:shop._id},{"$set":{name,info,imgs,price,cate,itemCode,colors,sizes,onSale}})
 	ctx.body={success:true}
 })
 export default router

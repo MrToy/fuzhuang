@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-
+import InfoBox from '../components/InfoBox'
 import Ajax from '../lib/Ajax'
 import store from 'store'
 import Table from '../lib/Table'
@@ -9,9 +9,6 @@ import MenuPanel from '../lib/MenuPanel'
 import {Link} from 'react-router'
 import Modal from '../lib/Modal'
 
-import Header from '../components/Header'
-import TitleBar from '../components/TitleBar'
-import Footer from '../components/Footer'
 
 class PayWay extends Component{
 	render(){
@@ -31,9 +28,7 @@ export default class extends Component{
 		var id=this.props.location.query.id
 		var {goods={},addr={}}=this.state.deal
 		return(
-			<div>
-				<Header />
-				<TitleBar text>收银台</TitleBar>
+			<InfoBox title="收银台">
 				<div style={{height:700,width:1000,margin:"0 auto",paddingTop:50}}>
 					<TipBar title="订单信息" />
 					<div style={{lineHeight:1.5,marginBottom:50}}>
@@ -61,16 +56,15 @@ export default class extends Component{
 					<Modal isOpen={this.state.modal} style={{width:500}} onRequestClose={()=>this.setState({addModal:false})}>
 						<TipBar title="支付结果" />
 						<div style={{textAlign:"center"}}>
-							<Link to="/user.html/deal.html">
+							<Link to="/user/deal.html">
 								<Button color="success">支付成功</Button>
 							</Link>
 							<Button color="default" onClick={()=>this.setState({modal:false})}>支付失败，继续尝试</Button>
 						</div>
 					</Modal>
 				</div>
-				<Footer />
 				<Ajax auto url={"/deals/"+id} onSuccess={deal=>this.setState({deal})} />
-			</div>
+			</InfoBox>
 		)
 	}
 }

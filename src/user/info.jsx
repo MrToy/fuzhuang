@@ -1,6 +1,7 @@
 import React,{Component} from "react"
-import ReactDOM from "react-dom"
-import {MenuPanel,Box} from './'
+import UserBox from '../components/UserBox'
+
+import MenuPanel from '../lib/MenuPanel'
 import {Link} from 'react-router'
 import store from 'store'
 import Input from '../lib/Input'
@@ -116,7 +117,7 @@ class AddressTable extends Component{
 export default class extends Component{
 	render(){
 		return(
-			<Box title="用户中心">
+			<UserBox title="用户中心">
 				<MenuPanel>
 					<UserInfo title="个人资料" />
 					<AccountInfo title="账户信息" />
@@ -124,7 +125,7 @@ export default class extends Component{
 						<AddressTable />
 					</div>
 				</MenuPanel>
-			</Box>
+			</UserBox>
 		)
 	}
 }

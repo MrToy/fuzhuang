@@ -32,7 +32,10 @@ export default class extends Component{
 					}}>删除</Button>
 				</div>
 			)}>
-				<List selected={this.state.selected} data={data} onChange={selected=>this.setState({selected})} />
+				<List selected={this.state.selected} data={data} onChange={selected=>{
+					this.setState({selected})
+					this.props.onSelect&&this.props.onSelect(selected)
+				}} />
 			</Card>
 		)
 	}

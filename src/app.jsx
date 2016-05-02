@@ -19,8 +19,7 @@ class RouterList extends Component{
 					<Route path="cashier.html" component={require('react-router!./main/cashier')} />
 					<Route path="demo.html" component={require('react-router!./main/demo')} />
 				</Route>
-				<Route path="/user.html"  component={require('react-router!./user')} >
-					<IndexRoute component={require('react-router!./user/info')} />
+				<Route path="/user">
 					<Route path="info.html" component={require('react-router!./user/info')} />
 					<Route path="chart.html" component={require('react-router!./user/chart')} />
 					<Route path="deal.html" component={require('react-router!./user/deal')} />

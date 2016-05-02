@@ -107,7 +107,7 @@ export default class FileManager extends Component{
 			this.props.onDir&&this.props.onDir(dir)
 		}
 		var config={
-			data:[{key:null,name:"root",type:"folder",parent:"root"},...this.props.data],
+			data:[{key:null,type:"folder",parent:"root"},...this.props.data],
 			selected:this.props.onSelect?this.props.selected:this.state.selected,
 			dir:this.props.onDir?this.props.dir:this.state.dir,
 			onSelect:selected=>{
