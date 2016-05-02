@@ -10,20 +10,28 @@ import ButtonGroup from '../lib/ButtonGroup'
 
 
 
+class ImagePicker extends Component{
+	state={selected:0}
+	render(){
+		return (
+			<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
+				<img style={{width:400,height:400,display:"block"}} src={this.props.imgs[this.state.selected]?("/files/image"+this.props.imgs[this.state.selected].path+"?w=400&h=400"):require('./014-image.png')} />
+				{this.props.imgs.slice(0,4).map((it,i)=>(
+					<img onClick={()=>this.setState({selected:i})} style={{width:92,height:92,margin:"10px 10px 0 0",cursor:"pointer",border:"2px solid "+(this.state.selected==i?"#C81624":"transparent"),padding:3}} src={("/files/image"+it.path+"?w=90&h=90")||require('./014-image.png')} />
+				))}
+			</div>
+		)
+	}
+}
+
+
 class ItemInfo extends Component{
 	state={amount:1,size:null,color:null}
 	render(){
-		var data=this.props.data||{imgs:[]}
+		var data=this.props.data
 		return(
 			<div style={{border:"1px solid #ccc",padding:20}}>
-				<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
-					<img style={{width:400,height:400,padding:20}} src={data.imgs[0]?("/files/image"+data.imgs[0].path+"?w=360&h=360"):require('./014-image.png')} />
-					<div>
-						{data.imgs.slice(1,5).map((it,i)=>(
-							<img style={{width:78,height:78,margin:10}} src={("/files/image"+it.path+"?w=80&h=80")||require('./014-image.png')} />
-						))}
-					</div>
-				</div>
+				<ImagePicker imgs={data.imgs||[]} />
 				<div style={{display:'inline-block',verticalAlign:"top",marginLeft:20}}>
 					<p style={{fontSize:20,width:680,textAlign:"center"}}>{data.name}</p>
 					<div style={{padding:"20px 50px",margin:"20px 0",background:"#eee",lineHeight:"50px",color:"#888"}}>

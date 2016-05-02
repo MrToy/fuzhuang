@@ -11,7 +11,7 @@ var router=new Router()
 
 async function parseFile(ctx){
 	return new Promise((resolve,reject)=>{
-		var form = new formidable.IncomingForm({uploadDir:"upload",keepExtensions:true})
+		var form = new formidable.IncomingForm({uploadDir:"upload",keepExtensions:true,maxFieldsSize:10*1024*1024})
 		form.parse(ctx.req,function(err,fields,files){
 			err?reject(err):resolve({fields,files})
 		})
