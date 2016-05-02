@@ -28,7 +28,7 @@ class ImagePicker extends Component{
 class ItemInfo extends Component{
 	state={amount:1,size:null,color:null}
 	render(){
-		var data=this.props.data
+		var data=this.props.data||{}
 		return(
 			<div style={{border:"1px solid #ccc",padding:20}}>
 				<ImagePicker imgs={data.imgs||[]} />
