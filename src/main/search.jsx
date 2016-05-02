@@ -6,7 +6,7 @@ import Ajax from '../lib/Ajax'
 import ButtonGroup from '../lib/ButtonGroup'
 import Button from '../lib/Button'
 import GoodsList from '../components/GoodsList'
-
+import SearchBox from '../components/SearchBox'
 
 @Radium
 class MenuList extends Component{
@@ -75,7 +75,7 @@ export default class extends Component{
 	}
 	render(){
 		return (
-			<div>
+			<SearchBox>
 				<Menu word={(this.state.word||this.props.location.query.word)} />
 				<ButtonGroup onCheck={this.onSort.bind(this)}  style={{marginBottom:20}}>
 					<Button color="red">综合</Button>
@@ -87,7 +87,7 @@ export default class extends Component{
 				<GoodsList data={this.state.data} />
 				<Paging color="red" total={this.state.pages} style={{display:"inline-block"}} onPaging={i=>this.setState({index:i},()=>this.refs.get.request())} />
 				<Ajax auto ref="get" url={"/goods?limit=15&sort="+this.state.sort+","+(this.state.direct?"+":"-")+"&word="+(this.state.word||this.props.location.query.word)+"&onSale=true&skip="+(this.state.index-1)*15} onSuccess={it=>this.setState({data:it.data,pages:Math.ceil(it.total/15)})} />
-			</div>
+			</SearchBox>
 		)
 	}
 }
