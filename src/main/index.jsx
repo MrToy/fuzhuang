@@ -5,7 +5,7 @@ import Carouse from '../lib/Carouse'
 import Ajax from '../lib/Ajax'
 import Card from '../lib/Card'
 import Button from '../lib/Button'
-import Flag from '../lib/IconMoon/Flag'
+import Icon from '../lib/Icon'
 
 import SearchBox from '../components/SearchBox'
 import GoodsList from '../components/GoodsList'
@@ -79,7 +79,7 @@ class ItemList extends Component{
 			<div>
 				<div style={{borderBottom:"2px solid #C81624",marginBottom:20}}>			
 					<strong style={{display:"inline-block",padding:"0 10px",height:23,color:"#C81624",lineHeight:"1.5em",textAlign:"center"}}>
-						<Flag />
+						<Icon name="flag" />
 						<span style={{marginLeft:10}}>{this.props.title||"#"}</span>
 					</strong>
 					<Link to={"/search.html?word="+this.props.title} style={{float:"right",marginRight:10}}>more</Link>

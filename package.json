@@ -43,6 +43,7 @@
     "react-tap-event-plugin": "^0.2.2",
     "store": "^1.3.20",
     "style-loader": "^0.13.0",
+    "svgxuse": "^1.1.16",
     "sweetalert": "^1.1.3",
     "url-loader": "^0.5.7",
     "velocity-react": "^1.1.5",

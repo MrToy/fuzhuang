@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import Input from '../lib/Input'
 import Button from '../lib/Button'
-import Search from '../lib/IconMoon/Search'
+import Icon from '../lib/Icon'
 
 export default class extends Component{
 	state={value:""}
@@ -20,7 +20,7 @@ export default class extends Component{
 							<Input  labelCollapse size="xl" color="red" placeholder="请输入关键词" style={{width:450}} onChange={e=>this.setState({value:e.target.value})} addRight={(
 								<Link ref="link" to={"/search.html?word="+this.state.value}>
 									<Button color="red" size="xl" style={{marginRight:0}}>
-										<Search />搜索
+										<Icon name="search" />搜索
 									</Button>
 								</Link>
 							)} />

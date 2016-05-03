@@ -4,15 +4,16 @@ import Footer from './Footer'
 import TitleBar from './TitleBar'
 
 import {Link} from 'react-router'
-import Cart from '../lib/IconMoon/Cart'
-import Stack from '../lib/IconMoon/Stack'
-import User from '../lib/IconMoon/User'
-import Pushpin from '../lib/IconMoon/Pushpin'
-import UserTie from '../lib/IconMoon/UserTie'
-import Airplane from '../lib/IconMoon/Airplane'
-import Home from '../lib/IconMoon/Home'
-import Drawer from '../lib/IconMoon/Drawer'
-import FilesEmpty from '../lib/IconMoon/FilesEmpty'
+// import Cart from '../lib/IconMoon/Cart'
+// import Stack from '../lib/IconMoon/Stack'
+// import User from '../lib/IconMoon/User'
+// import Pushpin from '../lib/IconMoon/Pushpin'
+// import UserTie from '../lib/IconMoon/UserTie'
+// import Airplane from '../lib/IconMoon/Airplane'
+// import Home from '../lib/IconMoon/Home'
+// import Drawer from '../lib/IconMoon/Drawer'
+// import FilesEmpty from '../lib/IconMoon/FilesEmpty'
+import Icon from '../lib/Icon'
 import Radium from 'radium'
 import store from 'store'
 import Ajax from '../lib/Ajax'
@@ -25,7 +26,7 @@ class NavItem extends Component{
 			<Link to={this.props.to}>
 				<div onClick={this.props.onClick} style={[{padding:"10px 30px 0 30px",":hover":{background:"#333"}},this.props.active?{background:"#333"}:{}]}>
 					<div style={{color:"#fff",fontSize:20,lineHeight:"50px",padding:"0 30px",borderBottom:"1px solid rgba(255,255,255,0.5)"}}>
-						<this.props.icon style={{fill:"#fff",width:20,height:20,marginRight:25}} />
+						{this.props.icon}
 						{this.props.children}
 					</div>
 				</div>
@@ -36,35 +37,35 @@ class NavItem extends Component{
 
 @Radium
 export default class extends Component{
-	state={choosed:0,list:[]}
+	state={list:[]}
 	render(){
 		var list=[
-			{text:"用户中心",link:"/user/info.html",icon:User},
-			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			{text:"我的订单",link:"/user/deal.html",icon:Stack},
+			{text:"用户中心",link:"/user/info.html",icon:<Icon name="account_circle" />},
+			//{text:"购物车",link:"/user.html/chart.html",icon:"shopping_cart"},
+			{text:"我的订单",link:"/user/deal.html",icon:<Icon name="loyalty" />},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
 			//{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
 		]
 		var list2=[
-			{text:"用户中心",link:"/user/info.html",icon:User},
-			{text:"店铺管理",link:"/user/shop.html",icon:Home},
+			{text:"用户中心",link:"/user/info.html",icon:<Icon name="account_circle" />},
+			{text:"店铺管理",link:"/user/shop.html",icon:<Icon name="home2" />},
 			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack},
 			//{text:"客户服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"物流管理",link:"/user.html/diliver.html",icon:Airplane},
-			{text:"文件管理",link:"/user.html/files.html",icon:FilesEmpty}
+			{text:"文件管理",link:"/user.html/files.html",icon:<Icon name="insert_drive_file" />}
 		]
 		var list3=[
-			{text:"用户中心",link:"/user/info.html",icon:User},
-			{text:"网站管理",link:"/user/config.html",icon:Home},
-			//{text:"购物车",link:"/user.html/chart.html",icon:Cart},
-			{text:"我的订单",link:"/user/deal.html",icon:Stack},
+			{text:"用户中心",link:"/user/info.html",icon:<Icon name="account_circle" />},
+			{text:"网站管理",link:"/user/config.html",icon:<Icon name="home2" />},
+			//{text:"购物车",link:"/user.html/chart.html",icon:"shopping_cart"},
+			{text:"我的订单",link:"/user/deal.html",icon:<Icon name="loyalty" />},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},
 			//{text:"消费足迹",link:"/user.html/track.html",icon:PushPin},
 			//{text:"物流信息",link:"/user.html/diliver.html",icon:Airplane},
-			{text:"文件管理",link:"/user/files.html",icon:FilesEmpty},
-			{text:"店铺管理",link:"/user/shop.html",icon:Home},
+			{text:"文件管理",link:"/user/files.html",icon:<Icon name="insert_drive_file" />},
+			{text:"店铺管理",link:"/user/shop.html",icon:<Icon name="home2" />},
 			//{text:"订单管理",link:"/user.html/deal.html",icon:Stack}
 		]
 		return (
@@ -74,7 +75,7 @@ export default class extends Component{
 					<div ref="nav" style={{width:250,overflowX:"hidden",transition:"all 0.5s",position:"absolute",top:0,bottom:0,background:"#555",overflow:"auto"}}>
 						<div style={{width:250}}>
 							{this.state.list.map((it,i)=>{
-								return <NavItem active={this.state.choosed==i} onClick={()=>this.setState({choosed:i})} to={it.link} icon={it.icon}>{it.text}</NavItem>
+								return <NavItem active={it.link==location.pathname} to={it.link} icon={it.icon}>{it.text}</NavItem>
 							})}
 						</div>
 					</div>

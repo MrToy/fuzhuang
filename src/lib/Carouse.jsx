@@ -1,8 +1,7 @@
 import React,{Component} from "react"
 import {VelocityComponent} from 'velocity-react'
 import Radium from 'radium'
-import CircleLeft from './IconMoon/CircleLeft'
-import CircleRight from './IconMoon/CircleRight'
+import Icon from '../lib/Icon'
 
 @Radium
 export default class extends Component{
@@ -53,13 +52,13 @@ export default class extends Component{
 					</div>
 				</VelocityComponent>
 				{this.props.button&&(
-					<div key="left" onClick={this.pre.bind(this)} style={{color:"#ccc",":hover":{color:"#888"},fontSize:35,display:isHover?"block":"none",cursor:"pointer",padding:10,position:"absolute",top:0,bottom:0,margin:"auto",width:70,height:70}} >
-						<CircleLeft/>
+					<div key="left" onClick={this.pre.bind(this)} style={{color:"#ccc",":hover":{color:"#fff"},fontSize:35,display:isHover?"block":"none",cursor:"pointer",padding:10,position:"absolute",top:0,bottom:0,margin:"auto",width:70,height:70}} >
+						<Icon name="arrow-left"/>
 					</div>
 				)}	
 				{this.props.button&&(
-					<div key="right" onClick={this.next.bind(this)} style={{color:"#ccc",":hover":{color:"#888"},fontSize:35,display:isHover?"block":"none",cursor:"pointer",padding:10,position:"absolute",right:0,top:0,bottom:0,margin:"auto",width:70,height:70}}>
-						<CircleRight  />
+					<div key="right" onClick={this.next.bind(this)} style={{color:"#ccc",":hover":{color:"#fff"},fontSize:35,display:isHover?"block":"none",cursor:"pointer",padding:10,position:"absolute",right:0,top:0,bottom:0,margin:"auto",width:70,height:70}}>
+						<Icon name="arrow-right"/>
 					</div>
 				)}
 				{this.props.list&&(

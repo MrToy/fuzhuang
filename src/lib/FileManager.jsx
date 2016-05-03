@@ -8,7 +8,7 @@ import {Tree,InlineTree,getIcon} from './Tree'
 import Button from './Button'
 import FileButton from './FileButton'
 import Modal from './Modal'
-import Cross from './IconMoon/Cross'
+import Icon from '../lib/Icon'
 
 @Radium
 class FileNode extends Component{
@@ -19,7 +19,7 @@ class FileNode extends Component{
 		onClick:React.PropTypes.func
 	}
 	render(){
-		var Icon=getIcon(this.props.type,this.state.isOpen)
+		var ico=getIcon(this.props.type,this.state.isOpen)
 		// var dropfn=this.props.type=="folder"?{
 		// 	onDrop:e=>{
 		// 		e.preventDefault();
@@ -41,7 +41,7 @@ class FileNode extends Component{
 				this.props.active?{background:"#FFE6B0",border:"1px solid #FFB951"}:{border:"1px solid transparent"}
 			]} onClick={this.props.onClick} onDoubleClick={this.props.onDoubleClick}>
 				<div style={{fontSize:"3em",":hover":{opacity:0.7}}}>
-					{this.props.path&&this.props.type.match(/image/)?<img style={{width:48,height:48,display:"inline-block"}} src={"/files/image"+this.props.path+"?w=48&h=48"} />:<Icon />}
+					{this.props.path&&this.props.type.match(/image/)?<img style={{width:48,height:48,display:"inline-block"}} src={"/files/image"+this.props.path+"?w=48&h=48"} />:ico}
 				</div>
 				{this.props.name}
 			</div>
@@ -75,7 +75,7 @@ class FileViewer extends Component{
 		var it=this.props.data||{}
 		return (
 			<Modal {...this.props}>
-				<span onClick={this.props.onRequestClose} style={{cursor:"pointer",float:"right"}}><Cross /></span>
+				<span onClick={this.props.onRequestClose} style={{cursor:"pointer",float:"right"}}><Icon name="close2" /></span>
 				<span style={{clear:"both"}}></span>
 				{it.type=="image/jpeg"?(
 					<img style={{height:500,display:"block",margin:"0 auto"}} src={it.path} />

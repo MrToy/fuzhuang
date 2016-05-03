@@ -5,9 +5,10 @@ import store from 'store'
 import InfoBox from '../components/InfoBox'
 
 import Input from '../lib/Input'
-import Lock from '../lib/Linearicons/Lock'
-import Smile from '../lib/Linearicons/Smile'
-import Sad from '../lib/Linearicons/Sad'
+// import Lock from '../lib/Linearicons/Lock'
+// import Smile from '../lib/Linearicons/Smile'
+// import Sad from '../lib/Linearicons/Sad'
+import Icon from '../lib/Icon'
 import Button from '../lib/Button'
 import Ajax from '../lib/Ajax'
 import FormGroup from '../lib/FormGroup'
@@ -20,7 +21,7 @@ class LoginPanel extends Component{
 		return (
 			<div onKeyDown={event=>{if(event.keyCode==13)this.refs.post.request()}} style={[{padding:40,border:"1px solid #ccc",float:"right"},this.props.style]}>
 				<FormGroup>
-					<Input addLeft={account.length!=11&&account.length!=0?<Sad/>:<Smile />} size="lg" full
+					<Input addLeft={account.length!=11&&account.length!=0?<Icon name="sentiment_dissatisfied" />:<Icon name="sentiment_satisfied" />} size="lg" full
 						color={account.length==0?"default":(account.length!=11?"danger":"success")} 
 						onChange={e=>this.setState({account:e.target.value})} />
 				</FormGroup>

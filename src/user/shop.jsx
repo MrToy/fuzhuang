@@ -8,7 +8,7 @@ import Ajax from '../lib/Ajax'
 import Card from '../lib/Card'
 import Input from '../lib/Input'
 import FormGroup from '../lib/FormGroup'
-import Home from '../lib/IconMoon/Home'
+import Icon from '../lib/Icon'
 import Col from '../lib/Col'
 import ButtonGroup from '../lib/ButtonGroup'
 import Table from '../lib/Table'
@@ -45,7 +45,7 @@ class Config extends Component{
 class Goods extends Component{
 	state={addModal:false,selected:{},data:[],pages:0,index:1}
 	render(){
-		var {name="",info="",price=0,imgs=[],onSale=false,cate="",sizes=[],colors=[],itemCode=""}=this.state.selected
+		var {name,info,price,imgs,onSale,cate,sizes,colors,itemCode}=this.state.selected
 		return (
 			<div>
 				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,selected:{}})}>添加</Button>
@@ -66,12 +66,12 @@ class Goods extends Component{
 						<FormGroup label="货号">
 							<Input full value={itemCode} onChange={e=>this.setState({selected:{...this.state.selected,itemCode:e.target.value}})}  />
 						</FormGroup>
-						<FileModalButton checked={imgs} onCheck={imgs=>this.setState({selected:{...this.state.selected,imgs}})} >展示缩略图</FileModalButton>
+						<FileModalButton checked={imgs||[]} onCheck={imgs=>this.setState({selected:{...this.state.selected,imgs}})} >展示缩略图</FileModalButton>
 						<FormGroup horizontal label="尺寸列表">
-							<Menus data={sizes} onChange={sizes=>this.setState({selected:{...this.state.selected,sizes}})}  />
+							<Menus data={sizes||[]} onChange={sizes=>this.setState({selected:{...this.state.selected,sizes}})}  />
 						</FormGroup>
 						<FormGroup horizontal label="颜色列表">
-							<Menus data={colors} onChange={colors=>this.setState({selected:{...this.state.selected,colors}})}  />
+							<Menus data={colors||[]} onChange={colors=>this.setState({selected:{...this.state.selected,colors}})}  />
 						</FormGroup>	
 					</div>
 					<Col sm={4} offset={8} style={{marginTop:20}}>
@@ -143,7 +143,7 @@ class Apply extends Component{
 				<Ajax ref="ajax" url={"/shops?token="+store.get("token")} method="post" data={JSON.stringify({name:this.state.name,info:this.state.info})} alert></Ajax>
 			</Card>
 		):(
-			<Card title={<Home />} style={{textAlign:"center"}}>
+			<Card title={<Icon name="home2" />} style={{textAlign:"center"}}>
 				<div style={{margin:"80px 0"}}>申请店铺进行中</div>
 				<Button collapse onClick={()=>this.setState({active:true})}>申请店铺</Button>
 			</Card>

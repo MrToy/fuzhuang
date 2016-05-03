@@ -4,8 +4,7 @@ import {FileBar} from '../lib/FileManager'
 import Modal from '../lib/Modal'
 import AjaxFileManager from './AjaxFileManager'
 import Button from '../lib/Button'
-import ArrowDown from '../lib/IconMoon/ArrowDown'
-import Cross from '../lib/IconMoon/Cross';
+import Icon from '../lib/Icon'
 
 class FileModal extends Component{
 	state={selected:null,dump:null}
@@ -15,16 +14,16 @@ class FileModal extends Component{
 		return(
 			<Modal {...this.props} style={{width:910}}>
 				<div style={{textAlign:"right",marginBottom:10}}>
-					<span onClick={this.props.onRequestClose} style={{cursor:"pointer"}}><Cross /></span>
+					<span onClick={this.props.onRequestClose} style={{cursor:"pointer"}}><Icon name="close2" /></span>
 				</div>
 				<AjaxFileManager style={{height:400,minWidth:800}} onSelect={selected=>this.setState({selected})} />
 				<div style={{marginTop:10,textAlign:"center"}}>
 					<Button color="warning" disable={!this.state.selected||!filterPass||!repeatPass} onClick={()=>{
 						this.props.onCheck([...this.props.checked,this.state.selected])
-					}}><ArrowDown /></Button>
+					}}><Icon name="keyboard_arrow_down" /></Button>
 					<Button color="danger" disable={!this.state.dump} onClick={()=>{
 						this.props.onCheck(this.props.checked.filter(it=>it.key!=this.state.dump))
-					}}><Cross /></Button>
+					}}><Icon name="close2" /></Button>
 				</div>
 				<FileBar data={this.props.checked} style={{marginTop:10}} onSelect={dump=>this.setState({dump})} />
 			</Modal>

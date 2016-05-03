@@ -10,9 +10,7 @@ import {Link} from 'react-router'
 import store from 'store'
 import Button from '../lib/Button'
 import dateFormat from 'dateformat'
-
-import ArrowDown from '../lib/IconMoon/ArrowDown'
-import Cross from '../lib/IconMoon/Cross'
+import Icon from '../lib/Icon'
 
 @Radium
 class Info extends 	Component{
@@ -72,10 +70,10 @@ class Goods extends Component{
 				<div style={{marginTop:10,textAlign:"center"}}>
 					<Button color="warning" disable={!this.state.selected||!repeatPass} onClick={()=>{
 						this.props.onCheck([...this.props.checked,this.state.selected])
-					}}><ArrowDown /></Button>
+					}}><Icon name="keyboard_arrow_down" /></Button>
 					<Button color="danger" disable={!this.state.dump} onClick={()=>{
 						this.props.onCheck(this.props.checked.filter(it=>it._id!=this.state.dump))
-					}}><Cross /></Button>
+					}}><Icon name="close2" /></Button>
 				</div>
 				<InfoBar data={this.props.checked} checked={this.state.dump} onCheck={it=>this.setState({dump:it._id})} />
 			</Modal>

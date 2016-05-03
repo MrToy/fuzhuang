@@ -3,7 +3,6 @@ import {Link} from 'react-router'
 import Button from '../lib/Button'
 import ButtonGroup from '../lib/ButtonGroup'
 import Input from '../lib/Input'
-import Home from '../lib/IconMoon/Home'
 import Col from '../lib/Col'
 import Tipbar from '../lib/Tipbar'
 import AvgGrid from '../lib/AvgGrid'
@@ -21,6 +20,7 @@ import GoodsModalButton from '../components/GoodsModalButton'
 import Editor from '../components/Editor'
 import List from '../lib/List'
 import Popover from '../lib/Popover'
+import Icon from '../lib/Icon'
 
 export default class extends Component{
 	render(){
@@ -30,7 +30,7 @@ export default class extends Component{
 				<div>
 					<Button>测试</Button>
 					<Button disable>测试</Button>
-					<Button><Home />测试</Button>
+					<Button><Icon name="home" />测试</Button>
 					<Button size="xl">测试</Button>
 					<Button color="success">测试</Button>
 					<Button color="warning">测试</Button>
@@ -49,6 +49,11 @@ export default class extends Component{
 					<Button>测试</Button>
 				</ButtonGroup>
 				<br /><br /><br />
+				<Tipbar title="Icon" color="random" />
+				<div style={{color:"red"}}>
+					<Icon name="home" />
+				</div>
+				<br /><br /><br />
 				<Tipbar title="Input" color="random" />
 				<div>
 					<Input placeholder="测试" />
@@ -58,7 +63,7 @@ export default class extends Component{
 				</div>
 				<br />
 				<div>
-					<Input placeholder="测试"  addRight={<Home />} color="random" />
+					<Input placeholder="测试"  addRight={<Icon name="home" />} color="random" />
 					<Input placeholder="测试"  addLeft={233} />
 				</div>
 				<br />

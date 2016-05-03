@@ -1,20 +1,14 @@
 import React,{Component} from "react"
 import Radium from 'radium'
-
-import Plus from './IconMoon/Plus'
-import Minus from './IconMoon/Minus'
-import Folder from './IconMoon/Folder'
-import FolderOpen from './IconMoon/FolderOpen'
-import FileEmpty from './IconMoon/FileEmpty'
-import Image from './IconMoon/Image'
+import Icon from '../lib/Icon'
 
 export function getIcon(type,sec){
-	var Icon=FileEmpty
+	var ico=<Icon name="file-o" />
 	if(type=="folder")
-		Icon=sec?FolderOpen:Folder
+		ico=sec?<Icon name="folder-open-o" />:<Icon name="folder-o" />
 	if(type.match(/image/))
-		Icon=Image
-	return Icon
+		ico=<Icon name="file-image-o" />
+	return ico
 }
 
 @Radium
@@ -27,20 +21,20 @@ class TreeNode extends Component{
 	}
 	state={isOpen:true}
 	render(){
-		var Icon=getIcon(this.props.type,this.state.isOpen)
+		var ico=getIcon(this.props.type,this.state.isOpen)
 		return (
 			<div style={this.props.style}>
 				{this.props.children&&(
 					<span style={{fontSize:"0.7em",marginLeft:-16,cursor:"pointer",whiteSpace:"nowrap"}}
 						onClick={()=>this.setState({isOpen:!this.state.isOpen})} >
-						{this.state.isOpen?<Minus />:<Plus />}
+						{this.state.isOpen?<Icon name="minus" />:<Icon name="plus" />}
 					</span>
 				)}
 				<span style={[
 					{cursor:"pointer",padding:"2px 5px",lineHeight:1.5,userSelect:"none",whiteSpace:"nowrap"},
 					this.props.active?{background:"#FFE6B0",border:"1px solid #FFB951"}:{border:"1px solid transparent"}
 				]} draggable onDragStart={e=>e.dataTransfer.setData("Text",this.props.id)} onClick={this.props.onClick}>
-					<Icon />
+					{ico}
 					{this.props.name}
 				</span>
 				{this.props.children&&(
@@ -63,7 +57,7 @@ export class InlineTree extends Component{
 		for(let it=data.find(b=>b.key==selected);it;it=data.find(b=>b.key==it.parent)){
 			res.unshift(
 				<TreeNode active={selected==it.key} {...it} id={it.key}
-					style={{display:"inline",margin:"0 20px"}}
+					style={{display:"inline",margin:"0 10px"}}
 					onClick={this.props.onSelect&&(()=>this.props.onSelect(it.key))} />
 			)
 			res.unshift(">")

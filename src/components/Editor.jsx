@@ -3,15 +3,16 @@ import Radium from 'radium'
 import {Editor, EditorState,RichUtils,convertToRaw} from 'draft-js'
 import Button from '../lib/Button'
 import ButtonGroup from '../lib/ButtonGroup'
-import List2 from '../lib/IconMoon/List2'
-import ListNumbered from '../lib/IconMoon/ListNumbered'
-import QuotesRight from '../lib/IconMoon/QuotesRight'
-import Unlink from '../lib/Linearicons/Unlink'
-import Link from '../lib/Linearicons/Link'
-import Image from '../lib/IconMoon/Image'
-import Undo2 from '../lib/IconMoon/Undo2'
-import Redo2 from '../lib/IconMoon/Redo2'
-import Eyedropper from '../lib/IconMoon/Eyedropper'
+// import List2 from '../lib/IconMoon/List2'
+// import ListNumbered from '../lib/IconMoon/ListNumbered'
+// import QuotesRight from '../lib/IconMoon/QuotesRight'
+// import Unlink from '../lib/Linearicons/Unlink'
+// import Link from '../lib/Linearicons/Link'
+// import Image from '../lib/IconMoon/Image'
+// import Undo2 from '../lib/IconMoon/Undo2'
+// import Redo2 from '../lib/IconMoon/Redo2'
+// import Eyedropper from '../lib/IconMoon/Eyedropper'
+import Icon from '../lib/Icon'
 import FileModalButton from './FileModalButton'
 import Popover from '../lib/Popover'
 import {SketchPicker} from 'react-color'
@@ -73,9 +74,9 @@ export default class extends Component{
 					<ControlButton type="header-four" {...config}>H4</ControlButton>
 					<ControlButton type="header-five" {...config}>H5</ControlButton>
 					<ControlButton type="header-six" {...config}>H6</ControlButton>
-					<ControlButton type="blockquote" {...config}><QuotesRight /></ControlButton>
-					<ControlButton type="unordered-list-item" {...config}><List2 /></ControlButton>
-					<ControlButton type="ordered-list-item" {...config}><ListNumbered /></ControlButton>
+					<ControlButton type="blockquote" {...config}><Icon name="format_quote" /></ControlButton>
+					<ControlButton type="unordered-list-item" {...config}><Icon name="format_list_bulleted" /></ControlButton>
+					<ControlButton type="ordered-list-item" {...config}><Icon name="format_list_numbered" /></ControlButton>
 					<ControlButton type="code-block" {...config}>{'{}'}</ControlButton>
 				</div>
 				<div style={{border:"1px solid #eee",display:"inline-block",marginRight:20,marginBottom:10}}>
