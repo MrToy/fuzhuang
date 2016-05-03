@@ -26,7 +26,7 @@ class LoginPanel extends Component{
 						onChange={e=>this.setState({account:e.target.value})} />
 				</FormGroup>
 				<FormGroup>
-					<Input addLeft={<Lock />} type="password" size="lg" full
+					<Input addLeft={<Icon name="lock" />} type="password" size="lg" full
 						color={pass.length==0?"default":(pass.length>=6&&pass.length<=30?"success":"danger")} 
 						onChange={e=>this.setState({pass:e.target.value})}  />
 				</FormGroup>
