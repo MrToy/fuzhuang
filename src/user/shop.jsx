@@ -51,7 +51,7 @@ class Goods extends Component{
 			<div>
 				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,selected:{}})}>添加</Button>
 				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})} style={{width:1200}}>
-					<div style={{maxHeight:600,overflow:"auto"}}>
+					<div style={{maxHeight:500,overflow:"auto"}}>
 						<FormGroup label="商品名" >
 							<Input full value={name} onChange={e=>this.setState({selected:{...this.state.selected,name:e.target.value}})} />
 						</FormGroup>
