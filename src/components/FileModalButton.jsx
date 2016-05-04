@@ -52,10 +52,10 @@ export default class extends Component{
 		return (
 			<span>
 				<Button style={this.props.style} onClick={()=>this.setState({isOpen:true})}>{this.props.children}</Button>
-				<FileModal onConfirm={data=>{
+				<FileModal onConfirm={this.props.onConfirm?data=>{
 						this.setState({isOpen:false})
 						this.props.onConfirm(data)
-					}} checked={checked} onCheck={checked=>{
+					}:null} checked={checked} onCheck={checked=>{
 						this.setState({checked})
 						this.props.onCheck&&this.props.onCheck(checked)
 					}} filter="image" onRequestClose={()=>this.setState({isOpen:false})} isOpen={this.state.isOpen} />

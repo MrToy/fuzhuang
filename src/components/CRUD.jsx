@@ -1,40 +1,53 @@
 import React,{Component} from "react"
 import URL from 'url'
-
-function request(method,url,body){
-	return new Promise((resolve,reject)=>{
-		var xhr=new XMLHttpRequest()
-		var timer=setTimeout(()=>{
-			reject(new Error("请求超时，请刷新重试"))
-			xhr.abort()
-		},10000)
-		if(method.toLocaleLowerCase()=="post"||method.toLocaleLowerCase()=="put")
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-		xhr.open(method,URL.parse(url))
-		xhr.onreadystatechange=()=>{
-			if(xhr.readyState==4){
-				clearTimeout(timer)
-				var res=JSON.parse(xhr.responseText)
-				xhr.status==200?resolve(res):reject(new Error(res))
-			}
-		}
-		xhr.send(body)
-	})
-}
+import swal from 'sweetalert'
+import 'sweetalert/dist/sweetalert.css'
 
 export default class extends Component{
 	state={data:null}
-	onCreate(){
-		
+	async onCreate(){
+		try{
+			var res=await fetch(URL.parse(this.props.url),{method:"post",body:this.props.body})
+			var j=await res.json()
+			if(!res.ok)
+				throw j.error
+		}catch(err){
+			swal({title:"错误",text:err,timer:1000,type:"error"})
+		}
+		this.onRetrieve()
 	}
-	onRetrieve(){
-
+	async onRetrieve(){
+		try{
+			var res=await fetch(URL.parse(this.props.url))
+			var j=await res.json()
+			if(!res.ok)
+				throw j.error
+			this.state.setState({data:j})
+		}catch(err){
+			swal({title:"错误",text:err,timer:1000,type:"error"})
+		}
 	}
-	onUpdate(){
-
+	async onUpdate(){
+		try{
+			var res=await await fetch(URL.parse(this.props.url),{method:"put",body:this.props.body})
+			var j=await res.json()
+			if(!res.ok)
+				throw j.error
+		}catch(err){
+			swal({title:"错误",text:err,timer:1000,type:"error"})
+		}
+		this.onRetrieve()
 	}
-	onDelete(){
-
+	async onDelete(){
+		try{
+			var res=await fetch(URL.parse(this.props.url),{method:"delete"})
+			var j=await res.json()
+			if(!res.ok)
+				throw j.error
+		}catch(err){
+			swal({title:"错误",text:err,timer:1000,type:"error"})
+		}
+		this.onRetrieve()
 	}
 	render(){
 		return React.cloneElement(this.props.children,{
