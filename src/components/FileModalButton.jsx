@@ -16,7 +16,7 @@ class FileModal extends Component{
 				<div style={{textAlign:"right",marginBottom:10}}>
 					<span onClick={this.props.onRequestClose} style={{cursor:"pointer"}}><Icon name="close2" /></span>
 				</div>
-				<AjaxFileManager style={{height:400,minWidth:800}} selected={this.state.selected} onSelect={selected=>this.setState({selected})} />
+				<AjaxFileManager style={{height:400,minWidth:800}} selected={(this.state.selected||{})._id} onSelect={selected=>this.setState({selected})} />
 				{!this.props.onConfirm&&(
 					<div>
 						<div style={{marginTop:10,textAlign:"center"}}>

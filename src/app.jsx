@@ -21,14 +21,11 @@ class RouterList extends Component{
 				</Route>
 				<Route path="/user">
 					<Route path="info.html" component={require('react-router!./user/info')} />
-					<Route path="chart.html" component={require('react-router!./user/chart')} />
 					<Route path="deal.html" component={require('react-router!./user/deal')} />
-					<Route path="serve.html" component={require('react-router!./user/serve')} />
-					<Route path="track.html" component={require('react-router!./user/track')} />
-					<Route path="diliver.html" component={require('react-router!./user/diliver')} />
 					<Route path="shop.html" component={require('react-router!./user/shop')} />
 					<Route path="files.html" component={require('react-router!./user/files')} />
 					<Route path="config.html" component={require('react-router!./user/config')} />
+					<Route path="news.html" component={require('react-router!./user/news')} />
 				</Route>
 				<Route path="*" component={require('react-router!./main/404')} />
 			</Router>
