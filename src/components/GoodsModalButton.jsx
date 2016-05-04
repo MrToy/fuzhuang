@@ -70,10 +70,10 @@ class Goods extends Component{
 				<div style={{marginTop:10,textAlign:"center"}}>
 					<Button color="warning" disable={!this.state.selected||!repeatPass} onClick={()=>{
 						this.props.onCheck([...this.props.checked,this.state.selected])
-					}}><Icon name="keyboard_arrow_down" /></Button>
+					}}><Icon name="arrow-down" /></Button>
 					<Button color="danger" disable={!this.state.dump} onClick={()=>{
 						this.props.onCheck(this.props.checked.filter(it=>it._id!=this.state.dump))
-					}}><Icon name="close2" /></Button>
+					}}><Icon name="close" /></Button>
 				</div>
 				<InfoBar data={this.props.checked} checked={this.state.dump} onCheck={it=>this.setState({dump:it._id})} />
 			</Modal>

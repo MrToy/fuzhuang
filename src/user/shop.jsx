@@ -18,6 +18,7 @@ import FileModalButton from '../components/FileModalButton'
 import dateFormat from 'dateformat'
 import {Link} from 'react-router'
 import Menus from '../components/Menus'
+import Editor from '../components/Editor'
 
 class Config extends Component{
 	static propTypes ={
@@ -41,15 +42,15 @@ class Config extends Component{
 		)
 	}
 }
-
+//<Input full value={info} onChange={e=>this.setState({selected:{...this.state.selected,info:e.target.value}})} type="textarea" />
 class Goods extends Component{
 	state={addModal:false,selected:{},data:[],pages:0,index:1}
 	render(){
-		var {name,info,price,imgs,onSale,cate,sizes,colors,itemCode}=this.state.selected
+		var {name,info,price,imgs,onSale,cate,sizes,colors,itemCode,remain}=this.state.selected
 		return (
 			<div>
 				<Button style={{marginBottom:20}} onClick={()=>this.setState({addModal:true,selected:{}})}>添加</Button>
-				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})}>
+				<Modal isOpen={this.state.addModal} onRequestClose={()=>this.setState({addModal:false})} style={{width:1200}}>
 					<div style={{maxHeight:600,overflow:"auto"}}>
 						<FormGroup label="商品名" >
 							<Input full value={name} onChange={e=>this.setState({selected:{...this.state.selected,name:e.target.value}})} />
@@ -60,8 +61,8 @@ class Goods extends Component{
 						<FormGroup label="价格">
 							<Input full value={price} onChange={e=>this.setState({selected:{...this.state.selected,price:e.target.value}})} type="number"  />
 						</FormGroup>
-						<FormGroup label="商品介绍">
-							<Input full value={info} onChange={e=>this.setState({selected:{...this.state.selected,info:e.target.value}})} type="textarea" />
+						<FormGroup label="剩余数量">
+							<Input full value={remain} onChange={e=>this.setState({selected:{...this.state.selected,remain:e.target.value}})} type="number"  />
 						</FormGroup>
 						<FormGroup label="货号">
 							<Input full value={itemCode} onChange={e=>this.setState({selected:{...this.state.selected,itemCode:e.target.value}})}  />
@@ -72,6 +73,9 @@ class Goods extends Component{
 						</FormGroup>
 						<FormGroup horizontal label="颜色列表">
 							<Menus data={colors||[]} onChange={colors=>this.setState({selected:{...this.state.selected,colors}})}  />
+						</FormGroup>
+						<FormGroup label="商品介绍">
+							<Editor style={{minHeight:400}} value={info} onChange={info=>this.setState({selected:{...this.state.selected,info}})} />
 						</FormGroup>	
 					</div>
 					<Col sm={4} offset={8} style={{marginTop:20}}>
@@ -82,9 +86,9 @@ class Goods extends Component{
 						<Button onClick={()=>this.setState({addModal:false})}>取消</Button>
 					</Col>
 				</Modal>
-				<Table border center keys={["商品名","货号","价格","主图","关键词","创建时间","操作"]}
+				<Table border center keys={["商品名","货号","价格","剩余数量","主图","关键词","创建时间","操作"]}
 					data={this.state.data.map(it=>{
-						var {_id,name,price,info,imgs,onSale,itemCode,cate,createTime}=it
+						var {_id,name,price,info,imgs,onSale,itemCode,cate,createTime,remain}=it
 						return [
 							(
 								<Link to={"/item.html?id="+_id}>
@@ -93,6 +97,7 @@ class Goods extends Component{
 							),
 							itemCode,
 							price,
+							remain,
 							<img style={{width:100,height:100}} src={((imgs||[])[0]||{}).path}/>,
 							cate,
 							it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss"),

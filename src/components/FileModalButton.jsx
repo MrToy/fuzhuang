@@ -16,16 +16,25 @@ class FileModal extends Component{
 				<div style={{textAlign:"right",marginBottom:10}}>
 					<span onClick={this.props.onRequestClose} style={{cursor:"pointer"}}><Icon name="close2" /></span>
 				</div>
-				<AjaxFileManager style={{height:400,minWidth:800}} onSelect={selected=>this.setState({selected})} />
-				<div style={{marginTop:10,textAlign:"center"}}>
-					<Button color="warning" disable={!this.state.selected||!filterPass||!repeatPass} onClick={()=>{
-						this.props.onCheck([...this.props.checked,this.state.selected])
-					}}><Icon name="keyboard_arrow_down" /></Button>
-					<Button color="danger" disable={!this.state.dump} onClick={()=>{
-						this.props.onCheck(this.props.checked.filter(it=>it.key!=this.state.dump))
-					}}><Icon name="close2" /></Button>
-				</div>
-				<FileBar data={this.props.checked} style={{marginTop:10}} onSelect={dump=>this.setState({dump})} />
+				<AjaxFileManager style={{height:400,minWidth:800}} selected={this.state.selected} onSelect={selected=>this.setState({selected})} />
+				{!this.props.onConfirm&&(
+					<div>
+						<div style={{marginTop:10,textAlign:"center"}}>
+							<Button color="warning" disable={!this.state.selected||!filterPass||!repeatPass} onClick={()=>{
+								this.props.onCheck([...this.props.checked,this.state.selected])
+							}}><Icon name="arrow-down" /></Button>
+							<Button color="danger" disable={!this.state.dump} onClick={()=>{
+								this.props.onCheck(this.props.checked.filter(it=>it.key!=this.state.dump))
+							}}><Icon name="close" /></Button>
+						</div>
+						<FileBar data={this.props.checked} style={{marginTop:10}} onSelect={dump=>this.setState({dump})} />
+					</div>
+				)}
+				{this.props.onConfirm&&(
+					<div style={{marginTop:10,textAlign:"right"}}>
+						<Button onClick={()=>this.props.onConfirm(this.state.selected)}>确定</Button>
+					</div>
+				)}
 			</Modal>
 		)
 	}
@@ -43,10 +52,13 @@ export default class extends Component{
 		return (
 			<span>
 				<Button style={this.props.style} onClick={()=>this.setState({isOpen:true})}>{this.props.children}</Button>
-				<FileModal checked={checked} onCheck={checked=>{
-					this.setState({checked})
-					this.props.onCheck&&this.props.onCheck(checked)
-				}} filter="image" onRequestClose={()=>this.setState({isOpen:false})} isOpen={this.state.isOpen} />
+				<FileModal onConfirm={data=>{
+						this.setState({isOpen:false})
+						this.props.onConfirm(data)
+					}} checked={checked} onCheck={checked=>{
+						this.setState({checked})
+						this.props.onCheck&&this.props.onCheck(checked)
+					}} filter="image" onRequestClose={()=>this.setState({isOpen:false})} isOpen={this.state.isOpen} />
 				{!this.props.noBar&&<FileBar data={checked} style={{marginTop:10}} />}
 			</span>
 		)

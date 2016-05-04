@@ -108,7 +108,7 @@ export default class FileManager extends Component{
 		}
 		var config={
 			data:[{key:null,type:"folder",parent:"root"},...this.props.data],
-			selected:this.props.onSelect?this.props.selected:this.state.selected,
+			selected:this.props.onSelect?(this.props.selected||{})._id:this.state.selected,
 			dir:this.props.onDir?this.props.dir:this.state.dir,
 			onSelect:selected=>{
 				this.setState({selected})
@@ -117,7 +117,7 @@ export default class FileManager extends Component{
 				this.props.onSelect&&this.props.onSelect(selected)
 			}
 		}
-		var it=config.data.find(it=>it.key==this.state.selected)||{}
+		var it=config.data.find(it=>it.key==config.selected)||{}
 		return (
 			<Card full style={[this.props.style]} color={this.props.color}>
 				<div style={{overflow:"auto",whiteSpace:"nowrap",paddingBottom:8,paddingTop:2,marginBottom:8,borderBottom:"1px solid"}}>
@@ -149,7 +149,7 @@ export default class FileManager extends Component{
 					</div>
 					<div style={{overflow:"auto",height:"calc(100% - 65px)"}}>
 						{config.data.filter(it=>it.parent==config.dir).map(it=>(
-							<FileNode active={this.state.selected==it.key} {...it} id={it.key} onClick={()=>{
+							<FileNode active={config.selected==it.key} {...it} id={it.key} onClick={()=>{
 								this.setState({selected:it.key})
 								this.props.onSelect&&this.props.onSelect(it.key)		
 							}} onDoubleClick={()=>{

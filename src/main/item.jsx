@@ -7,6 +7,7 @@ import Ajax from '../lib/Ajax'
 import Input from '../lib/Input'
 import Button from '../lib/Button'
 import ButtonGroup from '../lib/ButtonGroup'
+import Editor from '../components/Editor'
 
 
 
@@ -58,7 +59,8 @@ class ItemInfo extends Component{
 					</div>
 					<div style={{borderBottom:"1px dotted #ccc",padding:"15px 0"}}>
 						<span style={{color:"#888",marginRight:30}}>数量</span>
-						<Input inline type="number" value={this.state.amount} onChange={e=>this.setState({amount:e.target.value})} />
+						<Input inline type="number" min={0} max={data.remain||0} boxStyle={{verticalAlign:"middle"}} value={this.state.amount} onChange={e=>this.setState({amount:e.target.value})} />
+						<span><span style={{color:"#888"}}>剩余</span> {data.remain} <span style={{color:"#888"}}>件</span></span>
 					</div>
 					<div style={{marginTop:20}}>
 						<Link to={"/deal.html?id="+data._id+"&amount="+this.state.amount} style={{marginLeft:70}}>
@@ -78,18 +80,7 @@ class ImageInfo extends Component{
 		return (
 			<div style={{marginTop:30,border:"1px solid #ccc"}}>
 				<h2 style={{borderBottom:"1px solid #ccc",padding:"15px 20px",background:"#eee",fontSize:16,color:"#333"}}>商品详情</h2>
-				<div style={{padding:20}}>
-					<ul style={{listStyle:"none",fontSize:13,margin:"0 40px 20px 40px"}}>
-						{data.info}
-					</ul>
-					<div style={{overflow:"hidden",textAlign:"center"}}>
-						{data.imgs.map(it=>(
-							<div style={{padding:50}}>
-								<img style={{width:"auto",height:"auto",maxWidth:"100%"}} src={it.path} />
-							</div>
-						))}
-					</div>
-				</div>
+				<Editor readOnly value={data.info} />
 			</div>
 		)
 	}

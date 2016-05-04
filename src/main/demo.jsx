@@ -206,7 +206,7 @@ export default class extends Component{
 				<GoodsModalButton>选择商品</GoodsModalButton>
 				<br /><br /><br />
 				<Tipbar title="Editor" color="random" />
-				<Editor />
+				<Editor style={{width:1200}} onChange={data=>console.log(data)} />
 				<br /><br /><br />
 				<Tipbar title="List" color="random" />
 				<Card>

@@ -7,7 +7,8 @@ export default class extends Component{
 		return(
 			<Modal {...this.props} style={{
 				overlay:{background:"rgba(0,0,0,0.5)",
-				transition:"all 0.2s"
+				transition:"all 0.2s",
+				zIndex:999
 			},content:{
 				width:850,
 				height:"auto",

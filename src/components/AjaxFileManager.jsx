@@ -19,6 +19,7 @@ export default class extends Component{
 						this.setState({selected})
 						this.props.onSelect&&this.props.onSelect(this.state.data.find(it=>it.key==selected))
 					}}
+					selected={this.props.onSelect?this.props.selected:this.state.selected}
 					onDir={dir=>this.setState({dir})}
 					onUpload={files=>{
 						var form=new FormData()

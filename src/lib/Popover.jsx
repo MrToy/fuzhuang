@@ -43,7 +43,7 @@ export default class extends Component{
 			<div style={{position:"relative",display:"inline-block"}} onClick={e=>{
 				e.stopPropagation?e.stopPropagation():window.event.cancelBubble = true
 			}}>
-				<span onClick={()=>this.setState({active:true})}>{this.props.children}</span>
+				<span onClick={()=>this.setState({active:!this.state.active})}>{this.props.children}</span>
 				<div style={{zIndex:4,display:this.state.active?"block":"none",position:"absolute",padding:8,...color,...styles.box,...this.props.style}}>
 					{this.props.content}
 					<div style={{whiteSpace:"nowrap",position:"absolute",...styles.angle,border:"5px solid "+color.backgroundColor}}></div>
