@@ -11,10 +11,15 @@ import SearchBox from '../components/SearchBox'
 import GoodsList from '../components/GoodsList'
 
 class NoticePanel extends Component{
+	state={data:[]}
 	render(){
 		return (
 			<Card full style={{height:144}}>
 				<p style={{fontSize:20,textAlign:"center"}}>公告</p>
+				{this.state.data.map(it=>(
+					<Link to={{pathname:"/news.html",query:{id:it._id}}} style={{display:"block",lineHeight:1.4,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{it.title}</Link>
+				))}
+				<Ajax auto url={"/news?limit=4"} onSuccess={res=>this.setState({data:res.data})} />
 			</Card>
 		)
 	}

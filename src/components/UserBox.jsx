@@ -59,6 +59,7 @@ export default class extends Component{
 		var list3=[
 			{text:"用户中心",link:"/user/info.html",icon:<Icon name="account_circle" />},
 			{text:"网站管理",link:"/user/config.html",icon:<Icon name="home2" />},
+			{text:"新闻管理",link:"/user/news.html",icon:<Icon name="newspaper-o" />},
 			//{text:"购物车",link:"/user.html/chart.html",icon:"shopping_cart"},
 			{text:"我的订单",link:"/user/deal.html",icon:<Icon name="loyalty" />},
 			//{text:"售后服务",link:"/user.html/serve.html",icon:UserTie},

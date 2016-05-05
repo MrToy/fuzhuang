@@ -64,7 +64,7 @@ class ItemInfo extends Component{
 					</div>
 					<div style={{marginTop:20}}>
 						<Link to={"/deal.html?id="+data._id+"&amount="+this.state.amount} style={{marginLeft:70}}>
-							<Button color="red">立即购买</Button>
+							<Button>立即购买</Button>
 						</Link>
 						<Button style={{marginLeft:150}} >收藏</Button>
 						<Button >加入购物车</Button>

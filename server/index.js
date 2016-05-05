@@ -15,6 +15,7 @@ import goods from './goods'
 import configs from './configs'
 import deals from './deals'
 import addrs from './addrs'
+import news from './news'
 
 var router=new Router()
 router.use('/users',users.routes(),users.allowedMethods())
@@ -24,6 +25,7 @@ router.use('/goods',goods.routes(),goods.allowedMethods())
 router.use('/configs',configs.routes(),configs.allowedMethods())
 router.use('/deals',deals.routes(),deals.allowedMethods())
 router.use('/addrs',addrs.routes(),addrs.allowedMethods())
+router.use('/news',news.routes(),news.allowedMethods())
 
 var app = new Koa()
 app.use(async (ctx,next)=>{
