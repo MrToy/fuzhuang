@@ -46,7 +46,7 @@ class Goods extends Component{
 		var repeatPass=this.state.selected?!this.props.checked.find(it=>it._id==this.state.selected._id):false
 		return (
 			<Modal {...this.props} style={{width:910}}>
-				<Table border center keys={[null,"商品名","价格","商品简介","创建时间"]}
+				<Table border center keys={[null,"商品名","价格","创建时间"]}
 					data={this.state.data.map(it=>{
 						var {_id,name,price,info,imgs,onSale,createTime}=it
 						return [
@@ -58,7 +58,6 @@ class Goods extends Component{
 								</Link>
 							),
 							price,
-							(info||"").length>10?info.slice(0,10)+"...":info,
 							it.createTime&&dateFormat(it.createTime,"yyyy-mm-dd , HH:MM:ss")
 						]
 					}
