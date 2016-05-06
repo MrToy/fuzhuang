@@ -48,7 +48,7 @@ class Goods extends Component{
 			<Modal {...this.props} style={{width:910}}>
 				<Table border center keys={[null,"商品名","价格","创建时间"]}
 					data={this.state.data.map(it=>{
-						var {_id,name,price,info,imgs,onSale,createTime}=it
+						var {_id,name,price,imgs,onSale,createTime}=it
 						return [
 							(
 								<input type="checkbox" checked={(this.state.selected||{})._id==_id} onClick={()=>this.setState({selected:it})} />

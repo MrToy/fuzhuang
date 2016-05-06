@@ -72,8 +72,8 @@ export default class extends Component{
 				media = <audio controls src={src} />
 			} else if (type === 'image') {
 				media = (
-					<div style={{margin:"10px 0",textAlign:"center"}}>
-						<img src={src} style={{maxWidth:"100%"}} />
+					<div style={{textAlign:"center"}}>
+						<img src={src} style={{verticalAlign:"bottom",maxWidth:"100%"}} />
 					</div>
 				)
 	        } else if (type === 'video') {
