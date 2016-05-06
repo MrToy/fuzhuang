@@ -17,22 +17,18 @@ class FileModal extends Component{
 					<span onClick={this.props.onRequestClose} style={{cursor:"pointer"}}><Icon name="close2" /></span>
 				</div>
 				<AjaxFileManager style={{height:400,minWidth:800}} selected={(this.state.selected||{})._id} onSelect={selected=>this.setState({selected})} />
-				{!this.props.onConfirm&&(
-					<div>
-						<div style={{marginTop:10,textAlign:"center"}}>
-							<Button color="warning" disable={!this.state.selected||!filterPass||!repeatPass} onClick={()=>{
-								this.props.onCheck([...this.props.checked,this.state.selected])
-							}}><Icon name="arrow-down" /></Button>
-							<Button color="danger" disable={!this.state.dump} onClick={()=>{
-								this.props.onCheck(this.props.checked.filter(it=>it.key!=this.state.dump))
-							}}><Icon name="close" /></Button>
-						</div>
-						<FileBar data={this.props.checked} style={{marginTop:10}} onSelect={dump=>this.setState({dump})} />
-					</div>
-				)}
+				<div style={{marginTop:10,textAlign:"center"}}>
+					<Button color="warning" disable={!this.state.selected||!filterPass||!repeatPass} onClick={()=>{
+						this.props.onCheck([...this.props.checked,this.state.selected])
+					}}><Icon name="arrow-down" /></Button>
+					<Button color="danger" disable={!this.state.dump} onClick={()=>{
+						this.props.onCheck(this.props.checked.filter(it=>it.key!=this.state.dump))
+					}}><Icon name="close" /></Button>
+				</div>
+				<FileBar data={this.props.checked} style={{marginTop:10}} onSelect={dump=>this.setState({dump})} />
 				{this.props.onConfirm&&(
 					<div style={{marginTop:10,textAlign:"right"}}>
-						<Button onClick={()=>this.props.onConfirm(this.state.selected)}>确定</Button>
+						<Button onClick={()=>this.props.onConfirm()} disable={!this.props.checked.length}>确定</Button>
 					</div>
 				)}
 			</Modal>
@@ -54,7 +50,7 @@ export default class extends Component{
 				<Button style={this.props.style} onClick={()=>this.setState({isOpen:true})}>{this.props.children}</Button>
 				<FileModal onConfirm={this.props.onConfirm?data=>{
 						this.setState({isOpen:false})
-						this.props.onConfirm(data)
+						this.props.onConfirm(checked)
 					}:null} checked={checked} onCheck={checked=>{
 						this.setState({checked})
 						this.props.onCheck&&this.props.onCheck(checked)

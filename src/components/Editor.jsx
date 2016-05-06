@@ -45,10 +45,12 @@ export default class extends Component{
 		if(props.readOnly)
 	    	this.setState({editorState:props.value&&props.value.raw?EditorState.createWithContent(convertFromRaw(props.value.raw)):EditorState.createEmpty(),styleMap:props.value&&props.value.style?props.value.style:{}})  
 	}
-	onChange(editorState){
-		this.setState({editorState})
-		var data={style:this.state.styleMap,raw:convertToRaw(editorState.getCurrentContent())}
-       	this.props.onChange&&this.props.onChange(data)
+	async onChange(editorState){
+		return new Promise((resolve,reject)=>{
+			this.setState({editorState},resolve)
+			var data={style:this.state.styleMap,raw:convertToRaw(editorState.getCurrentContent())}
+			this.props.onChange&&this.props.onChange(data)
+		})
 	}
 	onColor(color){
 		color='rgba('+color.rgb.r+','+color.rgb.g+','+color.rgb.b+','+color.rgb.a+')'
@@ -57,10 +59,12 @@ export default class extends Component{
 		this.setState({styleMap,color})
 		this.onChange(RichUtils.toggleInlineStyle(editorState,color))
 	}
-	onMedia(src){
-		const entityKey = Entity.create("image", 'MUTABLE', {src})
-		var state=AtomicBlockUtils.insertAtomicBlock(this.state.editorState,entityKey,' ')
-		this.onChange(state)
+	async onMedia(arr){
+		for(var i=0;i<arr.length;i++){
+			const entityKey = Entity.create("image", 'MUTABLE', {src:arr[i].path})
+			var state=AtomicBlockUtils.insertAtomicBlock(this.state.editorState,entityKey,' ')
+			await this.onChange(state)	
+		}
 	}
 	mediaBlockRenderer(block){
 		const Media = (props) => {
@@ -115,7 +119,7 @@ export default class extends Component{
 							<Popover content={<SketchPicker color={this.state.color} onChange={this.onColor.bind(this)} />}>
 								<Button style={{marginRight:0}}><Icon name="colorize" /></Button>
 							</Popover>
-							<FileModalButton noBar style={{marginRight:0}} onConfirm={data=>this.onMedia(data.path)} onClick={()=>this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'))}><Icon name="image" /></FileModalButton>
+							<FileModalButton noBar style={{marginRight:0}} onConfirm={arr=>this.onMedia(arr)}><Icon name="image" /></FileModalButton>
 						</div>
 					</div>
 				)}
