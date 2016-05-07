@@ -73,7 +73,7 @@ class ShopInfo extends Component{
 	render(){
 		var {name,info}=this.props.data
 		return (
-			<div style={{width:215,height:434}}>
+			<div style={{width:215,height:461}}>
 				<h3>{name}</h3>
 				<br />
 				<p>{info}</p>
