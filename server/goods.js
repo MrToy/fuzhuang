@@ -27,7 +27,7 @@ async function getCateReg(ctx,word){
 		cates.filter(it=>it.parent==word).forEach(it=>recur(it.text))
 	}
 	recur(word)
-	return "["+res.toString()+"]"
+	return '('+res.join('|')+')'
 }
 
 router.get('/',async ctx=>{

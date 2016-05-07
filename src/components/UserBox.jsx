@@ -4,20 +4,10 @@ import Footer from './Footer'
 import TitleBar from './TitleBar'
 
 import {Link} from 'react-router'
-// import Cart from '../lib/IconMoon/Cart'
-// import Stack from '../lib/IconMoon/Stack'
-// import User from '../lib/IconMoon/User'
-// import Pushpin from '../lib/IconMoon/Pushpin'
-// import UserTie from '../lib/IconMoon/UserTie'
-// import Airplane from '../lib/IconMoon/Airplane'
-// import Home from '../lib/IconMoon/Home'
-// import Drawer from '../lib/IconMoon/Drawer'
-// import FilesEmpty from '../lib/IconMoon/FilesEmpty'
 import Icon from '../lib/Icon'
 import Radium from 'radium'
 import store from 'store'
 import Ajax from '../lib/Ajax'
-
 
 @Radium
 class NavItem extends Component{

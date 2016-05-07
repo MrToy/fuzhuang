@@ -21,6 +21,7 @@ import Editor from '../components/Editor'
 import List from '../lib/List'
 import Popover from '../lib/Popover'
 import Icon from '../lib/Icon'
+import BackToTop from '../lib/BackToTop'
 
 export default class extends Component{
 	render(){
@@ -218,6 +219,7 @@ export default class extends Component{
 				<Card>
 				<List data={["233","123","测试","23","1","a","v","ver","32s","azz","zasd","1231x","zxasd","2131s sdcd","sda dwqd","r3edwsa"]} />
 				</Card>
+				<BackToTop />
 			</div>
 		)
 	}

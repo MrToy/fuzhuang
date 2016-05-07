@@ -4,7 +4,7 @@ import "svgxuse"
 export default class extends Component{
 	render(){
 		return (
-			<svg style={{width:"1em",height:"1em",margin:"-0.1em 0.2em 0.1em 0.2em",verticalAlign:"middle",fill:"currentColor"}}>
+			<svg {...this.props} style={{width:"1em",height:"1em",margin:"-0.1em 0.2em 0.1em 0.2em",verticalAlign:"middle",fill:"currentColor",...this.props.style}}>
 				<use xlinkHref={require("./svg-symbols.svg")+"#"+this.props.name}></use>
 			</svg>
 		)

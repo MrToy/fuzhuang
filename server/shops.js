@@ -24,6 +24,9 @@ router.get('/info',async ctx=>{
 		ctx.throw("获取失败",403)
 	}
 })
+router.get('/:id',async ctx=>{
+	ctx.body=await ctx.mongo.collection("shops").findOne({_id:ObjectID(ctx.params.id)})
+})
 
 router.put('/',async ctx=>{
 	var {_id}=await getUser(ctx)
