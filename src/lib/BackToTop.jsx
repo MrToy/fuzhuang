@@ -10,8 +10,9 @@ export default class extends Component{
 	componentWillUnmount(){
 		window.removeEventListener('scroll', this.onScroll)
 	}
-	onScroll=(e)=>{
-		if(e.pageY>200)
+	onScroll=()=>{
+		var t=document.documentElement.scrollTop||document.body.scrollTop
+		if(t>200)
 			this.setState({isHide:false})
 		else
 			this.setState({isHide:true})
