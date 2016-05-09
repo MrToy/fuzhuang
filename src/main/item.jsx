@@ -17,8 +17,8 @@ class ImagePicker extends Component{
 		return (
 			<div style={{marginRight:20,display:'inline-block',verticalAlign:"top"}}>
 				<img style={{width:350,height:350,display:"block"}} src={this.props.imgs[this.state.selected]?("/files/image"+this.props.imgs[this.state.selected].path+"?w=400&h=400"):require('./014-image.png')} />
-				{this.props.imgs.slice(0,5).map((it,i)=>(
-					<img onClick={()=>this.setState({selected:i})} style={{width:65,height:65,margin:"15px 5px 0 0",cursor:"pointer",border:"2px solid "+(this.state.selected==i?"#C81624":"transparent"),padding:3}} src={("/files/image"+it.path+"?w=90&h=90")||require('./014-image.png')} />
+				{this.props.imgs.slice(0,4).map((it,i)=>(
+					<img onClick={()=>this.setState({selected:i})} style={{width:82,height:82,margin:"15px 5px 0 0",cursor:"pointer",border:"2px solid "+(this.state.selected==i?"#C81624":"transparent"),padding:3}} src={("/files/image"+it.path+"?w=90&h=90")||require('./014-image.png')} />
 				))}
 			</div>
 		)
@@ -73,7 +73,7 @@ class ShopInfo extends Component{
 	render(){
 		var {name,info}=this.props.data
 		return (
-			<div style={{width:215,height:435}}>
+			<div style={{width:215,height:451}}>
 				<h3>{name}</h3>
 				<br />
 				<p>{info}</p>

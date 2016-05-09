@@ -1,7 +1,6 @@
 import Koa from 'koa'
 import convert from 'koa-convert'
-import serve from 'koa-static'
-import rewrite from 'koa-rewrite'
+import send from 'koa-send'
 import mongo from 'koa-mongo'
 import favicon from 'koa-favicon'
 import cache from 'koa-static-cache'
@@ -18,6 +17,7 @@ import addrs from './addrs'
 import news from './news'
 
 var router=new Router()
+router.get('/*.html',ctx=>send(ctx,'./public/index.html'))
 router.use('/users',users.routes(),users.allowedMethods())
 router.use('/files',files.routes(),files.allowedMethods())
 router.use('/shops',shops.routes(),shops.allowedMethods())
@@ -56,11 +56,9 @@ app.use(convert(mongo({
 	port:27017,
 	db:"main"
 })))
-app.use(convert(rewrite('/*.html','/index.html')))
-app.use(convert(cache("public")))
-app.use(convert(cache("upload")))
-app.use(convert(serve("public")))
-app.use(convert(serve("upload")))
+//app.use(convert(rewrite('/*.html','/index.html')))
+app.use(convert(cache("upload",{maxAge:365*24*60*60})))
+app.use(convert(cache("public",{maxAge:365*24*60*60})))
 app.use(convert(favicon('./src/favicon.ico')))
 app.use(router.routes())
 app.use(router.allowedMethods())
