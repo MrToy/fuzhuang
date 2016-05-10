@@ -17,6 +17,7 @@ import addrs from './addrs'
 import news from './news'
 
 var router=new Router()
+router.get('/',ctx=>send(ctx,'./public/index.html'))
 router.get('/*.html',ctx=>send(ctx,'./public/index.html'))
 router.use('/users',users.routes(),users.allowedMethods())
 router.use('/files',files.routes(),files.allowedMethods())
