@@ -15,6 +15,7 @@ import configs from './configs'
 import deals from './deals'
 import addrs from './addrs'
 import news from './news'
+import captcha from './captcha'
 
 var router=new Router()
 router.get('/',ctx=>send(ctx,'./public/index.html'))
@@ -27,6 +28,7 @@ router.use('/configs',configs.routes(),configs.allowedMethods())
 router.use('/deals',deals.routes(),deals.allowedMethods())
 router.use('/addrs',addrs.routes(),addrs.allowedMethods())
 router.use('/news',news.routes(),news.allowedMethods())
+router.use('/captcha',captcha.routes(),captcha.allowedMethods())
 
 var app = new Koa()
 app.use(async (ctx,next)=>{

@@ -41,7 +41,8 @@ router.post('/',async ctx=>{
 		throw "密码长度应为6到30位"
 	if(pass!=repass)
 		throw "两次密码输入不一致"
-	if(captcha!="1234")
+	var data=await ctx.mongo.collection("captcha").findOne({tel:account})
+	if(!data||data.code!=captcha)
 		throw "验证码错误"
 	var sum=crypto.createHash('sha1')
 	sum.update(pass)

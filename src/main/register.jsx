@@ -3,6 +3,7 @@ import Radium from 'radium'
 import {Link,browserHistory} from 'react-router'
 import store from 'store'
 import InfoBox from '../components/InfoBox'
+import validator from 'validator'
 
 import Ajax from '../lib/Ajax'
 import FormGroup from '../lib/FormGroup'
@@ -51,6 +52,30 @@ class FormButton extends Component{
 	}
 }
 
+class CaptchaButton extends Component{
+	state={cd:0}
+	componentWillUnmount(){
+		clearInterval(this.timer)
+	}
+	render(){
+		return (
+			<Button onClick={()=>{
+				this.refs.captcha.request()
+				this.setState({cd:60})
+				this.timer=setInterval(()=>{
+					if(this.state.cd>0)
+						this.setState({cd:this.state.cd-1})
+					else
+						clearInterval(this.timer)
+				},1000)
+			}} disable={!validator.isMobilePhone(this.props.tel,"zh-CN")||!!this.state.cd}>
+				{this.state.cd?this.state.cd+'秒':'获取验证码'}
+				<Ajax ref="captcha" method="post" url="/captcha" data={JSON.stringify({tel:this.props.tel})} alert />
+			</Button>
+		)
+	}
+}
+
 class RegForm extends Component{
 	state={account:"",pass:"",repass:"",captcha:""}
 	render(){
@@ -60,7 +85,7 @@ class RegForm extends Component{
 			<div onKeyDown={e=>{e.keyCode==13&&this.refs.post.request()}}>
 				<FormGroup label="手机号" horizontal>
 					<Input full
-						color={account.length==0?"default":(account.length!=11?"danger":"success")} 
+						color={account.length==0?"default":(!validator.isMobilePhone(account,"zh-CN")?"danger":"success")} 
 						onChange={e=>this.setState({account:e.target.value})} />
 				</FormGroup>
 				<FormGroup label="密码" horizontal>
@@ -74,14 +99,14 @@ class RegForm extends Component{
 						onChange={e=>this.setState({repass:e.target.value})}  />
 				</FormGroup>
 				<FormGroup label="短信验证码" horizontal>
-					<Input full
-						color={captcha.length==0?"default":(captcha.length!=4?"danger":"success")} 
+					<Input color={captcha.length==0?"default":(captcha.length!=6?"danger":"success")} 
 						onChange={e=>this.setState({captcha:e.target.value})} />
+					<CaptchaButton tel={account} />
 				</FormGroup>
 				<FormGroup horizontal>
 					<Button onClick={()=>this.refs.post.request()}>注册</Button>
 				</FormGroup>
-				<Ajax ref="post" method="post" url={"/users"} data={JSON.stringify({account,pass,repass,captcha,target})} onSuccess={data=>{
+				<Ajax ref="post" method="post" url="/users" data={JSON.stringify({account,pass,repass,captcha,target})} onSuccess={data=>{
 					store.set('token',data.token)
 					browserHistory.push("/")
 				}} alert />

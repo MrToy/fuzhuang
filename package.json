@@ -53,6 +53,7 @@
     "whatwg-fetch": "^0.11.0"
   },
   "dependencies": {
+    "alidayu-node": "^1.0.3",
     "babel-core": "^6.7.2",
     "babel-preset-es2015-node5": "^1.2.0",
     "babel-preset-stage-0": "^6.5.0",
