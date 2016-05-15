@@ -19,7 +19,7 @@ export default class extends Component{
 					return [_id,
 						(
 							<div>
-								<img style={{width:50,height:50}} src={goods.imgs[0].path} />
+								<img style={{width:50,height:50}} src={(goods.imgs||[])[0].path} />
 								<p>{goods.name}</p>
 							</div>
 						),

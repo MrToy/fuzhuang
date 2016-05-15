@@ -15,7 +15,7 @@ class SwitchTap extends Component{
 	render(){
 		var colors={primary:'#C81624'}
 		return (
-			<div style={{marginTop:100}}>
+			<div style={{marginTop:100,margin:"0 200px"}}>
 				<div onClick={()=>this.setState({target:0})} style={{display:"inline-block",width:"50%",borderBottom:"2px solid "+(!this.state.target?colors.primary:"#AAA"),textAlign:"center",color:!this.state.target?colors.primary:"#AAA",fontSize:20,lineHeight:"50px",cursor:"pointer"}}>我是买家</div>
 				<div onClick={()=>this.setState({target:1})} style={{display:"inline-block",width:"50%",borderBottom:"2px solid "+(this.state.target?colors.primary:"#AAA"),textAlign:"center",color:this.state.target?colors.primary:"#AAA",fontSize:20,lineHeight:"50px",cursor:"pointer"}}>我是卖家</div>
 				<div style={{paddingTop:30}}>{this.state.target?this.props.children[1]:this.props.children[0]}</div>
