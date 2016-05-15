@@ -1,23 +1,41 @@
-import Alidayu from 'alidayu-node'
 import Router from 'koa-router'
 import parse from 'co-body'
+import fetch from "node-fetch"
 import validator from 'validator'
+import querystring from "querystring"
+import dateformat from "dateformat"
+import crypto from "crypto"
+
 var router=new Router()
 
 async function smsSend(tel,code){
-	return new Promise((resolve,reject)=>{
-		var app=new Alidayu('23361783','2554ae11cf420866e55ae9e6545e6a51')
-		app.smsSend({sms_free_sign_name:'第一印象',sms_param: JSON.stringify({code,"product":"第一印象"}),rec_num:tel,sms_template_code:'SMS_8985981'},res=>{
-			if(res.error_response){
-				if(res.error_response.sub_code=="isv.BUSINESS_LIMIT_CONTROL")
-					reject("请求过于频繁，请稍后再试")
-				else
-					reject(res.error_response.sub_msg)
-			}else
-				resolve()
-		})
+	var query={
+		app_key:"23361783",
+		format:"json",
+		method:"alibaba.aliqin.fc.sms.num.send",
+		timestamp:dateformat(new Date(),"yyyy-mm-dd HH:MM:ss"),
+		v:"2.0",
+		sign_method:"md5",
+		"sms_type":"normal",
+		"sms_free_sign_name":'第一印象',
+		"rec_num":tel,
+		"sms_template_code":"SMS_8985981",
+		"sms_param":JSON.stringify({code,"product":"第一印象"})
+	}
+	var queryArray=[]
+	for(let i in query)
+		queryArray.push(i+query[i])
+	var key="2554ae11cf420866e55ae9e6545e6a51"
+	query.sign = crypto.createHash('md5').update(key+queryArray.sort().join('')+key,'utf-8').digest('hex').toUpperCase()
+	var res=await fetch("http://gw.api.taobao.com/router/rest",{
+		method:"POST",
+		headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"},
+		body:querystring.stringify(query)
 	})
-};
+	var data=await res.json()
+	if(data.error_response)
+		throw data.error_response.sub_msg
+}
 
 router.post('/',async ctx=>{
 	var {tel}=await parse.json(ctx)

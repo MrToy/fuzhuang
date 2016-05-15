@@ -2,6 +2,11 @@ import Router from 'koa-router'
 import {getUser} from './users'
 import {ObjectID} from 'mongodb'
 import parse from 'co-body'
+import fetch from "node-fetch"
+import querystring from "querystring"
+import dateformat from "dateformat"
+import crypto from "crypto"
+import fs from "fs"
 var router=new Router()
 
 router.post('/',async ctx=>{
@@ -32,6 +37,53 @@ router.get('/',async ctx=>{
 	var data=await ctx.mongo.collection("deals").find(config).sort({createTime:-1}).limit(parseInt(limit)||20).skip(parseInt(skip)||0).toArray()
 	ctx.body={total,data}
 })
+
+router.get('/redirect',async ctx=>{
+	var {id}=ctx.query
+	var deal=await ctx.mongo.collection("deals").findOne({_id:ObjectID(id)})
+	if(!deal)
+		throw "该订单不存在"
+	if(deal.status!="待付款")
+		throw "商品状态目前为 "+deal.status
+	var query={
+		partner:"2088221651662605",
+		service:"create_direct_pay_by_user",
+		_input_charset:"utf-8",
+		timestamp:dateformat(new Date(),"yyyy-mm-dd HH:MM:ss"),
+		version:"1.0",
+		out_trade_no:id,
+		total_fee:deal.goods.price*deal.amount,
+		subject:deal.goods.name,
+		payment_type:"1",
+		seller_email:"1203111636@qq.com",
+		notify_url:"http://www.zzwlpf.com/deals/notify"
+	}
+	var str=Object.keys(query).sort().map(i=>i+"="+query[i]).join('&')
+	var key= fs.readFileSync('./private.pem').toString()
+	query.sign = crypto.createSign('RSA-SHA1').update(str,'utf-8').sign(key,'base64')
+	query.sign_type="RSA"
+	var url="https://mapi.alipay.com/gateway.do?"+querystring.stringify(query)
+	ctx.redirect(url)
+})
+
+const TradeStatus={
+	WAIT_BUYER_PAY:"待付款",
+	TRADE_CLOSED:"交易关闭",
+	TRADE_SUCCESS:"交易成功",
+	TRADE_PENDING:"待收款",
+	TRADE_FINISHED:"交易结束"
+}
+
+router.post('/notify',async ctx=>{
+	var {out_trade_no,trade_status}=await parse.json(ctx)
+	trade_status=TradeStatus[trade_status]
+	out_trade_no=ObjectID(out_trade_no)
+	if(!status||!out_trade_no)
+		throw "交易异常"
+	await ctx.mongo.collection("deals").update({_id:out_trade_no},{$set:{status:trade_status}})
+	ctx.body="success"
+})
+
 router.get('/:id',async ctx=>{
 	try{
 		ctx.body=await ctx.mongo.collection("deals").findOne({_id:ObjectID(ctx.params.id)})

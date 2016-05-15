@@ -23,7 +23,7 @@ class PayWay extends Component{
 }
 
 export default class extends Component{
-	state={deal:{},pay:{},modal:false}
+	state={deal:{},payway:"支付宝",modal:false}
 	render(){
 		var id=this.props.location.query.id
 		var {goods={},addr={}}=this.state.deal
@@ -38,19 +38,13 @@ export default class extends Component{
 						<p>订单金额: <span style={{color:"#C81624",fontSize:30}}>￥{this.state.deal.amount*goods.price}</span></p>
 					</div>
 					<TipBar title="支付方式" />
-					<MenuPanel style={{marginBottom:50,minHeight:160}}>
-						<div title="支付平台">
-							<PayWay onClick={()=>this.setState({pay:{name:"支付宝",url:"https://excashier.alipay.com/standard/auth.htm?payOrderId="}})} active={this.state.pay.name=="支付宝"} src={require("./alipay.png")} />
-							<PayWay onClick={()=>this.setState({pay:{name:"微信",url:"https://pay.weixin.qq.com/index.php/home/login?return_url=%2F"}})} active={this.state.pay.name=="微信"} src={require("./wechat.png")} />
-						</div>
-						<div title="银行卡支付">
-							<p>暂未开通</p>
-						</div>
-					</MenuPanel>
+					<div style={{paddingBottom:20}}>
+						<PayWay onClick={()=>this.setState({payway:"支付宝"})} active={this.state.payway=="支付宝"} src={require("./alipay.png")} />
+					</div>
 					<TipBar title="确认支付" />
 					<div style={{textAlign:"right",padding:20}}>
-						<a href={this.state.pay.url} target="_blank">
-							<Button disable={!this.state.pay.url} color="warning" onClick={()=>this.setState({modal:true})}>同意协议并付款</Button>
+						<a href={"/deals/redirect?id="+id+"&payway="+this.state.payway} target="_blank">
+							<Button disable={!this.state.payway} color="warning" onClick={()=>this.setState({modal:true})}>确认付款</Button>
 						</a>
 					</div>
 					<Modal isOpen={this.state.modal} style={{width:500}} onRequestClose={()=>this.setState({addModal:false})}>
