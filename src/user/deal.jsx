@@ -7,31 +7,24 @@ import Ajax from '../lib/Ajax'
 import store from 'store'
 import Button from '../lib/Button'
 import {Link} from 'react-router'
-
+// <MenuBar onChange={type=>this.setState({type})} current={this.state.type} data={["所有订单","待付款订单","等待发货订单","待收货的订单","已完成的订单","取消的订单"]} />
+				
 export default class extends Component{
 	state={type:"所有订单",data:[]}
 	render(){
 		return(
 			<UserBox title="我的订单">
-				<MenuBar onChange={type=>this.setState({type})} current={this.state.type} data={["所有订单","待付款订单","等待发货订单","待收货的订单","已完成的订单","取消的订单"]} />
-				<Table center border keys={["订单号","商品信息","单价","数量","实付款","交易状态","操作"]} data={this.state.data.map(it=>{
+				<Table center border keys={["订单号","商品名","单价","数量","实付款","交易状态","操作"]} data={this.state.data.map(it=>{
 					var {_id,goods,amount,status}=it
 					return [_id,
-						(
-							<div>
-								<img style={{width:50,height:50}} src={(goods.imgs||[])[0].path} />
-								<p>{goods.name}</p>
-							</div>
-						),
+						<p>{goods.name}</p>,
 						goods.price,amount,goods.price*amount,status,
 						status=="待付款"&&(
 							<div>
 								<Link to={"/cashier.html?id="+it._id}>
 									<Button>立即付款</Button>
 								</Link>
-								<Link to={"/cashier.html?id="+it._id}>
-									<Button color="default">取消订单</Button>
-								</Link>
+								<Button color="default">取消订单</Button>
 							</div>
 						)
 					]
