@@ -75,7 +75,7 @@ const TradeStatus={
 }
 
 router.post('/notify',async ctx=>{
-	var {out_trade_no,trade_status}=await parse.json(ctx)
+	var {out_trade_no,trade_status}=querystring.parse(await parse.text(ctx))
 	trade_status=TradeStatus[trade_status]
 	out_trade_no=ObjectID(out_trade_no)
 	if(!status||!out_trade_no)
