@@ -1,5 +1,5 @@
 node:
-  image: daocloud.io/qq08420/fuzhuang:master-10f02ff
+  image: daocloud.io/qq08420/fuzhuang:master-390b14b
   restart: always
   links:
   - mongo:mongo
@@ -12,14 +12,14 @@ node:
   - /home/upload:/home/upload
   - /home/key:/home/key
 mongo:
-  image: library/mongo:3.2.4
+  image: library/mongo
   restart: always
   ports:
   - '27017'
   volumes:
   - /data/db:/data/db
 proxy:
-  image: jwilder/nginx-proxy
+  image: index.docker.io/jwilder/nginx-proxy
   privileged: true
   restart: always
   ports:

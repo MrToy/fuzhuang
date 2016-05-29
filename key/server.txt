@@ -1,0 +1,2 @@
+ssh root@a.aibi.me
+123456o
