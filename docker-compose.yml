@@ -8,7 +8,9 @@ node:
   environment:
   - VIRTUAL_HOST=www.*,a.*
   volumes:
+  - /home/public:/home/public
   - /home/upload:/home/upload
+  - /home/key:/home/key
 mongo:
   image: library/mongo:3.2.4
   restart: always
@@ -17,7 +19,7 @@ mongo:
   volumes:
   - /data/db:/data/db
 proxy:
-  image: daocloud.io/qq08420/nginx-proxy:master-bea4f85
+  image: jwilder/nginx-proxy
   privileged: true
   restart: always
   ports:
@@ -25,3 +27,4 @@ proxy:
   - 80:80
   volumes:
   - /var/run/docker.sock:/tmp/docker.sock
+  - /home/nginx.conf:/etc/nginx/conf.d/nginx.conf

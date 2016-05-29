@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 import parse from 'co-body'
-import fetch from "node-fetch"
+import fetch from "isomorphic-fetch"
 import validator from 'validator'
 import querystring from "querystring"
 import dateformat from "dateformat"
@@ -9,8 +9,9 @@ import crypto from "crypto"
 var router=new Router()
 
 async function smsSend(tel,code){
+	var alidayu=require("../key/alidayu.json")
 	var query={
-		app_key:"23361783",
+		app_key:alidayu.id,
 		format:"json",
 		method:"alibaba.aliqin.fc.sms.num.send",
 		timestamp:dateformat(new Date(),"yyyy-mm-dd HH:MM:ss"),
@@ -25,7 +26,7 @@ async function smsSend(tel,code){
 	var queryArray=[]
 	for(let i in query)
 		queryArray.push(i+query[i])
-	var key="2554ae11cf420866e55ae9e6545e6a51"
+	var key=alidayu.pass
 	query.sign = crypto.createHash('md5').update(key+queryArray.sort().join('')+key,'utf-8').digest('hex').toUpperCase()
 	var res=await fetch("http://gw.api.taobao.com/router/rest",{
 		method:"POST",

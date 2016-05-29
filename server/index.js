@@ -4,6 +4,7 @@ import send from 'koa-send'
 import mongo from 'koa-mongo'
 import favicon from 'koa-favicon'
 import cache from 'koa-static-cache'
+import serve from 'koa-static'
 import Router from 'koa-router'
 import logger from 'koa-logger'
 
@@ -59,9 +60,8 @@ app.use(convert(mongo({
 	port:27017,
 	db:"main"
 })))
-//app.use(convert(rewrite('/*.html','/index.html')))
-app.use(convert(cache("upload",{maxAge:365*24*60*60})))
 app.use(convert(cache("public",{maxAge:365*24*60*60})))
+app.use(convert(serve("public")))
 app.use(convert(favicon('./src/favicon.ico')))
 app.use(router.routes())
 app.use(router.allowedMethods())

@@ -11,7 +11,7 @@ var router=new Router()
 
 async function parseFile(ctx){
 	return new Promise((resolve,reject)=>{
-		var form = new formidable.IncomingForm({uploadDir:"upload",keepExtensions:true,maxFieldsSize:10*1024*1024})
+		var form = new formidable.IncomingForm({uploadDir:"./upload",keepExtensions:true,maxFieldsSize:10*1024*1024})
 		form.parse(ctx.req,function(err,fields,files){
 			err?reject(err):resolve({fields,files})
 		})
@@ -30,7 +30,8 @@ router.post('/',async ctx=>{
 		var {fields,files}=await parseFile(ctx)
 		for(var i in files){
 			var {path,size,name,type}=files[i]
-			path="/"+Path.relative("upload",path)
+			console.log(path)
+			path="/"+Path.relative("public",path)
 			await ctx.mongo.collection("files").insert({path,size,name,type,pid,owner:user["_id"],createTime:new Date()})
 		}
 	}
@@ -42,12 +43,12 @@ router.get('/',async ctx=>{
 	ctx.body=await ctx.mongo.collection("files").find({owner:user["_id"]}).toArray()
 })
 
-router.get('/image/:name',async (ctx,next)=>{
-	var name=ctx.params.name
+router.get('/resize',async (ctx,next)=>{
+	var {path,w=0,h=0}=ctx.query
+	var name=Path.parse(path).base
 	var ext=Path.extname(url.parse(name).pathname).replace(".","")
 	if(ext!="jpg"&&ext!="png")
-		return ctx.redirect("/"+name)
-	var {w=0,h=0}=ctx.query
+		return ctx.redirect("/upload/"+name)
 	var filename=w+"x"+h+"_"+name
 	var filepath=Path.join(__dirname,"../upload",filename)
 	var imgpath=Path.join(__dirname,"../upload",name)
@@ -61,7 +62,7 @@ router.get('/image/:name',async (ctx,next)=>{
 		}
 
 	}
-	ctx.redirect("/"+filename)
+	ctx.redirect("/upload/"+filename)
 })
 
 router.get('/:id',async (ctx,next)=>{

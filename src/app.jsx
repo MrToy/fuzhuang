@@ -2,52 +2,38 @@ import 'core-js/shim'
 import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Router,Route,IndexRoute,Link,browserHistory} from 'react-router'
-import {StyleRoot,Style} from 'radium'
+import './app.styl'
 
-
-class RouterList extends Component{
+class App extends Component{
 	render(){
 		return (
 			<Router history={browserHistory}>
-				<Route path="/">
-					<IndexRoute component={require('react-router!./main')} />
-					<Route path="search.html" component={require('react-router!./main/search')} />
-					<Route path="item.html" component={require('react-router!./main/item')} />
-					<Route path="login.html" component={require('react-router!./main/login')} />
-					<Route path="register.html" component={require('react-router!./main/register')} />
-					<Route path="deal.html" component={require('react-router!./main/deal')} />
-					<Route path="cashier.html" component={require('react-router!./main/cashier')} />
-					<Route path="demo.html" component={require('react-router!./main/demo')} />
-					<Route path="news.html" component={require('react-router!./main/news')} />
+				<Route path="/" component={require('react-router!./Main')} >
+					<IndexRoute component={require('react-router!./Main/Index')} />
+					<Route path="search.html" component={require('react-router!./Main/Search')} />
+					<Route path="item.html" component={require('react-router!./Main/Item')} />
 				</Route>
-				<Route path="/user">
-					<Route path="info.html" component={require('react-router!./user/info')} />
-					<Route path="deal.html" component={require('react-router!./user/deal')} />
-					<Route path="shop.html" component={require('react-router!./user/shop')} />
-					<Route path="files.html" component={require('react-router!./user/files')} />
-					<Route path="config.html" component={require('react-router!./user/config')} />
-					<Route path="news.html" component={require('react-router!./user/news')} />
+				<Route path="/user" component={require('react-router!./User')}>
+					<Route path="info.html" component={require('react-router!./User/Info')} />
+					<Route path="deal.html" component={require('react-router!./User/Deal')} />
+					<Route path="shop.html" component={require('react-router!./User/Shop')} />
+					<Route path="files.html" component={require('react-router!./User/Files')} />
+					<Route path="config.html" component={require('react-router!./User/Config')} />
+					<Route path="news.html" component={require('react-router!./User/News')} />
 				</Route>
-				<Route path="*" component={require('react-router!./main/404')} />
+				<Route path="/" component={require('react-router!./Other')} >
+					<Route path="login.html" component={require('react-router!./Other/Login')} />
+					<Route path="register.html" component={require('react-router!./Other/Register')} />
+					<Route path="deal.html" component={require('react-router!./Other/Deal')} />
+					<Route path="cashier.html" component={require('react-router!./Other/Cashier')} />
+					<Route path="demo.html" component={require('react-router!./Other/Demo')} />
+					<Route path="news.html" component={require('react-router!./Other/News')} />
+					<Route path="*" component={require('react-router!./Other/404')} />
+				</Route>
 			</Router>
 		)
 	}
 }
 
-class App extends Component{
-	render(){
-		return (
-			<StyleRoot>
-				<Style rules={{
-					"*":{boxSizing:"border-box",margin:0,padding:0},
-					body:{fontFamily:"Microsoft YaHei,SimSun,Tahoma,Geneva,sans-serif",minWidth:1200},
-					a:{color:"#555",textDecoration:"none"},
-					"button::-moz-focus-inner,input::-moz-focus-inner":{border: 0,padding:0}
-				}} />
-				<RouterList />
-			</StyleRoot>
-		)
-	}
-}
 
 ReactDOM.render(<App />,document.getElementById('app'))

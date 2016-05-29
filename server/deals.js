@@ -59,7 +59,7 @@ router.get('/redirect',async ctx=>{
 		notify_url:"http://www.zzwlpf.com/deals/notify"
 	}
 	var str=Object.keys(query).sort().map(i=>i+"="+query[i]).join('&')
-	var key= fs.readFileSync('./private.pem').toString()
+	var key= fs.readFileSync('../key/private.pem').toString()
 	query.sign = crypto.createSign('RSA-SHA1').update(str,'utf-8').sign(key,'base64')
 	query.sign_type="RSA"
 	var url="https://mapi.alipay.com/gateway.do?"+querystring.stringify(query)
@@ -69,7 +69,7 @@ router.get('/redirect',async ctx=>{
 const TradeStatus={
 	WAIT_BUYER_PAY:"待付款",
 	TRADE_CLOSED:"交易关闭",
-	TRADE_SUCCESS:"交易成功",
+	TRADE_SUCCESS:"待发货",
 	TRADE_PENDING:"待收款",
 	TRADE_FINISHED:"交易结束"
 }
@@ -85,10 +85,11 @@ router.post('/notify',async ctx=>{
 })
 
 router.get('/:id',async ctx=>{
-	try{
-		ctx.body=await ctx.mongo.collection("deals").findOne({_id:ObjectID(ctx.params.id)})
-	}catch(err){
-		ctx.throw("获取失败",403)
-	}
+	ctx.body=await ctx.mongo.collection("deals").findOne({_id:ObjectID(ctx.params.id)})
+})
+router.put('/:id',async ctx=>{
+	var {intent}=ctx.query
+	if(intent=="cancle")
+		ctx.body=await ctx.mongo.collection("deals").update({_id:ObjectID(ctx.params.id)},{$set:{status:"已取消"}})
 })
 export default router
