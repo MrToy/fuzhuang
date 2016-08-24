@@ -1,26 +1,27 @@
-# 说明文档
+# zzwlpf
 
-### 安装依赖
+> A Vue.js project
 
+## Build Setup
+
+``` bash
+# install dependencies
 npm install
 
-### 开发阶段编译
-
-npm run build-dev
-
-### 开发阶段运行
-
+# serve with hot reload at localhost:8080
 npm run dev
 
-然后打开http://localhost/
-
-### 产品阶段编译
-
+# build for production with minification
 npm run build
 
-## 产品阶段运行
+# run unit tests
+npm run unit
 
-npm start
+# run e2e tests
+npm run e2e
 
+# run all tests
+npm test
+```
 
-
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
