@@ -1,6 +1,6 @@
 <template lang="jade">
 	.ui-saler
-		ui-box2(title="卖家中心" v-bind:menus="menus")
+		admin-box(title="卖家中心" v-bind:menus="menus")
 </template>
 <script>
 	export default{
@@ -14,7 +14,7 @@
 			}
 		},
 		components:{
-			'ui-box2': require('./components/Box2')
+			'admin-box': require('./components/AdminBox')
 		}
 	}
 </script>
