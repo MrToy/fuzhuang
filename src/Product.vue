@@ -119,7 +119,14 @@
 			},
 			xss(v){
 				return xss(v)
-			}
+			},
+			specify(spec){
+				var arr=[]
+				for(var i in spec){
+					arr.push(i+':'+spec[i])
+				}
+				return arr.join(' , ')
+			},
 		},
 		components:{
 			'ui-search-bar': require('./components/SearchBar'),
@@ -138,7 +145,7 @@
 						name:this.product.name,
 						price:this.product.price,
 						quantity:this.quantity,
-						spec:this.spec,
+						spec:this.specify(this.spec),
 						id:this.product.id
 					}]}
 					dispatch("SET_CURRENT",it)

@@ -7,11 +7,11 @@
 </template>
 <style lang="stylus" scoped>
 	.box
-		display:inline-block;padding:10px;width:300px;height:350px;vertical-align:top;overflow:hidden;border:1px solid transparent
+		display:inline-block;padding:10px;margin:10px 15px;width:200px;height:250px;vertical-align:top;overflow:hidden;border:1px solid transparent
 		&:hover
 			border:1px solid #e0e0e0;box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 	.img
-		width:300px;height:300px
+		width:200px;height:200px
 	.price
 		font-size: 18px;color: #cf1f3f;font-family: "Arial"
 	.name

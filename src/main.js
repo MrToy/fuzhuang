@@ -33,6 +33,9 @@ router.map({
 	'/deal':{
 		component:resolve=>require(["./Deal"],resolve),
 	},
+	'/pay/:id':{
+		component:resolve=>require(["./Pay"],resolve),
+	},
 	'/saler':{
 		component:resolve=>require(["./Saler"],resolve),
 		auth:true,

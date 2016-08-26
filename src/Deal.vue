@@ -16,7 +16,7 @@
 				tbody
 					tr(v-for="it in current.data")
 						th {{it.name}}
-						th {{specify(it.spec)}}
+						th {{it.spec}}
 						th {{it.price}}
 						th {{it.quantity}}
 						th {{it.price*it.quantity}}
@@ -24,7 +24,7 @@
 				span 需付款:
 				span.price {{total}}
 				span
-					ui-button(color="primary") 提交订单
+					ui-button(color="primary" v-on:click="createDeal") 提交订单
 </template>
 <style lang="stylus" scoped>
 	.box
@@ -51,6 +51,8 @@
 			vertical-align:middle;margin-left:20px
 </style>
 <script>
+	import {CreateDeal} from './store/deal'
+	import store from 'store'
 	export default {
 		components:{
 			'ui-search-bar': require('./components/SearchBar'),
@@ -59,12 +61,14 @@
 			'ui-button':require('keen-ui/lib/UiButton')
 		},
 		methods:{
-			specify(spec){
-				var arr=[]
-				for(var i in spec){
-					arr.push(i+':'+spec[i])
+			async createDeal(){
+				try{
+					var id=await CreateDeal(store.get("token"),this.current)
+				}catch(err){
+					return this.$dispatch("toast",err,"error")
 				}
-				return arr.join(' , ')
+				this.$dispatch("toast","订单创建成功","success")
+				this.$route.router.go({path:"/pay/"+id})
 			}
 		},
 		computed:{
@@ -75,7 +79,7 @@
 		vuex:{
 			getters:{
 				current:state=>state.deals.current
-			},
+			}
 		}
 	}
 </script>

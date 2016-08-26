@@ -5,11 +5,11 @@
 		.box
 			.products
 				product-profile(v-for="it in products.data" v-bind:data="it" transition="fade" stagger="100")
-			ui-pagination(v-bind:total="Math.ceil(products.total/8)" v-bind:current="parseInt($route.query.page)||1" v-bind:on-paging="onPaging")
+			ui-pagination(v-bind:total="Math.ceil(products.total/perpage)" v-bind:current="parseInt($route.query.page)||1" v-bind:on-paging="onPaging")
 </template>
 <style lang="stylus" scoped>
 	.products
-		height:744px;overflow:hidden
+		height:852px;overflow:hidden
 	.box
 		padding:5px 0;width:1300px;margin:0 auto
 	.fade
@@ -25,6 +25,7 @@
 			return{
 				products:{},
 				current:1,
+				perpage:15,
 			}
 		},
 		methods:{
@@ -42,8 +43,8 @@
 			async data(route){
 				var config={
 					word:route.to.query.word,
-					skip:((route.to.query.page||1)-1)*8,
-					limit:8,
+					skip:((route.to.query.page||1)-1)*this.perpage,
+					limit:this.perpage,
 					active:true
 				}
 				var products=await GetProducts(config)

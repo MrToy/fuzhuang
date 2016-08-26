@@ -17,8 +17,8 @@
 					span 个人中心
 					i.material-icons.arrow arrow_drop_down
 				.popover.user
-					a.text 待付款
-					a.text 待发货
+					a.text(v-link=`{path:"/user/orders"}`) 待付款
+					a.text(v-link=`{path:"/user/orders"}`) 待发货
 			li.pop
 				a.text
 					i.material-icons favorite_border
