@@ -3,7 +3,10 @@
 		ui-search-bar
 		ui-nav-bar
 		.box
-			info-bar(text="选择收货地址")
+			info-bar(text="填写收货地址")
+			ui-textbox(v-bind:value.sync="contact.name" name="name" label="收货人" placeholder="name")
+			ui-textbox(v-bind:value.sync="contact.phone" name="phone" label="收货电话" placeholder="phone")
+			ui-textbox(v-bind:value.sync="contact.addr" name="addr" label="收货地址" placeholder="addr")
 			info-bar(text="确定订单信息")
 			table
 				thead
@@ -54,16 +57,22 @@
 	import {CreateDeal} from './store/deal'
 	import store from 'store'
 	export default {
+		data(){
+			return {
+				contact:{}
+			}
+		},
 		components:{
 			'ui-search-bar': require('./components/SearchBar'),
 			'ui-nav-bar': require('./components/NavBar'),
 			'info-bar':require('./components/InfoBar'),
-			'ui-button':require('keen-ui/lib/UiButton')
+			'ui-button':require('keen-ui/lib/UiButton'),
+			'ui-textbox':require('keen-ui/lib/UiTextbox'),
 		},
 		methods:{
 			async createDeal(){
 				try{
-					var id=await CreateDeal(store.get("token"),this.current)
+					var id=await CreateDeal(store.get("token"),{...this.current,contact:this.contact})
 				}catch(err){
 					return this.$dispatch("toast",err,"error")
 				}

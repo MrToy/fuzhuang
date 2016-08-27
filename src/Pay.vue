@@ -30,7 +30,13 @@
 				img(src="./assets/alipay.png")
 			info-bar(text="确认付款")
 			.btns
-				ui-button(color="primary") 确认付款
+				a(v-bind:href="url" target="_blank")
+					ui-button(color="primary" v-on:click="showDlg=true") 确认付款
+		ui-modal(v-bind:show.sync="showDlg"  header="支付结果" body="支付已完成？")
+			div(slot="footer")
+				a(v-link=`{path:"/user/orders"}`)
+					ui-button(color="primary") 已支付,查看订单
+				ui-button(v-on:click="showDlg = false") 继续尝试支付
 </template>
 <style lang="stylus" scoped>
 	.right
@@ -59,14 +65,21 @@
 		width:190px
 </style>
 <script>
-	import {GetDealById} from './store/deal'
+	import {GetDealById,domain} from './store/deal'
 	export default {
 		data(){
 			return {
-				deal:{}
+				deal:{},
+				showDlg:false
+			}
+		},
+		computed:{
+			url:function(){
+				return `${domain}/pay/${this.$route.params.id}?notify=${domain}/pay`
 			}
 		},
 		components:{
+			'ui-modal': require('keen-ui/lib/UiModal'),
 			'ui-search-bar': require('./components/SearchBar'),
 			'ui-nav-bar': require('./components/NavBar'),
 			'info-bar':require('./components/InfoBar'),
