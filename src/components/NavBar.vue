@@ -2,15 +2,13 @@
 	.section
 		.wrapper
 			.item
-				.text 所有商品分类
+				a.text(v-link=`{path:"/"}`) 首页
 			.item
-				a.text 首页
+				a.text(v-link=`{path:"/search",query:{word:"每日新品"}}`) 每日新品
 			.item
-				a.text 每日新品
+				a.text(v-link=`{path:"/search",query:{word:"潮流前线"}}`) 潮流前线
 			.item
-				a.text 潮流前线
-			.item
-				a.text 当季促销
+				a.text(v-link=`{path:"/search",query:{word:"当季促销"}}`) 当季促销
 </template>
 <style lang="stylus" scoped>
 	.wrapper
@@ -24,5 +22,5 @@
 	.item
 		display:inline-block;font-size: 14px;font-weight: bold
 		&:first-child
-			margin-right:60px
+			margin-left:60px
 </style>

@@ -4,8 +4,11 @@
 		nav-bar
 		.box
 			.left
-				.menus
-					span 菜单 暂无
+				.menu-box
+					.menus(v-for="it in menus")
+						a(v-link=`{path:"/search",query:{word:it.name}}`) {{it.name}}
+						.sub
+							a(v-for="itit in it.sub" v-link=`{path:"/search",query:{word:itit}}`) {{itit}}
 			.right
 				.left
 					ui-carouse(v-bind:items="carouse" v-bind:width="800" v-bind:height="325")
@@ -51,8 +54,16 @@
 				width:800px;float:left
 			&>.right
 				margin-left:820px
-	.menus
+	.menu-box
 		height:285px;background:#c81624;color:#fff;padding:20px
+		.menus>a
+			margin:0;font-size:16px;color:#fff;font-weight:bold
+		.sub
+			margin-bottom:15px
+			&:after
+				visibility: hidden;display: block;font-size: 0;content: " ";clear: both;height: 0
+			a
+				display:block;float:left;margin-right:10px;cursor:pointer;color:#fff
 	.user-box
 		color:#C81624
 	.news-box
@@ -68,7 +79,7 @@
 			.ui-button
 				margin:5px
 	.products
-		height:292px
+		height:330px
 </style>
 <script>
 	import {UserActions} from "./store/userStore"
@@ -80,6 +91,24 @@
 				carouse:[
 					{img:require('./assets/c1.jpg')},
 					{img:require('./assets/c2.jpg')},
+				],
+				menus:[
+					{
+						name:"女装",
+						sub:["外套","时尚套装","连衣裙","针织衫","t恤","休闲裤"]
+					},
+					{
+						name:"男装",
+						sub:["T恤","衬衫","亚麻裤","牛仔裤","Polo衫","毛衣"]
+					},
+					{
+						name:"童装",
+						sub:["童牛仔裤","童衬衫","童服套装","童T恤"]
+					},
+					{
+						name:"风格",
+						sub:["帅气中性","优雅休闲","青春甜美","时尚百搭","性感蕾丝","文艺清新"]
+					}
 				]
 			}
 		},

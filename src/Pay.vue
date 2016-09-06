@@ -28,6 +28,8 @@
 			info-bar(text="支付方式")
 			.payway
 				img(src="./assets/alipay.png")
+			.payway.qrcode
+				img(src="./assets/qrpay.jpg")
 			info-bar(text="确认付款")
 			.btns
 				a(v-bind:href="url" target="_blank")
@@ -52,7 +54,15 @@
 	.btns
 		text-align:right
 	.payway
-		border: 2px solid #0E90D2;margin: 10px 0 30px 0;padding: 10px;display:inline-block
+		border: 2px solid #0E90D2;margin: 10px 20px 30px 0;padding: 10px;display:inline-block;vertical-align:middle
+		img
+			max-height:30px
+	.qrcode
+		cursor:pointer
+		img
+			transition:all 0.5s
+		&:hover img
+			transform:scale(8) translateY(-17px)
 	table
 		text-align:center;width:100%;border-collapse: collapse
 	thead th

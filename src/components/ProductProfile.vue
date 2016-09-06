@@ -7,7 +7,7 @@
 </template>
 <style lang="stylus" scoped>
 	.product-profile
-		display:inline-block;padding:10px;margin:10px 15px;width:200px;height:250px;vertical-align:top;overflow:hidden;border:1px solid transparent
+		display:inline-block;padding:10px;margin:10px 15px;width:200px;height:280px;vertical-align:top;overflow:hidden;border:1px solid transparent
 		&:hover
 			border:1px solid #e0e0e0;box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 	.img

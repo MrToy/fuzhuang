@@ -25,7 +25,7 @@
 				ui-textbox.inline-box(name="name" placeholder="属性" v-bind:value.sync="it.name")
 				.field
 					div(v-for="item in it.value" track-by="$index")
-						ui-icon-button.inline-box(icon="remove" type="flat" v-on:click="it.valueba.$remove(item)")
+						ui-icon-button.inline-box(icon="remove" type="flat" v-on:click="it.value.$remove(item)")
 						ui-textbox.inline-box(name="name" placeholder="值" v-bind:value.sync="item")
 					ui-icon-button(icon="add" type="flat" v-on:click="it.value.push('')")
 			ui-icon-button(icon="add" type="flat" v-on:click="product.spec.push({value:[]})")

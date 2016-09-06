@@ -79,6 +79,10 @@ router.map({
 				component:resolve=>require(["./UserCart"],resolve)
 			}
 		}
+	},
+	'/admin':{
+		component:resolve=>require(["./Admin"],resolve),
+		admin:true,
 	}
 })
 router.beforeEach(({to,next})=>{
@@ -90,6 +94,11 @@ router.beforeEach(({to,next})=>{
 	if(to.saler&&!to.router.app.$store.state.user.userInfo.group.saler){
 		to.router.app.$emit("toast","需要先注册一个店铺","warning")
 		to.router.go({path:"/saler/create"})
+		return
+	}
+	if(to.admin&&!to.router.app.$store.state.user.userInfo.group.admin){
+		to.router.app.$emit("toast","需要管理员权限","warning")
+		to.router.go({path:"/"})
 		return
 	}
 	next()
